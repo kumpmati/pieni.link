@@ -1,5 +1,7 @@
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
+import { nanoid } from 'nanoid';
+import { z } from 'zod';
 
 export const links = pgTable('links', {
 	id: text('id').primaryKey(),
@@ -10,4 +12,7 @@ export const links = pgTable('links', {
 
 export type Link = typeof links.$inferSelect;
 
-export const linkInsertSchema = createInsertSchema(links);
+export const linkInsertSchema = createInsertSchema(links, {
+	id: z.string().default(nanoid(8)),
+	url: z.string().url()
+});
