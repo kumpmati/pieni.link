@@ -4,6 +4,8 @@ import { error } from '@sveltejs/kit';
 
 export const actions = {
 	create: async ({ request }) => {
+		console.log('create action');
+
 		const raw = Object.fromEntries(await request.formData());
 
 		const body = linkInsertSchema.safeParse(raw);
