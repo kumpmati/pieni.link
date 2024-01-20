@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { PUBLIC_BASEURL } from '$env/static/public';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import type { Link } from '$lib/server/database/schema/link';
+	import { flyAndScale } from '$lib/utils';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { IconSend2, IconRotate, IconLoader } from '@tabler/icons-svelte';
 	import { tick } from 'svelte';
@@ -48,14 +50,14 @@
 	<title>pätkä.link</title>
 </svelte:head>
 
-{#if !shortenedLink}
-	<form
-		bind:this={form}
-		use:enhance={handleSubmit}
-		method="post"
-		action="?/create"
-		class="flex w-full max-w-md gap-2"
-	>
+<form
+	bind:this={form}
+	use:enhance={handleSubmit}
+	method="post"
+	action="?/create"
+	class="flex w-full max-w-md gap-2"
+>
+	{#if !shortenedLink}
 		<Input
 			name="url"
 			type="url"
@@ -71,25 +73,23 @@
 				<IconSend2 size={16} />
 			{/if}
 		</Button>
-	</form>
-{:else}
-	<div class="flex w-full max-w-sm gap-2">
+	{:else}
 		<Input
 			name="url"
 			type="url"
 			readonly
 			on:focus={(e) => e.currentTarget.select()}
-			value="https://pätkä.link/{shortenedLink.id}"
+			value="{PUBLIC_BASEURL}/{shortenedLink.id}"
 		/>
 
 		<Button type="reset" on:click={reset} size="icon" title="Shorten another link">
 			<IconRotate size={16} />
 		</Button>
-	</div>
-{/if}
+	{/if}
+</form>
 
 {#if error}
-	<p class="text-destructive">{JSON.stringify(error)}</p>
+	<p class="text-destructive" transition:flyAndScale>
+		{error?.message ?? 'unknown error'}
+	</p>
 {/if}
-
-<p class="text-destructive">moikka</p>
