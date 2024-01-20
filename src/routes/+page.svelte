@@ -8,6 +8,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { IconSend2, IconRotate, IconLoader } from '@tabler/icons-svelte';
 	import { tick } from 'svelte';
+	import { toast } from 'svelte-sonner';
 
 	let form: HTMLFormElement;
 
@@ -19,6 +20,13 @@
 		loading = false;
 		shortenedLink = null;
 		error = null;
+	};
+
+	const copyCurrentLink = async () => {
+		if (!shortenedLink) return;
+		const link = `${PUBLIC_BASEURL}/${shortenedLink.id}`;
+		await navigator.clipboard.writeText(link);
+		toast('Link copied!', { description: `Copied '${link}' to clipboard.`, dismissable: true });
 	};
 
 	const handleOnPaste = async () => {
@@ -35,6 +43,7 @@
 			switch (result.type) {
 				case 'success':
 					shortenedLink = result.data as Link;
+					await copyCurrentLink();
 					break;
 
 				case 'error':
@@ -66,7 +75,14 @@
 			on:paste={handleOnPaste}
 			disabled={loading}
 		/>
-		<Button type="submit" variant="outline" size="icon" title="Shorten link" disabled={loading}>
+
+		<Button
+			type="submit"
+			variant={loading ? 'ghost' : 'outline'}
+			size="icon"
+			title="Shorten link"
+			disabled={loading}
+		>
 			{#if loading}
 				<IconLoader size={16} class="animate-spin" />
 			{:else}
@@ -82,7 +98,7 @@
 			value="{PUBLIC_BASEURL}/{shortenedLink.id}"
 		/>
 
-		<Button type="reset" on:click={reset} size="icon" title="Shorten another link">
+		<Button type="reset" on:click={reset} size="icon" variant="ghost" title="Shorten another link">
 			<IconRotate size={16} />
 		</Button>
 	{/if}
