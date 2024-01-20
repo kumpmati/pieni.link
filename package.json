@@ -10,16 +10,22 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"migrate:generate": "drizzle-kit generate:pg",
+		"migrate:latest": "npx tsx src/migrate.ts",
+		"studio": "drizzle-kit studio"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "8.56.0",
+		"@types/pg": "^8.10.9",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.16",
+		"drizzle-kit": "^0.20.13",
+		"drizzle-orm": "^0.29.3",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
@@ -40,8 +46,12 @@
 	"dependencies": {
 		"bits-ui": "^0.15.1",
 		"clsx": "^2.1.0",
+		"dotenv": "^16.3.2",
+		"drizzle-zod": "^0.5.1",
+		"pg": "^8.11.3",
 		"radix-icons-svelte": "^1.2.1",
 		"tailwind-merge": "^2.2.0",
-		"tailwind-variants": "^0.1.20"
+		"tailwind-variants": "^0.1.20",
+		"zod": "^3.22.4"
 	}
 }
