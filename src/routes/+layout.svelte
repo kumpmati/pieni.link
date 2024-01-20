@@ -7,7 +7,7 @@
 </script>
 
 <nav class="absolute left-0 top-0 mx-auto flex w-full flex-row items-center justify-between p-2">
-	<a href="/">pätkä.link</a>
+	<a href="/">pieni.link</a>
 
 	<Button
 		href="/links"

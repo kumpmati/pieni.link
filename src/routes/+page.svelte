@@ -47,7 +47,7 @@
 </script>
 
 <svelte:head>
-	<title>pätkä.link</title>
+	<title>pieni.link</title>
 </svelte:head>
 
 <form
