@@ -78,7 +78,7 @@
 
 		<Button
 			type="submit"
-			variant={loading ? 'ghost' : 'outline'}
+			variant={loading ? 'ghost' : 'default'}
 			size="icon"
 			title="Shorten link"
 			disabled={loading}
