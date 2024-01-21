@@ -1,4 +1,4 @@
-import { pgTable, bigint, varchar, text } from 'drizzle-orm/pg-core';
+import { pgTable, bigint, varchar, text, uuid, timestamp } from 'drizzle-orm/pg-core';
 
 /**
  * @see https://lucia-auth.com/guidebook/drizzle-orm/#postgresql
@@ -7,8 +7,11 @@ import { pgTable, bigint, varchar, text } from 'drizzle-orm/pg-core';
 export const user = pgTable('auth_user', {
 	id: varchar('id', { length: 15 }).primaryKey(),
 	name: text('name').notNull(),
-	email: text('email').notNull(),
-	image: text('image')
+	email: text('email').unique(),
+	image: text('image'),
+	role: text('role', { enum: ['admin', 'member'] })
+		.notNull()
+		.default('member')
 });
 
 export const session = pgTable('user_session', {
@@ -27,3 +30,15 @@ export const key = pgTable('user_key', {
 		.references(() => user.id),
 	hashedPassword: varchar('hashed_password', { length: 255 })
 });
+
+export const signupToken = pgTable('signup_token', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	role: text('role', { enum: ['admin', 'member'] })
+		.notNull()
+		.default('member'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	usedAt: timestamp('used_at'),
+	userId: varchar('user_id', { length: 15 }).references(() => user.id)
+});
+
+export type SignupToken = typeof signupToken.$inferSelect;

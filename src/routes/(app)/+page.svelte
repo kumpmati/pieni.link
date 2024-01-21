@@ -39,7 +39,7 @@
 		shortenedLink = null;
 		error = null;
 
-		return async ({ result }) => {
+		return async ({ result, update }) => {
 			switch (result.type) {
 				case 'success':
 					shortenedLink = result.data as Link;
@@ -49,6 +49,9 @@
 				case 'error':
 					error = result.error;
 					break;
+
+				case 'redirect':
+					await update();
 			}
 			loading = false;
 		};

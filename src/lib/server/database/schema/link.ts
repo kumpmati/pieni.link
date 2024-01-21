@@ -1,13 +1,17 @@
-import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
+import { user } from './auth';
 
 export const links = pgTable('links', {
 	id: text('id').primaryKey(),
 	url: text('url').notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
-	lastUsed: timestamp('last_used')
+	lastUsed: timestamp('last_used'),
+	userId: varchar('user_id', { length: 15 })
+		.notNull()
+		.references(() => user.id)
 });
 
 export type Link = typeof links.$inferSelect;

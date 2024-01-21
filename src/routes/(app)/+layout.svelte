@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.pcss';
+	import '../../app.pcss';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { IconQuestionMark } from '@tabler/icons-svelte';
 	import Button from '$lib/components/ui/button/button.svelte';

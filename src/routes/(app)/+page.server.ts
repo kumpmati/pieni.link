@@ -1,12 +1,18 @@
 import { db } from '$lib/server/database/index.js';
 import { linkInsertSchema, links } from '$lib/server/database/schema/link.js';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	create: async ({ request }) => {
+	create: async ({ request, locals }) => {
+		const session = await locals.auth.validate();
+
+		if (!session) {
+			redirect(302, '/auth/signin');
+		}
+
 		const raw = Object.fromEntries(await request.formData());
 
-		const body = linkInsertSchema.safeParse(raw);
+		const body = linkInsertSchema.safeParse({ ...raw, userId: session.user.id });
 		if (!body.success) {
 			error(400, body.error.message);
 		}

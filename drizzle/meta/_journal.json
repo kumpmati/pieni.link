@@ -15,6 +15,27 @@
       "when": 1705829567811,
       "tag": "0001_famous_mimic",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1705834938621,
+      "tag": "0002_damp_epoch",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1705836489829,
+      "tag": "0003_shocking_cassandra_nova",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1705837678502,
+      "tag": "0004_swift_madame_hydra",
+      "breakpoints": true
     }
   ]
 }
