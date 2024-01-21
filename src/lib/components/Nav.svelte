@@ -12,14 +12,6 @@
 	<a href="/">pieni.link</a>
 
 	<div class="flex gap-2">
-		<Button
-			href="/about"
-			size="icon"
-			variant={$page.url.pathname === '/about' ? 'default' : 'ghost'}
-		>
-			<IconQuestionMark size={16} />
-		</Button>
-
 		{#if session}
 			<Button href="/me" size="icon" variant={$page.url.pathname === '/me' ? 'default' : 'ghost'}>
 				<IconUser size={16} />
