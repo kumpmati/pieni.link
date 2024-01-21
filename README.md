@@ -35,3 +35,31 @@ You need the following:
 - [ ] Google OAuth credentials
 
 TODO: Guides for hosting + Docker setup
+
+## Development
+
+Prerequisites:
+
+- Git
+- Node.js (`v18.x` or above)
+- PostgreSQL (`15`)
+
+### Setup
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Copy the contents of `.env.example` to a file called `.env`, then fill all the environment variables
+
+```bash
+cp .env.example .env
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
