@@ -1,0 +1,1 @@
+ALTER TABLE "link_visit" ALTER COLUMN "id" SET DEFAULT gen_random_uuid();

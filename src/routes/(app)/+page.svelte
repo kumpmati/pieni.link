@@ -39,7 +39,7 @@
 		shortenedLink = null;
 		error = null;
 
-		return async ({ result }) => {
+		return async ({ result, update }) => {
 			switch (result.type) {
 				case 'success':
 					shortenedLink = result.data as Link;
@@ -49,6 +49,9 @@
 				case 'error':
 					error = result.error;
 					break;
+
+				case 'redirect':
+					await update();
 			}
 			loading = false;
 		};
@@ -59,53 +62,65 @@
 	<title>pieni.link</title>
 </svelte:head>
 
-<form
-	bind:this={form}
-	use:enhance={handleSubmit}
-	method="post"
-	action="?/create"
-	class="flex w-full max-w-md gap-2"
->
-	{#if !shortenedLink}
-		<Input
-			name="url"
-			type="url"
-			required
-			placeholder="Enter a long link here"
-			on:paste={handleOnPaste}
-			disabled={loading}
-		/>
+<div class="mx-auto flex h-full w-full max-w-md flex-col items-center justify-center gap-2">
+	<form
+		bind:this={form}
+		use:enhance={handleSubmit}
+		method="post"
+		action="?/create"
+		class="flex w-full items-center gap-0"
+	>
+		{#if !shortenedLink}
+			<Input
+				name="url"
+				type="url"
+				required
+				placeholder="Paste a long link here to shorten..."
+				on:paste={handleOnPaste}
+				disabled={loading}
+				class="text-md rounded-r-none p-5"
+			/>
 
-		<Button
-			type="submit"
-			variant={loading ? 'ghost' : 'default'}
-			size="icon"
-			title="Shorten link"
-			disabled={loading}
-		>
-			{#if loading}
-				<IconLoader size={16} class="animate-spin" />
-			{:else}
-				<IconSend2 size={16} />
-			{/if}
-		</Button>
-	{:else}
-		<Input
-			name="url"
-			type="url"
-			readonly
-			on:focus={(e) => e.currentTarget.select()}
-			value="{PUBLIC_BASEURL}/{shortenedLink.id}"
-		/>
+			<Button
+				type="submit"
+				variant={loading ? 'ghost' : 'default'}
+				size="icon"
+				title="Shorten link"
+				disabled={loading}
+				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
+			>
+				{#if loading}
+					<IconLoader size={24} stroke={1.5} class="animate-spin" />
+				{:else}
+					<IconSend2 size={24} stroke={1.5} />
+				{/if}
+			</Button>
+		{:else}
+			<Input
+				name="url"
+				type="url"
+				readonly
+				on:focus={(e) => e.currentTarget.select()}
+				value="{PUBLIC_BASEURL}/{shortenedLink.id}"
+				class="text-md rounded-r-none p-5"
+			/>
 
-		<Button type="reset" on:click={reset} size="icon" variant="ghost" title="Shorten another link">
-			<IconRotate size={16} />
-		</Button>
+			<Button
+				type="reset"
+				on:click={reset}
+				size="icon"
+				variant="secondary"
+				title="Shorten another link"
+				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
+			>
+				<IconRotate size={24} stroke={1.5} />
+			</Button>
+		{/if}
+	</form>
+
+	{#if error}
+		<p class="text-destructive" transition:flyAndScale>
+			{error?.message ?? 'unknown error'}
+		</p>
 	{/if}
-</form>
-
-{#if error}
-	<p class="text-destructive" transition:flyAndScale>
-		{error?.message ?? 'unknown error'}
-	</p>
-{/if}
+</div>
