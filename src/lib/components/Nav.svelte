@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { IconLogin, IconQuestionMark, IconUser } from '@tabler/icons-svelte';
+	import { IconLogin, IconUser } from '@tabler/icons-svelte';
+	import Logo from './Logo.svelte';
 
 	import { Button } from './ui/button';
 	import type { Session } from 'lucia';
@@ -9,7 +10,9 @@
 </script>
 
 <nav class="flex w-full flex-row items-center justify-between p-2">
-	<a href="/">pieni.link</a>
+	<a href="/" class="flex flex-row items-center gap-2 text-lg">
+		<Logo size={32} /> Pieni
+	</a>
 
 	<div class="flex gap-2">
 		{#if session}

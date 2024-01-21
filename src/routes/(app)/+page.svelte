@@ -62,7 +62,7 @@
 </script>
 
 <svelte:head>
-	<title>pieni.link</title>
+	<title>Pieni - URL shortener</title>
 </svelte:head>
 
 <div class="mx-auto flex h-full w-full max-w-md flex-col items-center justify-center gap-2">
