@@ -12,9 +12,34 @@
 
 <div class="flex w-full flex-col gap-2">
 	<Card.Root class="w-full">
-		<Card.Content class="mt-5 flex gap-2">
+		<Card.Header>
+			<Card.Title>Visits</Card.Title>
+		</Card.Header>
+		<Card.Content class="visits grid" style="grid-template-columns: repeat(3, 1fr)">
 			<small class="text-muted-foreground">
-				Total visits
+				Last 24 hours
+				<h1 class="text-4xl font-bold text-primary">
+					{#await data.visits}
+						...
+					{:then visits}
+						{visits.map((v) => dayjs().diff(v.timestamp, 'hours') <= 24).length}
+					{/await}
+				</h1>
+			</small>
+
+			<small class="text-muted-foreground">
+				Last 7 days
+				<h1 class="text-4xl font-bold text-primary">
+					{#await data.visits}
+						...
+					{:then visits}
+						{visits.map((v) => dayjs().diff(v.timestamp, 'days') <= 7).length}
+					{/await}
+				</h1>
+			</small>
+
+			<small class="text-muted-foreground">
+				All time
 				<h1 class="text-4xl font-bold text-primary">
 					{#await data.visits}
 						...
@@ -31,7 +56,7 @@
 	{:then visits}
 		<Card.Root class="w-full">
 			<Card.Header>
-				<Card.Title>Visitor logs</Card.Title>
+				<Card.Title>Logs</Card.Title>
 				<Card.Description>Detailed logs of all visits to the link</Card.Description>
 			</Card.Header>
 

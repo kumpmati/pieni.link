@@ -26,7 +26,10 @@
 		if (!shortenedLink) return;
 		const link = `${PUBLIC_BASEURL}/${shortenedLink.id}`;
 		await navigator.clipboard.writeText(link);
-		toast('Link copied!', { description: `Copied '${link}' to clipboard.`, dismissable: true });
+		toast.success('Link copied!', {
+			description: `Copied '${link}' to clipboard.`,
+			dismissable: true
+		});
 	};
 
 	const handleOnPaste = async () => {

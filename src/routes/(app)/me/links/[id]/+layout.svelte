@@ -5,13 +5,13 @@
 	import { IconChartHistogram, IconChevronLeft, IconEdit } from '@tabler/icons-svelte';
 </script>
 
-<div class="relative flex w-full flex-row gap-2">
-	<div class="absolute hidden -translate-x-full flex-col gap-1 pr-4 xl:flex">
-		<Button href="/me" variant="ghost" class="justify-start gap-2">
+<div class="relative flex w-full flex-col gap-2 lg:flex-row">
+	<div class="flex flex-row gap-1 pr-4 lg:absolute lg:-translate-x-full lg:flex-col xl:flex">
+		<Button href="/me" variant="ghost" class="justify-start gap-2 pl-2 lg:pl-4">
 			<IconChevronLeft size={16} /> Profile
 		</Button>
 
-		<Separator class="mb-2" />
+		<Separator class="hidden lg:flex" />
 
 		<Button
 			variant={$page.url.pathname === `/me/links/${$page.params.id}/edit` ? 'secondary' : 'ghost'}

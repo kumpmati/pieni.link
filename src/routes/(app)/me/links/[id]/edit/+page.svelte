@@ -20,23 +20,23 @@
 		return async ({ update, result }) => {
 			switch (result.type) {
 				case 'redirect':
-					toast('Link updated!');
+					toast.success('Link updated!');
 					await update();
 					break;
 
 				case 'success':
-					toast('Link updated!');
+					toast.success('Link updated!');
 					await update();
 					break;
 
 				case 'error':
 					console.log('errori', result.error);
 					if (result.error?.code === '23505') {
-						toast('Error: ID already in use');
+						toast.error('Error: ID already in use');
 						break;
 					}
 
-					toast(result.error?.message ?? result?.error?.detail ?? 'unknown error');
+					toast.error(result.error?.message ?? result?.error?.detail ?? 'unknown error');
 					break;
 
 				default:

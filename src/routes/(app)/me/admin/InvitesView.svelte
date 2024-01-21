@@ -3,11 +3,12 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import type { SignupToken } from '$lib/server/database/schema/auth';
-	import { IconMailPlus, IconTrash } from '@tabler/icons-svelte';
+	import { IconCopy, IconMailPlus, IconTrash } from '@tabler/icons-svelte';
 	import dayjs from 'dayjs';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import { enhance } from '$app/forms';
+	import { toast } from 'svelte-sonner';
 
 	export let invites: SignupToken[];
 </script>
@@ -68,7 +69,25 @@
 			<Table.Body>
 				{#each invites as invite (invite.id)}
 					<Table.Row>
-						<Table.Cell>{invite.id}</Table.Cell>
+						<Table.Cell class="whitespace-nowrap">
+							<span class="inline-flex items-center gap-1">
+								<pre>{invite.id.substring(0, 15)}...</pre>
+
+								<Button
+									size="icon"
+									class="h-6 w-6 p-0"
+									variant="ghost"
+									title="Copy to clipboard"
+									on:click={async () =>
+										navigator.clipboard
+											.writeText(invite.id)
+											.then(() => toast.success(`Copied invite token to clipboard!`))
+											.catch((err) => toast.error(err))}
+								>
+									<IconCopy size={12} />
+								</Button>
+							</span>
+						</Table.Cell>
 						<Table.Cell>{invite.role}</Table.Cell>
 						<Table.Cell>{invite.userId ?? '-'}</Table.Cell>
 						<Table.Cell>{invite.usedAt ? dayjs().to(invite.usedAt) : '-'}</Table.Cell>
