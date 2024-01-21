@@ -1,4 +1,6 @@
-# ![logo](/static/favicon.png) Pieni
+![logo](/static/favicon.png)
+
+# Pieni
 
 > A modern, private, simple URL shortener
 
