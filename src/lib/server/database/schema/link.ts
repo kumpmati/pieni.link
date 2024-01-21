@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
-import { createInsertSchema } from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import { user } from './auth';
@@ -20,3 +20,5 @@ export const linkInsertSchema = createInsertSchema(links, {
 	id: z.string().default(() => nanoid(8)),
 	url: z.string().url()
 });
+
+export const linkUpdateSchema = createSelectSchema(links).partial();
