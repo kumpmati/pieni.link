@@ -62,7 +62,7 @@
 </script>
 
 <svelte:head>
-	<title>Pieni - URL shortener</title>
+	<title>Pieni - The modern, private URL shortener</title>
 	<meta name="description" content="A modern, private, simple URL shortener." />
 	<meta name="keywords" content="URL, shortener, private, link, tiny" />
 	<meta name="author" content="github.com/kumpmati" />
