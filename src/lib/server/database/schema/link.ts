@@ -11,7 +11,7 @@ export const links = pgTable('links', {
 	lastUsed: timestamp('last_used'),
 	userId: varchar('user_id', { length: 15 })
 		.notNull()
-		.references(() => user.id)
+		.references(() => user.id, { onDelete: 'cascade', onUpdate: 'cascade' })
 });
 
 export type Link = typeof links.$inferSelect;

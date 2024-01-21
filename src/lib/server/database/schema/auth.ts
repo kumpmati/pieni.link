@@ -1,4 +1,6 @@
 import { pgTable, bigint, varchar, text, uuid, timestamp } from 'drizzle-orm/pg-core';
+import { createInsertSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 /**
  * @see https://lucia-auth.com/guidebook/drizzle-orm/#postgresql
@@ -13,6 +15,8 @@ export const user = pgTable('auth_user', {
 		.notNull()
 		.default('member')
 });
+
+export type AuthUser = typeof user.$inferSelect;
 
 export const session = pgTable('user_session', {
 	id: varchar('id', { length: 128 }).primaryKey(),
@@ -42,3 +46,9 @@ export const signupToken = pgTable('signup_token', {
 });
 
 export type SignupToken = typeof signupToken.$inferSelect;
+
+export const signupTokenInsertSchema = createInsertSchema(signupToken);
+
+export const createSignupTokenSchema = z.object({
+	role: z.enum(['admin', 'member'])
+});

@@ -146,7 +146,7 @@
 												</AlertDialog.Description>
 											</AlertDialog.Header>
 
-											<AlertDialog.Footer>
+											<AlertDialog.Footer class="gap-2">
 												<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 
 												<form use:enhance class="contents" method="post" action="?/delete">

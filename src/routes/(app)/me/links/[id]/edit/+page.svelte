@@ -107,6 +107,7 @@
 
 					<form method="post" action="?/delete" use:enhance class="flex justify-end gap-2">
 						<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+
 						<Button variant="destructive" type="submit" class="gap-1">
 							<AlertDialog.Action type="button" asChild class="contents">
 								<IconTrash size={16} /> Delete

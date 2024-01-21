@@ -50,6 +50,13 @@
       "when": 1705851653361,
       "tag": "0006_square_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1705858378087,
+      "tag": "0007_worried_vindicator",
+      "breakpoints": true
     }
   ]
 }

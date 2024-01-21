@@ -2,7 +2,10 @@ import { AUTH_TYPE_COOKIE, SIGNUP_TOKEN_COOKIE } from '$lib/server/auth';
 import { GOOGLE_OAUTH_COOKIE } from '$lib/server/auth/google';
 import { auth, googleAuth } from '$lib/server/auth/lucia';
 import { consumeSignupToken } from '$lib/server/auth/signupToken';
+import { db } from '$lib/server/database/index.js';
+import { signupToken } from '$lib/server/database/schema/auth.js';
 import { error, redirect } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 
 export const GET = async ({ locals, url, cookies }) => {
 	const code = url.searchParams.get('code');
@@ -33,6 +36,10 @@ export const GET = async ({ locals, url, cookies }) => {
 		}
 
 		case 'signup': {
+			if (!signupTokenCookie) {
+				error(401, 'no signup token provided');
+			}
+
 			if (user) {
 				// behave as if signing in
 				const session = await auth.createSession({ userId: user.userId, attributes: {} });
@@ -48,6 +55,12 @@ export const GET = async ({ locals, url, cookies }) => {
 					role: await consumeSignupToken(signupTokenCookie)
 				}
 			});
+
+			// update signup token to contain created user's id
+			await db
+				.update(signupToken)
+				.set({ userId: newUser.id })
+				.where(eq(signupToken.id, signupTokenCookie));
 
 			const session = await auth.createSession({ userId: newUser.userId, attributes: {} });
 			locals.auth.setSession(session);

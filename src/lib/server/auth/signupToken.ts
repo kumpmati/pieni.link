@@ -2,13 +2,7 @@ import { and, eq, isNull } from 'drizzle-orm';
 import { db } from '../database';
 import { signupToken } from '../database/schema/auth';
 
-export const consumeSignupToken = async (
-	tokenId: string | undefined
-): Promise<'admin' | 'member'> => {
-	if (!tokenId || tokenId === '') {
-		return 'member';
-	}
-
+export const consumeSignupToken = async (tokenId: string): Promise<'admin' | 'member'> => {
 	const rows = await db
 		.update(signupToken)
 		.set({ usedAt: new Date() })

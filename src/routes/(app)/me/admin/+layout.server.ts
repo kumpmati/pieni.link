@@ -1,5 +1,5 @@
 import { db } from '$lib/server/database/index.js';
-import { user } from '$lib/server/database/schema/auth.js';
+import { signupToken, user } from '$lib/server/database/schema/auth.js';
 import { links } from '$lib/server/database/schema/link.js';
 import { error } from '@sveltejs/kit';
 
@@ -10,10 +10,15 @@ export const load = async ({ parent }) => {
 		error(401, 'unauthorized');
 	}
 
-	const [users, allLinks] = await Promise.all([db.select().from(user), db.select().from(links)]);
+	const [users, allLinks, allInvites] = await Promise.all([
+		db.select().from(user),
+		db.select().from(links),
+		db.select().from(signupToken)
+	]);
 
 	return {
 		users,
-		links: allLinks
+		links: allLinks,
+		invites: allInvites
 	};
 };
