@@ -36,6 +36,20 @@
       "when": 1705837678502,
       "tag": "0004_swift_madame_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1705851496523,
+      "tag": "0005_smooth_drax",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1705851653361,
+      "tag": "0006_square_warlock",
+      "breakpoints": true
     }
   ]
 }

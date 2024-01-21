@@ -4,6 +4,7 @@
 		IconChartHistogram,
 		IconDotsVertical,
 		IconEdit,
+		IconExternalLink,
 		IconLogout,
 		IconTrash
 	} from '@tabler/icons-svelte';
@@ -69,12 +70,23 @@
 							{@const url = new URL(`${PUBLIC_BASEURL}/${link.id}`)}
 							<Table.Row>
 								<Table.Cell>
-									<a href={url.toString()} target="_blank" referrerpolicy="no-referrer">
-										{url.host}{url.pathname}
-									</a>
+									<div class="flex items-center gap-1">
+										<a href="/me/links/{link.id}" class="hover:underline">
+											{link.id}
+										</a>
+
+										<a href={url.toString()} target="_blank" referrerpolicy="no-referrer">
+											<IconExternalLink size={12} />
+										</a>
+									</div>
 								</Table.Cell>
 								<Table.Cell>
-									<a href={link.url} target="_blank" referrerpolicy="no-referrer">
+									<a
+										href={link.url}
+										target="_blank"
+										referrerpolicy="no-referrer"
+										class="hover:underline"
+									>
 										{link.url}
 									</a>
 								</Table.Cell>

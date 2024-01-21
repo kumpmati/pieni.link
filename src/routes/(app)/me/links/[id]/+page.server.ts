@@ -1,8 +1,9 @@
 import { db } from '$lib/server/database';
 import { links } from '$lib/server/database/schema/link';
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { linkVisit } from '$lib/server/database/schema/analytics';
 
 export const load = (async ({ parent, params }) => {
 	const { session } = await parent();
@@ -21,6 +22,11 @@ export const load = (async ({ parent, params }) => {
 	}
 
 	return {
-		link
+		link,
+		visits: db
+			.select()
+			.from(linkVisit)
+			.where(eq(linkVisit.linkId, link.id))
+			.orderBy(desc(linkVisit.timestamp))
 	};
 }) satisfies PageServerLoad;

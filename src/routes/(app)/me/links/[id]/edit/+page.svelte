@@ -1,12 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconChevronLeft, IconDeviceFloppy, IconLoader } from '@tabler/icons-svelte';
+	import { IconChevronLeft, IconDeviceFloppy, IconLoader, IconTrash } from '@tabler/icons-svelte';
 	import type { PageData } from './$types';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { enhance } from '$app/forms';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
+	import * as Card from '$lib/components/ui/card';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 
 	export let data: PageData;
 
@@ -40,30 +42,68 @@
 	};
 </script>
 
-<div class="flex flex-col gap-2">
-	<Button href="/me" variant="link" class="w-fit gap-1 pl-2">
-		<IconChevronLeft size={16} /> Back to profile
-	</Button>
+<div class="flex w-full flex-col gap-2">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Edit link</Card.Title>
+			<Card.Description>Update the link's information</Card.Description>
+		</Card.Header>
 
-	<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight">Edit link</h1>
+		<Card.Content>
+			<form method="post" use:enhance={handleSubmit} action="?/update" class="flex flex-col gap-4">
+				<Label>
+					ID
+					<Input required name="id" value={data.link.id} class="mt-1" />
+				</Label>
 
-	<form method="post" use:enhance={handleSubmit} class="flex flex-col gap-2">
-		<Label>
-			ID
-			<Input required name="id" value={data.link.id} />
-		</Label>
+				<Label>
+					URL
+					<Input required name="url" value={data.link.url} type="url" class="mt-1" />
+				</Label>
 
-		<Label>
-			URL
-			<Input required name="url" value={data.link.url} type="url" />
-		</Label>
+				<Button type="submit" class="w-fit gap-1" disabled={loading}>
+					{#if loading}
+						<IconLoader size={16} class="animate-spin" /> Saving changes
+					{:else}
+						<IconDeviceFloppy size={16} /> Save changes
+					{/if}
+				</Button>
+			</form>
+		</Card.Content>
+	</Card.Root>
 
-		<Button type="submit" class="ml-auto w-fit" disabled={loading}>
-			{#if loading}
-				<IconLoader size={16} class="animate-spin" /> Saving changes
-			{:else}
-				<IconDeviceFloppy size={16} /> Save changes
-			{/if}
-		</Button>
-	</form>
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Danger zone</Card.Title>
+			<Card.Description>Make sure you know what you're doing!</Card.Description>
+		</Card.Header>
+
+		<Card.Content>
+			<AlertDialog.Root>
+				<AlertDialog.Trigger>
+					<Button type="button" variant="destructive" class="gap-1">
+						<IconTrash size={16} /> Delete link
+					</Button>
+				</AlertDialog.Trigger>
+
+				<AlertDialog.Content>
+					<AlertDialog.Header>
+						<AlertDialog.Title>Are you sure?</AlertDialog.Title>
+						<AlertDialog.Description>
+							This will permanently delete the link and all associated analytics.
+						</AlertDialog.Description>
+					</AlertDialog.Header>
+
+					<form method="post" action="?/delete" use:enhance class="flex justify-end gap-2">
+						<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+						<Button variant="destructive" type="submit" class="gap-1">
+							<AlertDialog.Action type="button" asChild class="contents">
+								<IconTrash size={16} /> Delete
+							</AlertDialog.Action>
+						</Button>
+					</form>
+				</AlertDialog.Content>
+			</AlertDialog.Root>
+		</Card.Content>
+	</Card.Root>
 </div>
