@@ -75,7 +75,7 @@
 				name="url"
 				type="url"
 				required
-				placeholder="Enter a long link here"
+				placeholder="Paste a long link here to shorten..."
 				on:paste={handleOnPaste}
 				disabled={loading}
 				class="text-md rounded-r-none p-5"

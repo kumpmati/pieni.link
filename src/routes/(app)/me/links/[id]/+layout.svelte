@@ -8,7 +8,7 @@
 <div class="relative flex w-full flex-row gap-2">
 	<div class="absolute hidden -translate-x-full flex-col gap-1 pr-4 xl:flex">
 		<Button href="/me" variant="ghost" class="justify-start gap-2">
-			<IconChevronLeft size={16} /> Back to profile
+			<IconChevronLeft size={16} /> Profile
 		</Button>
 
 		<Separator class="mb-2" />

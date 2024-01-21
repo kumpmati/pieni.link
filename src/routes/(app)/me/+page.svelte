@@ -6,6 +6,7 @@
 		IconEdit,
 		IconExternalLink,
 		IconLogout,
+		IconSettings,
 		IconTrash
 	} from '@tabler/icons-svelte';
 	import type { PageData } from './$types';
@@ -23,9 +24,24 @@
 	export let data: PageData;
 </script>
 
+<svelte:head>
+	<title>Me</title>
+</svelte:head>
+
 <div class="mt-10 flex flex-col gap-2">
 	<div class="flex items-center justify-between">
-		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight">Profile</h1>
+		<div class="mb-4 mt-5 flex flex-row items-center gap-4">
+			<img
+				class="h-10 w-10 rounded-full"
+				src={data.session?.user.image}
+				alt={data.session?.user.name}
+			/>
+
+			<span>
+				<h1>{data.session?.user.name}</h1>
+				<small class="text-muted-foreground">{data.session?.user.role}</small>
+			</span>
+		</div>
 
 		<Button
 			variant="destructive"
@@ -38,14 +54,12 @@
 		</Button>
 	</div>
 
-	<Card.Root>
-		<Card.Header>
-			<Card.Title>{data.session?.user.name}</Card.Title>
-		</Card.Header>
-		<Card.Content class="flex flex-row">
-			<img class="rounded-full" src={data.session?.user.image} alt={data.session?.user.name} />
-		</Card.Content>
-	</Card.Root>
+	{#if data.session?.user.role === 'admin'}
+		<Button href="/me/admin" class="w-fit gap-2" variant="outline">
+			<IconSettings size={16} />
+			Admin Panel
+		</Button>
+	{/if}
 
 	<Card.Root>
 		<Card.Header>
@@ -59,8 +73,8 @@
 						<Table.Row>
 							<Table.Head>Shortened link</Table.Head>
 							<Table.Head>Original link</Table.Head>
+							<Table.Head>Last Used</Table.Head>
 							<Table.Head>Created</Table.Head>
-							<Table.Head>Last used</Table.Head>
 							<Table.Head />
 						</Table.Row>
 					</Table.Header>
@@ -91,10 +105,10 @@
 									</a>
 								</Table.Cell>
 								<Table.Cell>
-									{link.createdAt.toLocaleString()}
+									{link.lastUsed ? dayjs().to(link.lastUsed) : '-'}
 								</Table.Cell>
 								<Table.Cell>
-									{link.lastUsed ? dayjs().to(link.lastUsed) : '-'}
+									{link.createdAt.toLocaleString()}
 								</Table.Cell>
 								<Table.Cell class="text-right">
 									<AlertDialog.Root>

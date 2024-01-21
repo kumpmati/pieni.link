@@ -1,5 +1,6 @@
+import { RESERVED_LINK_IDS } from '$lib/server/constants';
 import { db } from '$lib/server/database/index.js';
-import { linkUpdateSchema, links } from '$lib/server/database/schema/link.js';
+import { linkUpdateSchema, links, type Link } from '$lib/server/database/schema/link.js';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
@@ -12,13 +13,26 @@ export const actions = {
 			error(400, body.error.message);
 		}
 
-		const [updated] = await db
-			.update(links)
-			.set(body.data)
-			.where(eq(links.id, params.id))
-			.returning();
-		if (!updated) {
-			error(500, 'failed to update link');
+		if (body.data.id && RESERVED_LINK_IDS.includes(body.data.id)) {
+			error(400, 'cannot use a reserved url as an ID');
+		}
+
+		let updated: Link;
+
+		try {
+			const [row] = await db
+				.update(links)
+				.set(body.data)
+				.where(eq(links.id, params.id))
+				.returning();
+
+			if (!row) {
+				throw new Error('failed to update link');
+			}
+
+			updated = row;
+		} catch (err) {
+			error(500, err as Error);
 		}
 
 		redirect(301, `/me/links/${updated.id}/edit`);

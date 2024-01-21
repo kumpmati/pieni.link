@@ -1,6 +1,6 @@
 import { db } from '$lib/server/database';
 import { links } from '$lib/server/database/schema/link';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
@@ -12,7 +12,11 @@ export const load = (async ({ parent }) => {
 	}
 
 	return {
-		links: await db.select().from(links).where(eq(links.userId, session?.user.id))
+		links: await db
+			.select()
+			.from(links)
+			.where(eq(links.userId, session?.user.id))
+			.orderBy(desc(links.createdAt))
 	};
 }) satisfies PageServerLoad;
 

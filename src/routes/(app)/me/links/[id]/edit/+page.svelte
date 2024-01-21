@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconChevronLeft, IconDeviceFloppy, IconLoader, IconTrash } from '@tabler/icons-svelte';
+	import { IconDeviceFloppy, IconLoader, IconTrash } from '@tabler/icons-svelte';
 	import type { PageData } from './$types';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { enhance } from '$app/forms';
@@ -21,14 +21,22 @@
 			switch (result.type) {
 				case 'redirect':
 					toast('Link updated!');
+					await update();
 					break;
 
 				case 'success':
 					toast('Link updated!');
+					await update();
 					break;
 
 				case 'error':
-					toast(result.error?.message ?? result.error);
+					console.log('errori', result.error);
+					if (result.error?.code === '23505') {
+						toast('Error: ID already in use');
+						break;
+					}
+
+					toast(result.error?.message ?? result?.error?.detail ?? 'unknown error');
 					break;
 
 				default:
@@ -36,11 +44,14 @@
 					break;
 			}
 
-			await update();
 			loading = false;
 		};
 	};
 </script>
+
+<svelte:head>
+	<title>Edit link</title>
+</svelte:head>
 
 <div class="flex w-full flex-col gap-2">
 	<Card.Root>
