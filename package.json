@@ -49,6 +49,7 @@
 		"@tabler/icons-svelte": "^2.46.0",
 		"bits-ui": "^0.15.1",
 		"clsx": "^2.1.0",
+		"dayjs": "^1.11.10",
 		"dotenv": "^16.3.2",
 		"drizzle-zod": "^0.5.1",
 		"lucia": "^2.7.6",

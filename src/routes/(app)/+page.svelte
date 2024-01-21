@@ -67,7 +67,7 @@
 	use:enhance={handleSubmit}
 	method="post"
 	action="?/create"
-	class="flex w-full max-w-md gap-2"
+	class="mx-auto flex h-full w-full max-w-md items-center justify-center gap-2"
 >
 	{#if !shortenedLink}
 		<Input
