@@ -1,38 +1,37 @@
-# create-svelte
+# ![logo](/static/favicon.png) Pieni
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+> A modern, private, simple URL shortener
 
-## Creating a project
+## Yet another URL shortener
 
-If you're seeing this, you've probably already done this step. Congrats!
+Pieni.link is a simple sideproject, originally built to test out the development speed with the following stack: [SvelteKit](https://kit.svelte.dev/), [Drizzle ORM](https://orm.drizzle.team/), [Lucia](https://lucia-auth.com/) and [shadcn-svelte](https://www.shadcn-svelte.com/).
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+The website itself is hosted on [Netlify](https://app.netlify.com/), and uses [Neon](https://neon.tech/) to host the PostgreSQL database.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Features
 
-## Developing
+- [x] URL shortener (give long URL, get short URL in return)
+  - [x] Custom URLs
+  - [x] Per-link usage tracking
+  - [ ] Password-protected links (TODO)
+- [x] User accounts with roles (admin / member)
+  - [x] New users are invite-only (managed by admin users)
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Self-hosting
 
-```bash
-npm run dev
+To self-host Pieni, there are two paths:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Serverless
 
-## Building
+You need the following:
 
-To create a production version of your app:
+- [ ] A service that supports hosting SvelteKit projects (Vercel / Netlify / AWS / etc.)
+- [ ] A PostgreSQL database (Neon recommended)
+- [ ] Google OAuth credentials
 
-```bash
-npm run build
-```
+### Using Docker
 
-You can preview the production build with `npm run preview`.
+- [ ] A server or service that can run Docker (AWS / DigitalOcean / etc.)
+- [ ] Google OAuth credentials
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+TODO: Guides for hosting + Docker setup
