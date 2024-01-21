@@ -14,8 +14,9 @@ The website itself is hosted on [Netlify](https://app.netlify.com/), and uses [N
 
 - [x] URL shortener (give long URL, get short URL in return)
   - [x] Custom URLs
-  - [x] Per-link usage tracking
+  - [x] Basic per-link usage tracking
   - [ ] Password-protected links (TODO)
+  - [ ] Temporary links (TODO)
 - [x] User accounts with roles (admin / member)
   - [x] New users are invite-only (managed by admin users)
 
