@@ -78,6 +78,7 @@
 	>
 		{#if !shortenedLink}
 			<Input
+				autofocus
 				name="url"
 				type="url"
 				required
