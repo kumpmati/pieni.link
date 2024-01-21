@@ -10,7 +10,7 @@
 	import LinksView from './LinksView.svelte';
 	import InvitesView from './InvitesView.svelte';
 	import { page } from '$app/stores';
-	import { goto, pushState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 
 	dayjs.extend(relativeTime);
@@ -22,7 +22,7 @@
 	<title>Admin panel</title>
 </svelte:head>
 
-<div class="mt-10 flex flex-col gap-2">
+<div class="mt-14 flex flex-col gap-2">
 	<Tabs.Root
 		value={$page.url.searchParams.get('view') ?? ''}
 		onValueChange={(val) => {
