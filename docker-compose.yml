@@ -10,8 +10,15 @@ services:
       target: deploy-node
     ports:
       - 3000:3000
-    env_file:
-      - .env
+    environment:
+      # the URL where pieni is hosted (without trailing /)
+      - PUBLIC_BASEURL=
+
+      # match credentials to database credentials below
+      - DATABASE_URL=postgresql://pieni:CHANGEME@db/pieni?sslmode=require
+
+      - GOOGLE_OAUTH_ID=
+      - GOOGLE_OAUTH_SECRET=
 
   db:
     container_name: pieni-db
@@ -20,7 +27,7 @@ services:
     environment:
       POSTGRES_DB: pieni
       POSTGRES_USER: pieni
-      POSTGRES_PASSWORD: CHANGEME
+      POSTGRES_PASSWORD: CHANGEME # change me
     volumes:
       - pieni_db:/var/lib/postgresql/data
 
