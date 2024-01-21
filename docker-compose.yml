@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  web:
+    container_name: pieni-web
+    image: node:18-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deploy-node
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+
+  db:
+    container_name: pieni-db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: pieni
+      POSTGRES_USER: pieni
+      POSTGRES_PASSWORD: CHANGEME
+    volumes:
+      - pieni_db:/var/lib/postgresql/data
+
+volumes:
+  pieni_db: {}

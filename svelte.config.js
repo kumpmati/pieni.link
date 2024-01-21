@@ -1,4 +1,7 @@
 import adapter from '@sveltejs/adapter-auto';
+// replace above line with this when running using Docker
+// import adapter from '@sveltejs/adapter-node';
+
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
