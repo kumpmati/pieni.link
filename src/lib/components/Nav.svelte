@@ -9,7 +9,7 @@
 	export let session: Session | null;
 </script>
 
-<nav class="flex w-full flex-row items-center justify-between p-2">
+<nav class="absolute flex w-full flex-row items-center justify-between p-2">
 	<a href="/" class="flex flex-row items-center gap-2 text-lg">
 		<Logo size={32} /> Pieni
 	</a>
