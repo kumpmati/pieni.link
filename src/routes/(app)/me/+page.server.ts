@@ -2,7 +2,8 @@ import { db } from '$lib/server/database';
 import { links } from '$lib/server/database/schema/link';
 import { desc, eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import { user } from '$lib/server/database/schema/auth';
 
 export const load = (async ({ parent }) => {
 	const { session } = await parent();
@@ -21,7 +22,7 @@ export const load = (async ({ parent }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	delete: async ({ locals, request }) => {
+	delete_link: async ({ locals, request }) => {
 		const id = (await request.formData()).get('id')?.toString() ?? null;
 
 		if (!id) {
@@ -33,5 +34,17 @@ export const actions = {
 		}
 
 		await db.delete(links).where(eq(links.id, id));
+	},
+
+	delete_account: async ({ locals }) => {
+		const session = await locals.auth.validate();
+		if (!session) {
+			error(401, 'unauthorized');
+		}
+
+		await db.delete(user).where(eq(user.id, session.user.id));
+		locals.auth.invalidate();
+
+		redirect(302, '/');
 	}
 };

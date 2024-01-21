@@ -22,7 +22,7 @@ export const session = pgTable('user_session', {
 	id: varchar('id', { length: 128 }).primaryKey(),
 	userId: varchar('user_id', { length: 15 })
 		.notNull()
-		.references(() => user.id),
+		.references(() => user.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
 	activeExpires: bigint('active_expires', { mode: 'number' }).notNull(),
 	idleExpires: bigint('idle_expires', { mode: 'number' }).notNull()
 });
@@ -31,7 +31,7 @@ export const key = pgTable('user_key', {
 	id: varchar('id', { length: 255 }).primaryKey(),
 	userId: varchar('user_id', { length: 15 })
 		.notNull()
-		.references(() => user.id),
+		.references(() => user.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
 	hashedPassword: varchar('hashed_password', { length: 255 })
 });
 
@@ -42,7 +42,10 @@ export const signupToken = pgTable('signup_token', {
 		.default('member'),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	usedAt: timestamp('used_at'),
-	userId: varchar('user_id', { length: 15 }).references(() => user.id)
+	userId: varchar('user_id', { length: 15 }).references(() => user.id, {
+		onUpdate: 'cascade',
+		onDelete: 'cascade'
+	})
 });
 
 export type SignupToken = typeof signupToken.$inferSelect;
