@@ -13,6 +13,7 @@
 		"format": "prettier --write .",
 		"migrate:generate": "drizzle-kit generate:pg",
 		"migrate:latest": "npx tsx src/migrate.ts",
+		"migrate-start": "npm run migrate:latest && node build",
 		"studio": "drizzle-kit studio"
 	},
 	"devDependencies": {
