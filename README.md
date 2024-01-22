@@ -65,4 +65,5 @@ Run the development server
 
 ```bash
 npm run dev
+# navigate to http://localhost:5173
 ```
