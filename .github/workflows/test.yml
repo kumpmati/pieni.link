@@ -7,6 +7,11 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_BASEURL: ${{ secrets.PUBLIC_BASEURL }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      GOOGLE_OAUTH_ID: ${{ secrets.GOOGLE_OAUTH_ID }}
+      GOOGLE_OAUTH_SECRET: ${{ secrets.GOOGLE_OAUTH_SECRET }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
