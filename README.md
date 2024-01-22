@@ -44,7 +44,7 @@ TODO: Guides for hosting + Docker setup
 Prerequisites:
 
 - Git
-- Node.js (`v20.x` or above)
+- Node.js (`20` or above)
 - PostgreSQL (`15`)
 
 ### Setup
