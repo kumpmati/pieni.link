@@ -20,9 +20,17 @@ The website itself is hosted on [Netlify](https://app.netlify.com/), and uses [N
 - [x] User accounts with roles (admin / member)
   - [x] New users are invite-only (managed by admin users)
 
-## Self-hosting
+## Deployment
 
-To self-host Pieni, there are two paths:
+There are two ways to deploy Pieni yourself:
+
+### Using Docker
+
+- [ ] A server or service that can run Docker (AWS / DigitalOcean / etc.)
+- [ ] Google OAuth credentials
+
+1. Copy the contents of `.env.example` to a file called `.env`, then fill all the environment variables according to the comments in the file.
+2. Run `docker-compose up --build -d`
 
 ### Serverless
 
@@ -31,13 +39,6 @@ You need the following:
 - [ ] A service that supports hosting SvelteKit projects (Vercel / Netlify / AWS / etc.)
 - [ ] A PostgreSQL database (Neon recommended)
 - [ ] Google OAuth credentials
-
-### Using Docker
-
-- [ ] A server or service that can run Docker (AWS / DigitalOcean / etc.)
-- [ ] Google OAuth credentials
-
-TODO: Guides for hosting + Docker setup
 
 ## Development
 
@@ -55,7 +56,7 @@ Install dependencies
 npm install
 ```
 
-Copy the contents of `.env.example` to a file called `.env`, then fill all the environment variables
+Copy the contents of `.env.example` to a file called `.env`, then fill all the environment variables according to the comments in the file.
 
 ```bash
 cp .env.example .env
