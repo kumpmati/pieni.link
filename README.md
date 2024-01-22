@@ -26,8 +26,8 @@ There are two ways to deploy Pieni yourself:
 
 ### Using Docker
 
-- [ ] A server or service that can run Docker (AWS / DigitalOcean / etc.)
-- [ ] Google OAuth credentials
+- [x] A server or service that can run Docker (AWS / DigitalOcean / etc.)
+- [x] Google OAuth credentials
 
 1. Copy the contents of `.env.example` to a file called `.env`, then fill all the environment variables according to the comments in the file.
 2. Run `docker compose up --build -d`
@@ -36,9 +36,9 @@ There are two ways to deploy Pieni yourself:
 
 You need the following:
 
-- [ ] A service that supports hosting SvelteKit projects (Vercel / Netlify / AWS / etc.)
-- [ ] An external PostgreSQL database (example: Neon)
-- [ ] Google OAuth credentials
+- [x] A service that supports hosting SvelteKit projects (Vercel / Netlify / AWS / etc.)
+- [x] An external PostgreSQL database (example: Neon)
+- [x] Google OAuth credentials
 
 TODO: netlify / vercel guide
 
