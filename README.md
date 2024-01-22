@@ -8,7 +8,7 @@
 
 Pieni.link is a simple sideproject, originally built to test out the development speed with the following stack: [SvelteKit](https://kit.svelte.dev/), [Drizzle ORM](https://orm.drizzle.team/), [Lucia](https://lucia-auth.com/) and [shadcn-svelte](https://www.shadcn-svelte.com/).
 
-The website itself is hosted on [Netlify](https://app.netlify.com/), and uses [Neon](https://neon.tech/) to host the PostgreSQL database.
+The [pieni.link](https://pieni.link) website is hosted on [Netlify](https://app.netlify.com/), and uses [Neon](https://neon.tech/) for the PostgreSQL database.
 
 ## Features
 
@@ -37,8 +37,10 @@ There are two ways to deploy Pieni yourself:
 You need the following:
 
 - [ ] A service that supports hosting SvelteKit projects (Vercel / Netlify / AWS / etc.)
-- [ ] A PostgreSQL database (Neon recommended)
+- [ ] An external PostgreSQL database (example: Neon)
 - [ ] Google OAuth credentials
+
+TODO: netlify / vercel guide
 
 ## Development
 
