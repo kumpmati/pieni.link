@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY . .
 RUN npm run build
 RUN npm prune --production
 
-FROM node:18-alpine AS deploy-node
+FROM node:20-alpine AS deploy-node
 WORKDIR /app
 
 COPY --from=builder /app/build build/
