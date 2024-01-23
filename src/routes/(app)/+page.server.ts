@@ -1,6 +1,6 @@
 import { RESERVED_LINK_IDS } from '$lib/server/constants.js';
-import { db } from '$lib/server/database/index.js';
-import { linkInsertSchema, links } from '$lib/server/database/schema/link.js';
+import { insertLink } from '$lib/server/database/handlers/links.js';
+import { linkInsertSchema } from '$lib/server/database/schema/link.js';
 import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
@@ -22,12 +22,6 @@ export const actions = {
 			error(400, 'cannot use a reserved url as an ID');
 		}
 
-		const result = await db.insert(links).values(body.data).returning();
-
-		if (result.length === 0) {
-			error(500, 'failed to create link');
-		}
-
-		return result[0];
+		return await insertLink(body.data);
 	}
 };

@@ -21,4 +21,8 @@ export const linkInsertSchema = createInsertSchema(links, {
 	url: z.string().url()
 });
 
+export type LinkInsert = z.infer<typeof linkInsertSchema>;
+
 export const linkUpdateSchema = createSelectSchema(links).partial();
+
+export type LinkUpdate = z.infer<typeof linkUpdateSchema>;

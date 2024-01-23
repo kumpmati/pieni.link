@@ -1,8 +1,7 @@
-import { db } from '$lib/server/database/index.js';
-import { signupToken, user } from '$lib/server/database/schema/auth.js';
-import { links } from '$lib/server/database/schema/link.js';
+import { getAllLinks } from '$lib/server/database/handlers/links.js';
+import { getAllSignupTokens } from '$lib/server/database/handlers/signupToken.js';
+import { getAllUsers } from '$lib/server/database/handlers/user.js';
 import { error } from '@sveltejs/kit';
-import { desc } from 'drizzle-orm';
 
 export const load = async ({ parent }) => {
 	const { session } = await parent();
@@ -12,9 +11,9 @@ export const load = async ({ parent }) => {
 	}
 
 	const [users, allLinks, allInvites] = await Promise.all([
-		db.select().from(user).orderBy(desc(user.name)),
-		db.select().from(links).orderBy(desc(links.createdAt)),
-		db.select().from(signupToken).orderBy(desc(signupToken.createdAt))
+		getAllUsers(),
+		getAllLinks(),
+		getAllSignupTokens()
 	]);
 
 	return {

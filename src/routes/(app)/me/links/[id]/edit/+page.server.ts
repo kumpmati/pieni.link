@@ -1,4 +1,5 @@
 import { RESERVED_LINK_IDS } from '$lib/server/constants';
+import { updateLink } from '$lib/server/database/handlers/links.js';
 import { db } from '$lib/server/database/index.js';
 import { linkUpdateSchema, links, type Link } from '$lib/server/database/schema/link.js';
 import { error, redirect } from '@sveltejs/kit';
@@ -20,17 +21,7 @@ export const actions = {
 		let updated: Link;
 
 		try {
-			const [row] = await db
-				.update(links)
-				.set(body.data)
-				.where(eq(links.id, params.id))
-				.returning();
-
-			if (!row) {
-				throw new Error('failed to update link');
-			}
-
-			updated = row;
+			updated = await updateLink(params.id, body.data);
 		} catch (err) {
 			error(500, err as Error);
 		}

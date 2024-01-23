@@ -1,9 +1,8 @@
-import { db } from '$lib/server/database';
-import { links } from '$lib/server/database/schema/link';
-import { desc, eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error, redirect } from '@sveltejs/kit';
-import { user } from '$lib/server/database/schema/auth';
+import { deleteLink, getAllUserLinks } from '$lib/server/database/handlers/links';
+import { getAllLinkStatistics } from '$lib/server/database/handlers/linkVisit';
+import { deleteUser } from '$lib/server/database/handlers/user';
 
 export const load = (async ({ parent }) => {
 	const { session } = await parent();
@@ -13,11 +12,8 @@ export const load = (async ({ parent }) => {
 	}
 
 	return {
-		links: await db
-			.select()
-			.from(links)
-			.where(eq(links.userId, session?.user.id))
-			.orderBy(desc(links.createdAt))
+		links: await getAllUserLinks(session.user.id),
+		stats: await getAllLinkStatistics(session.user.id)
 	};
 }) satisfies PageServerLoad;
 
@@ -33,7 +29,7 @@ export const actions = {
 			error(401, 'unauthorized');
 		}
 
-		await db.delete(links).where(eq(links.id, id));
+		await deleteLink(id);
 	},
 
 	delete_account: async ({ locals }) => {
@@ -42,7 +38,7 @@ export const actions = {
 			error(401, 'unauthorized');
 		}
 
-		await db.delete(user).where(eq(user.id, session.user.id));
+		await deleteUser(session.user.id);
 		locals.auth.invalidate();
 
 		redirect(302, '/');

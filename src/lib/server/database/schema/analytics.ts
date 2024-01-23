@@ -11,3 +11,5 @@ export const linkVisit = pgTable('link_visit', {
 	userAgent: text('user_agent').notNull().default(''),
 	timestamp: timestamp('timestamp').notNull().defaultNow()
 });
+
+export type LinkVisit = typeof linkVisit.$inferSelect;
