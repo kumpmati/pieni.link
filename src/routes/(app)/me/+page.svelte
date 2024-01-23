@@ -5,6 +5,8 @@
 	import type { PageData } from './$types';
 	import LinksTable from './LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
+	import StatisticsOverview from './StatisticsOverview.svelte';
+	import Separator from '$lib/components/ui/separator/separator.svelte';
 
 	export let data: PageData;
 </script>
@@ -48,6 +50,7 @@
 		{/if}
 	</div>
 
+	<StatisticsOverview stats={data.stats} />
 	<LinksTable links={data.links} />
 
 	<Card.Root>

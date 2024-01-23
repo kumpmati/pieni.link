@@ -18,7 +18,7 @@
 		<Card.Content class="visits grid" style="grid-template-columns: repeat(3, 1fr)">
 			<small class="text-muted-foreground">
 				Last 24 hours
-				<h1 class="text-4xl font-bold text-primary">
+				<h1 class="text-4xl font-extrabold text-primary">
 					{#await data.visits}
 						...
 					{:then visits}
@@ -29,7 +29,7 @@
 
 			<small class="text-muted-foreground">
 				Last 7 days
-				<h1 class="text-4xl font-bold text-primary">
+				<h1 class="text-4xl font-extrabold text-primary">
 					{#await data.visits}
 						...
 					{:then visits}
@@ -40,7 +40,7 @@
 
 			<small class="text-muted-foreground">
 				All time
-				<h1 class="text-4xl font-bold text-primary">
+				<h1 class="text-4xl font-extrabold text-primary">
 					{#await data.visits}
 						...
 					{:then visits}
