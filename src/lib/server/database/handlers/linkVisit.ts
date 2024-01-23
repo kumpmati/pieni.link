@@ -56,12 +56,17 @@ export type LinkStatistics = {
  * @returns
  */
 export const insertLinkVisitFromRequest = async (linkId: Link['id'], request: Request) => {
-	const result = await db.insert(linkVisit).values({
+	const url = new URL(request.url);
+
+	const referrer =
+		url.searchParams.get('ref') ??
+		request.headers.get('referrer') ??
+		request.headers.get('referer') ??
+		request.referrer;
+
+	await db.insert(linkVisit).values({
 		linkId,
-		referrer:
-			request.headers.get('referrer') ?? request.headers.get('referer') ?? request.referrer ?? '',
+		referrer,
 		userAgent: request.headers.get('user-agent') ?? ''
 	});
-
-	return result.rowCount === 1;
 };
