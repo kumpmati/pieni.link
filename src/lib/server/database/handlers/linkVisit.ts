@@ -58,7 +58,8 @@ export type LinkStatistics = {
 export const insertLinkVisitFromRequest = async (linkId: Link['id'], request: Request) => {
 	const result = await db.insert(linkVisit).values({
 		linkId,
-		referrer: request.headers.get('referrer') ?? request.headers.get('referer') ?? '',
+		referrer:
+			request.headers.get('referrer') ?? request.headers.get('referer') ?? request.referrer ?? '',
 		userAgent: request.headers.get('user-agent') ?? ''
 	});
 
