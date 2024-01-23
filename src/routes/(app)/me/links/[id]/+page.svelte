@@ -64,7 +64,7 @@
 				<Table.Root>
 					<Table.Header>
 						<Table.Head>Time</Table.Head>
-						<Table.Head>Host</Table.Head>
+						<Table.Head>Referrer</Table.Head>
 						<Table.Head>User-Agent</Table.Head>
 					</Table.Header>
 
@@ -74,7 +74,7 @@
 								<Table.Cell class="whitespace-nowrap" title={visit.timestamp.toISOString()}>
 									{dayjs().to(visit.timestamp)}
 								</Table.Cell>
-								<Table.Cell>{visit.host}</Table.Cell>
+								<Table.Cell>{visit.referrer}</Table.Cell>
 								<Table.Cell>{visit.userAgent}</Table.Cell>
 							</Table.Row>
 						{:else}

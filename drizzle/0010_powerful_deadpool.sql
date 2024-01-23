@@ -1,0 +1,1 @@
+ALTER TABLE "link_visit" RENAME COLUMN "host" TO "referrer";

@@ -9,7 +9,7 @@ export const linkVisit = pgTable(
 			.notNull()
 			.references(() => links.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
 
-		host: text('host').notNull().default(''),
+		referrer: text('referrer').notNull().default(''),
 		userAgent: text('user_agent').notNull().default(''),
 		timestamp: timestamp('timestamp').notNull().defaultNow()
 	},
