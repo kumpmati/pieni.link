@@ -52,14 +52,13 @@ export type LinkStatistics = {
 /**
  * Creates a new link visit entry, returning true if the visit was successful
  * @param linkId
- * @param host
- * @param userAgent
+ * @param request
  * @returns
  */
 export const insertLinkVisitFromRequest = async (linkId: Link['id'], request: Request) => {
 	const result = await db.insert(linkVisit).values({
 		linkId,
-		host: request.headers.get('host') ?? '',
+		referrer: request.headers.get('referrer') ?? request.headers.get('referer') ?? '',
 		userAgent: request.headers.get('user-agent') ?? ''
 	});
 
