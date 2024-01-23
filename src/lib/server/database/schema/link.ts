@@ -25,7 +25,11 @@ export const links = pgTable(
 export type Link = typeof links.$inferSelect;
 
 export const linkInsertSchema = createInsertSchema(links, {
-	id: z.string().default(() => nanoid(8)),
+	id: z
+		.string()
+		.min(1)
+		.regex(/^[\w-]+$/g)
+		.default(() => nanoid(8)),
 	url: z.string().url()
 });
 
