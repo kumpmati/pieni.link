@@ -2,7 +2,7 @@
 
 # Pieni
 
-> A modern, private, simple URL shortener
+> A modern, minimal URL shortener
 
 ## Yet another URL shortener
 
