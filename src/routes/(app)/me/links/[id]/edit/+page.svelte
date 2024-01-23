@@ -9,10 +9,13 @@
 	import { toast } from 'svelte-sonner';
 	import * as Card from '$lib/components/ui/card';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import { Switch } from '$lib/components/ui/switch';
+	import DatePicker from '$lib/components/DatePicker.svelte';
 
 	export let data: PageData;
 
 	let loading = false;
+	let expires = !!data.link.validStart;
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -30,7 +33,6 @@
 					break;
 
 				case 'error':
-					console.log('errori', result.error);
 					if (result.error?.code === '23505') {
 						toast.error('Error: ID already in use');
 						break;
@@ -70,6 +72,11 @@
 				<Label>
 					URL
 					<Input required name="url" value={data.link.url} type="url" class="mt-1" />
+				</Label>
+
+				<Label>
+					Expires after
+					<DatePicker value={data.link.validEnd} />
 				</Label>
 
 				<Button type="submit" class="w-fit gap-1" disabled={loading}>

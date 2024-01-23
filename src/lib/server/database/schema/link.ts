@@ -11,6 +11,10 @@ export const links = pgTable(
 		url: text('url').notNull(),
 		createdAt: timestamp('created_at').notNull().defaultNow(),
 		lastUsed: timestamp('last_used'),
+
+		validStart: timestamp('valid_start'),
+		validEnd: timestamp('valid_end'),
+
 		userId: varchar('user_id', { length: 15 })
 			.notNull()
 			.references(() => user.id, { onDelete: 'cascade', onUpdate: 'cascade' })
@@ -18,6 +22,10 @@ export const links = pgTable(
 	(self) => ({
 		createdAtIdx: index('links_created_at_index').on(self.createdAt).desc(),
 		lastUsedIdx: index('links_last_used_index').on(self.lastUsed).desc(),
+
+		validStartIdx: index('links_valid_start_index').on(self.validStart),
+		validEndIdx: index('links_valid_end_index').on(self.validEnd),
+
 		userIdIdx: index('links_user_id_index').on(self.userId)
 	})
 );
