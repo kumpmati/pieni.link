@@ -32,10 +32,17 @@
 
 	<Card.Root>
 		<Card.Content class="mt-5 flex flex-col overflow-hidden text-sm text-muted-foreground">
-			<span class="flex items-center justify-between"> Most visited <IconStar size={18} /></span>
-			<span class="overflow-ellipsis whitespace-nowrap text-3xl font-extrabold text-primary">
-				{stats.mostVisited?.linkId ?? '-'}
+			<span class="flex items-center justify-between">
+				Most visited ({stats.mostVisited?.count ?? '-'})
+				<IconStar size={18} />
 			</span>
+
+			<a
+				href="/me/links/{stats.mostVisited?.linkId}"
+				class="overflow-ellipsis whitespace-nowrap text-3xl font-extrabold text-primary hover:underline"
+			>
+				{stats.mostVisited?.linkId ?? '-'}
+			</a>
 		</Card.Content>
 	</Card.Root>
 </div>

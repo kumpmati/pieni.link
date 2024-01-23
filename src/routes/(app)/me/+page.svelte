@@ -50,8 +50,6 @@
 		{/if}
 	</div>
 
-	<Separator class="mb-5" />
-
 	<StatisticsOverview stats={data.stats} />
 	<LinksTable links={data.links} />
 
