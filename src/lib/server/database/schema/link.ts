@@ -12,8 +12,7 @@ export const links = pgTable(
 		createdAt: timestamp('created_at').notNull().defaultNow(),
 		lastUsed: timestamp('last_used'),
 
-		validStart: timestamp('valid_start'),
-		validEnd: timestamp('valid_end'),
+		validUntil: timestamp('valid_until'),
 
 		userId: varchar('user_id', { length: 15 })
 			.notNull()
@@ -23,8 +22,7 @@ export const links = pgTable(
 		createdAtIdx: index('links_created_at_index').on(self.createdAt).desc(),
 		lastUsedIdx: index('links_last_used_index').on(self.lastUsed).desc(),
 
-		validStartIdx: index('links_valid_start_index').on(self.validStart),
-		validEndIdx: index('links_valid_end_index').on(self.validEnd),
+		validUntilIdx: index('links_valid_until_index').on(self.validUntil),
 
 		userIdIdx: index('links_user_id_index').on(self.userId)
 	})

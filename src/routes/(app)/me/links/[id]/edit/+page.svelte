@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconDeviceFloppy, IconLoader, IconTrash } from '@tabler/icons-svelte';
+	import { IconDeviceFloppy, IconClockX, IconLoader, IconTrash } from '@tabler/icons-svelte';
 	import type { PageData } from './$types';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { enhance } from '$app/forms';
@@ -10,12 +10,12 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Switch } from '$lib/components/ui/switch';
-	import DatePicker from '$lib/components/DatePicker.svelte';
+	import dayjs from 'dayjs';
 
 	export let data: PageData;
 
 	let loading = false;
-	let expires = !!data.link.validStart;
+	let isTemporary = !!data.link.validUntil;
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -74,10 +74,24 @@
 					<Input required name="url" value={data.link.url} type="url" class="mt-1" />
 				</Label>
 
-				<Label>
-					Expires after
-					<DatePicker value={data.link.validEnd} />
-				</Label>
+				<Card.Root>
+					<Card.Header>
+						<Card.Title class="flex w-full justify-between">
+							Temporary
+							<Switch bind:checked={isTemporary} />
+						</Card.Title>
+						<Card.Description>
+							When enabled, the link will only work up until the specified time.
+						</Card.Description>
+					</Card.Header>
+					<Card.Content>
+						{#if isTemporary}
+							<p>Expires in {dayjs().diff(data.link.validUntil, 'minutes')} minutes</p>
+						{:else}
+							<p>Does not expire</p>
+						{/if}
+					</Card.Content>
+				</Card.Root>
 
 				<Button type="submit" class="w-fit gap-1" disabled={loading}>
 					{#if loading}
