@@ -1,4 +1,4 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, gt, isNull, or } from 'drizzle-orm';
 import { db } from '..';
 import type { AuthUser } from '../schema/auth';
 import { links, type Link, type LinkUpdate, type LinkInsert } from '../schema/link';
@@ -8,7 +8,9 @@ export const consumeLink = async (linkId: Link['id']) => {
 	const rows = await db
 		.update(links)
 		.set({ lastUsed: new Date() })
-		.where(eq(links.id, linkId))
+		.where(
+			and(eq(links.id, linkId), or(gt(links.validUntil, new Date()), isNull(links.validUntil)))
+		)
 		.returning();
 
 	if (rows.length === 0) {

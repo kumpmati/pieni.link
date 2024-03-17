@@ -21,6 +21,7 @@
 	let loading: string | null = null;
 	let validUntil: Date | null = data.link.validUntil;
 	let tempForm: HTMLFormElement;
+	let hasExpired = data.link.validUntil ? dayjs(data.link.validUntil).diff() < 0 : false;
 
 	const handleSubmit: SubmitFunction = (e) => {
 		loading = e.formElement.dataset.id as string;
@@ -115,11 +116,15 @@
 
 		<Card.Content class="flex flex-col gap-2">
 			<Dialog.Root>
-				<Dialog.Trigger class="{buttonVariants({ variant: 'outline' })} w-fit gap-2">
+				<Dialog.Trigger
+					class="{buttonVariants({ variant: 'outline' })} w-fit gap-2 {hasExpired
+						? 'text-red-300'
+						: ''}"
+				>
 					<IconEdit size={16} />
 
 					{#if data.link.validUntil}
-						Expires {dayjs(data.link.validUntil).fromNow()}
+						{hasExpired ? 'Expired' : 'Expires'} {dayjs(data.link.validUntil).fromNow()}
 					{:else}
 						Doesn't expire
 					{/if}
