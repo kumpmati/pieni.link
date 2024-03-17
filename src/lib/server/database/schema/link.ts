@@ -36,7 +36,11 @@ export const linkInsertSchema = createInsertSchema(links, {
 		.min(1)
 		.regex(/^[\w-]+$/g)
 		.default(() => nanoid(8)),
-	url: z.string().url()
+	url: z.string().url(),
+	validUntil: z
+		.string()
+		.transform((val) => (val !== '' ? new Date(val) : null))
+		.nullable()
 });
 
 export type LinkInsert = z.infer<typeof linkInsertSchema>;
