@@ -11,6 +11,9 @@ export const links = pgTable(
 		url: text('url').notNull(),
 		createdAt: timestamp('created_at').notNull().defaultNow(),
 		lastUsed: timestamp('last_used'),
+
+		validUntil: timestamp('valid_until'),
+
 		userId: varchar('user_id', { length: 15 })
 			.notNull()
 			.references(() => user.id, { onDelete: 'cascade', onUpdate: 'cascade' })
@@ -18,6 +21,9 @@ export const links = pgTable(
 	(self) => ({
 		createdAtIdx: index('links_created_at_index').on(self.createdAt).desc(),
 		lastUsedIdx: index('links_last_used_index').on(self.lastUsed).desc(),
+
+		validUntilIdx: index('links_valid_until_index').on(self.validUntil),
+
 		userIdIdx: index('links_user_id_index').on(self.userId)
 	})
 );
@@ -30,7 +36,11 @@ export const linkInsertSchema = createInsertSchema(links, {
 		.min(1)
 		.regex(/^[\w-]+$/g)
 		.default(() => nanoid(8)),
-	url: z.string().url()
+	url: z.string().url(),
+	validUntil: z
+		.string()
+		.transform((val) => (val !== '' ? new Date(val) : null))
+		.nullable()
 });
 
 export type LinkInsert = z.infer<typeof linkInsertSchema>;
