@@ -4,6 +4,7 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import type { PageData } from './$types';
 	import dayjs from 'dayjs';
+	import PerLinkStatisticsOverview from './PerLinkStatisticsOverview.svelte';
 
 	dayjs.extend(relativeTime);
 
@@ -11,45 +12,11 @@
 </script>
 
 <div class="flex w-full flex-col gap-2">
-	<Card.Root class="w-full">
-		<Card.Header>
-			<Card.Title>Visits</Card.Title>
-		</Card.Header>
-		<Card.Content class="visits grid" style="grid-template-columns: repeat(3, 1fr)">
-			<small class="text-muted-foreground">
-				Last 24 hours
-				<h1 class="text-4xl font-extrabold text-primary">
-					{#await data.visits}
-						...
-					{:then visits}
-						{visits.map((v) => dayjs().diff(v.timestamp, 'hours') <= 24).length}
-					{/await}
-				</h1>
-			</small>
-
-			<small class="text-muted-foreground">
-				Last 7 days
-				<h1 class="text-4xl font-extrabold text-primary">
-					{#await data.visits}
-						...
-					{:then visits}
-						{visits.map((v) => dayjs().diff(v.timestamp, 'days') <= 7).length}
-					{/await}
-				</h1>
-			</small>
-
-			<small class="text-muted-foreground">
-				All time
-				<h1 class="text-4xl font-extrabold text-primary">
-					{#await data.visits}
-						...
-					{:then visits}
-						{visits.length}
-					{/await}
-				</h1>
-			</small>
-		</Card.Content>
-	</Card.Root>
+	{#await data.stats}
+		<PerLinkStatisticsOverview stats={null} />
+	{:then stats}
+		<PerLinkStatisticsOverview {stats} />
+	{/await}
 
 	{#await data.visits}
 		<p>Loading analytics...</p>

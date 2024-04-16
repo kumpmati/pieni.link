@@ -3,6 +3,7 @@ import { links } from '$lib/server/database/schema/link';
 import { and, desc, eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { getLinkStatistics } from '$lib/server/database/handlers/linkVisit';
 import { linkVisit } from '$lib/server/database/schema/analytics';
 
 export const load = (async ({ parent, params }) => {
@@ -23,6 +24,7 @@ export const load = (async ({ parent, params }) => {
 
 	return {
 		link,
+		stats: getLinkStatistics(params.id),
 		visits: db
 			.select()
 			.from(linkVisit)
