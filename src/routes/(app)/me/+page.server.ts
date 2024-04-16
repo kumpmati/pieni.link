@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { error, redirect } from '@sveltejs/kit';
 import { deleteLink, getAllUserLinks } from '$lib/server/database/handlers/links';
-import { getAllLinkStatistics } from '$lib/server/database/handlers/linkVisit';
+import { getOverallLinkStatistics } from '$lib/server/database/handlers/linkVisit';
 import { deleteUser } from '$lib/server/database/handlers/user';
 
 export const load = (async ({ parent }) => {
@@ -13,7 +13,7 @@ export const load = (async ({ parent }) => {
 
 	return {
 		links: await getAllUserLinks(session.user.id),
-		stats: await getAllLinkStatistics(session.user.id)
+		stats: getOverallLinkStatistics(session.user.id)
 	};
 }) satisfies PageServerLoad;
 

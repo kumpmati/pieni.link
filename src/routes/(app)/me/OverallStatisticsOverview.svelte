@@ -1,9 +1,10 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import type { LinkStatistics } from '$lib/server/database/handlers/linkVisit';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+	import type { OverallLinkStatistics } from '$lib/server/database/handlers/linkVisit';
 	import { IconStar, IconActivity } from '@tabler/icons-svelte';
 
-	export let stats: LinkStatistics;
+	export let stats: OverallLinkStatistics | null;
 </script>
 
 <div
@@ -15,8 +16,13 @@
 			<span class="flex items-center justify-between">
 				Visits (last 24h) <IconActivity size={18} />
 			</span>
+
 			<span class="text-4xl font-extrabold text-primary">
-				{stats.lastDay}
+				{#if stats}
+					{stats.lastDay}
+				{:else}
+					<Skeleton class="mt-2 h-8 w-1/2" />
+				{/if}
 			</span>
 		</Card.Content>
 	</Card.Root>
@@ -26,22 +32,31 @@
 			<span class="flex items-center justify-between">
 				Visits (all time) <IconActivity size={18} />
 			</span>
-			<span class="text-4xl font-extrabold text-primary">{stats.total}</span>
+			<span class="text-4xl font-extrabold text-primary">
+				{#if stats}
+					{stats.total}
+				{:else}
+					<Skeleton class="mt-2 h-8 w-1/2" />
+				{/if}
+			</span>
 		</Card.Content>
 	</Card.Root>
 
 	<Card.Root>
 		<Card.Content class="mt-5 flex flex-col overflow-hidden text-sm text-muted-foreground">
 			<span class="flex items-center justify-between">
-				Most visited ({stats.mostVisited?.count ?? '-'})
-				<IconStar size={18} />
+				Most visited ({stats?.mostVisited?.count ?? '-'}) <IconStar size={18} />
 			</span>
 
 			<a
-				href="/me/links/{stats.mostVisited?.linkId}"
+				href={stats ? `/me/links/${stats?.mostVisited?.linkId}` : ''}
 				class="overflow-ellipsis whitespace-nowrap text-3xl font-extrabold text-primary hover:underline"
 			>
-				{stats.mostVisited?.linkId ?? '-'}
+				{#if stats}
+					{stats.mostVisited?.linkId ?? '-'}
+				{:else}
+					<Skeleton class="mt-2 h-8 w-1/2" />
+				{/if}
 			</a>
 		</Card.Content>
 	</Card.Root>

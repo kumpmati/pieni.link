@@ -9,7 +9,9 @@ import dayjs from 'dayjs';
  * Returns overall statistics for all of the user's links
  * @param userId
  */
-export const getAllLinkStatistics = async (userId: AuthUser['id']): Promise<LinkStatistics> => {
+export const getOverallLinkStatistics = async (
+	userId: AuthUser['id']
+): Promise<OverallLinkStatistics> => {
 	const last24hDate = dayjs().subtract(24, 'hours').toDate();
 
 	const [lastDayVisits, alltimeVisits, mostVisited] = await Promise.all([
@@ -43,10 +45,51 @@ export const getAllLinkStatistics = async (userId: AuthUser['id']): Promise<Link
 	};
 };
 
-export type LinkStatistics = {
+export type OverallLinkStatistics = {
 	lastDay: number;
 	total: number;
 	mostVisited: { linkId: string; count: number } | null;
+};
+
+/**
+ * Returns overall statistics for all of the user's links
+ * @param userId
+ */
+export const getLinkStatistics = async (linkId: Link['id']): Promise<PerLinkStatistics> => {
+	const last24hDate = dayjs().subtract(24, 'hours').toDate();
+	const lastWeekDate = dayjs().subtract(7, 'days').toDate();
+
+	const [lastDayVisits, lastWeekVisits, alltimeVisits] = await Promise.all([
+		db
+			.select({ count: sql<number>`cast(count(${linkVisit.id}) as int)` })
+			.from(linkVisit)
+			.where(and(gte(linkVisit.timestamp, last24hDate), eq(linkVisit.linkId, linkId)))
+			.innerJoin(links, eq(linkVisit.linkId, links.id)),
+
+		db
+			.select({ count: sql<number>`cast(count(${linkVisit.id}) as int)` })
+			.from(linkVisit)
+			.where(and(gte(linkVisit.timestamp, lastWeekDate), eq(linkVisit.linkId, linkId)))
+			.innerJoin(links, eq(linkVisit.linkId, links.id)),
+
+		db
+			.select({ count: sql<number>`cast(count(${linkVisit.id}) as int)` })
+			.from(linkVisit)
+			.where(eq(linkVisit.linkId, linkId))
+			.innerJoin(links, eq(linkVisit.linkId, links.id))
+	]);
+
+	return {
+		lastDay: lastDayVisits[0].count,
+		lastWeek: lastWeekVisits[0].count,
+		total: alltimeVisits[0].count
+	};
+};
+
+export type PerLinkStatistics = {
+	lastDay: number;
+	lastWeek: number;
+	total: number;
 };
 
 /**
