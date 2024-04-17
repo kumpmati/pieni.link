@@ -21,8 +21,10 @@
 			<IconEdit size={16} /> Edit
 		</Button>
 		<Button
-			variant={$page.url.pathname === `/me/links/${$page.params.id}` ? 'secondary' : 'ghost'}
-			href="/me/links/{$page.params.id}"
+			variant={$page.url.pathname.startsWith(`/me/links/${$page.params.id}/analytics`)
+				? 'secondary'
+				: 'ghost'}
+			href="/me/links/{$page.params.id}/analytics"
 			class="justify-start gap-2"
 		>
 			<IconChartHistogram size={16} /> Analytics

@@ -34,7 +34,7 @@
 					<Table.Row>
 						<Table.Head>Shortened link</Table.Head>
 						<Table.Head>Original link</Table.Head>
-						<Table.Head>Last Used</Table.Head>
+						<Table.Head>Last visited</Table.Head>
 						<Table.Head>Created</Table.Head>
 						<Table.Head />
 					</Table.Row>
@@ -46,7 +46,7 @@
 						<Table.Row>
 							<Table.Cell>
 								<div class="flex items-center gap-1">
-									<a href="/me/links/{link.id}" class="hover:underline">
+									<a href="/me/links/{link.id}/edit" class="hover:underline">
 										{link.id}
 									</a>
 
@@ -85,7 +85,7 @@
 												Edit
 											</DropdownMenu.Item>
 
-											<DropdownMenu.Item href="/me/links/{link.id}" class="gap-2">
+											<DropdownMenu.Item href="/me/links/{link.id}/analytics" class="gap-2">
 												<IconChartHistogram size={16} stroke={1.5} />
 												Analytics
 											</DropdownMenu.Item>

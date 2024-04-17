@@ -49,7 +49,7 @@
 			</span>
 
 			<a
-				href={stats ? `/me/links/${stats?.mostVisited?.linkId}` : ''}
+				href={stats ? `/me/links/${stats?.mostVisited?.linkId}/analytics` : ''}
 				class="overflow-ellipsis whitespace-nowrap text-3xl font-extrabold text-primary hover:underline"
 			>
 				{#if stats}
