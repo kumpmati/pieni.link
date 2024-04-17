@@ -9,10 +9,10 @@ export const links = pgTable(
 	{
 		id: text('id').primaryKey(),
 		url: text('url').notNull(),
-		createdAt: timestamp('created_at').notNull().defaultNow(),
-		lastUsed: timestamp('last_used'),
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+		lastUsed: timestamp('last_used', { withTimezone: true }),
 
-		validUntil: timestamp('valid_until'),
+		validUntil: timestamp('valid_until', { withTimezone: true }),
 
 		userId: varchar('user_id', { length: 15 })
 			.notNull()

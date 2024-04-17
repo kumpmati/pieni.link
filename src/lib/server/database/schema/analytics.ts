@@ -11,7 +11,7 @@ export const linkVisit = pgTable(
 
 		referrer: text('referrer').notNull().default(''),
 		userAgent: text('user_agent').notNull().default(''),
-		timestamp: timestamp('timestamp').notNull().defaultNow()
+		timestamp: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow()
 	},
 	(self) => ({
 		linkIdIdx: index('link_visit_link_id_index').on(self.linkId),
