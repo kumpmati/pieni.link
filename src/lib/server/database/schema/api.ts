@@ -6,8 +6,8 @@ import { z } from 'zod';
 export const apiKey = pgTable(
 	'api_key',
 	{
-		id: varchar('id', { length: 15 }),
-		secret: text('secret'),
+		id: varchar('id', { length: 15 }).notNull(),
+		secret: text('secret').notNull(),
 		userId: varchar('user_id', { length: 15 })
 			.notNull()
 			.references(() => user.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
