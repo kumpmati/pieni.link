@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-	import type { PerLinkStatistics } from '$lib/server/database/handlers/linkVisit';
+	import type { PerLinkStatistics } from '$lib/server/database/handlers/analytics';
 
 	export let stats: PerLinkStatistics | null;
 </script>
