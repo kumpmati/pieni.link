@@ -11,12 +11,12 @@ export const apiKey = pgTable(
 		userId: varchar('user_id', { length: 15 })
 			.notNull()
 			.references(() => user.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-		created_at: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow()
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
 	(self) => ({
 		pk: primaryKey({ columns: [self.id, self.secret] }),
 		userIdIdx: index('api_key_user_id_idx').on(self.userId),
-		createdAtIdx: index('api_key_created_at_idx').on(self.created_at).desc()
+		createdAtIdx: index('api_key_created_at_idx').on(self.createdAt).desc()
 	})
 );
 

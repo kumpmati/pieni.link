@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconLogout, IconServerCog, IconTrash } from '@tabler/icons-svelte';
+	import { IconKey, IconLogout, IconServerCog, IconTrash } from '@tabler/icons-svelte';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import type { PageData } from './$types';
 	import LinksTable from './LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
+	import ApiKeysTable from './ApiKeysTable.svelte';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
 
 	export let data: PageData;
@@ -47,6 +48,10 @@
 				Admin Panel
 			</Button>
 		{/if}
+
+		<Button href="/me/api" class="w-fit gap-2" variant="outline">
+			<IconKey size={16} /> API Keys
+		</Button>
 	</div>
 
 	{#await data.stats}
@@ -54,7 +59,27 @@
 	{:then stats}
 		<OverallStatisticsOverview {stats} />
 	{/await}
-	<LinksTable links={data.links} />
+
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>My Links ({data.links.length})</Card.Title>
+		</Card.Header>
+
+		<Card.Content>
+			<LinksTable links={data.links} />
+		</Card.Content>
+	</Card.Root>
+
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>API Keys</Card.Title>
+			<Card.Description>Programmatic access to your links</Card.Description>
+		</Card.Header>
+
+		<Card.Content>
+			<ApiKeysTable keys={data.apiKeys} />
+		</Card.Content>
+	</Card.Root>
 
 	<Card.Root>
 		<Card.Header>

@@ -3,6 +3,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { deleteLink, getAllUserLinks } from '$lib/server/database/handlers/links';
 import { getOverallLinkStatistics } from '$lib/server/database/handlers/analytics';
 import { deleteUser } from '$lib/server/database/handlers/user';
+import { getUserApiKeys } from '$lib/server/database/handlers/api';
 
 export const load = (async ({ parent }) => {
 	const { session } = await parent();
@@ -13,7 +14,8 @@ export const load = (async ({ parent }) => {
 
 	return {
 		links: await getAllUserLinks(session.user.id),
-		stats: getOverallLinkStatistics(session.user.id)
+		stats: getOverallLinkStatistics(session.user.id),
+		apiKeys: await getUserApiKeys(session.user.id)
 	};
 }) satisfies PageServerLoad;
 
