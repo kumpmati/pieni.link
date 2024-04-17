@@ -2,7 +2,6 @@
 	import ApexCharts from 'apexcharts';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
-	import { numVisitsByDay } from './util';
 	import PerLinkStatisticsOverview from '../PerLinkStatisticsOverview.svelte';
 
 	export let data: PageData;
@@ -10,7 +9,7 @@
 	let chartElement: HTMLDivElement;
 
 	onMount(() => {
-		data.visits.then((d) => {
+		data.visitsByDay.then((days) => {
 			const chart = new ApexCharts(chartElement, {
 				chart: {
 					type: 'line',
@@ -22,7 +21,15 @@
 					borderColor: '#222',
 					xaxis: { lines: { show: true } }
 				},
-				series: [{ name: 'Visits', data: numVisitsByDay(d) }],
+				series: [
+					{
+						name: 'Visits',
+						data: days.map((item) => ({
+							x: item.day,
+							y: item.count
+						}))
+					}
+				],
 				stroke: { curve: 'smooth' },
 				xaxis: { tickAmount: 10 }
 			});
