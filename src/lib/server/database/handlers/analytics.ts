@@ -46,7 +46,7 @@ export const getLinkVisitsPerDay = async (linkId: string): Promise<LinkVisitsPer
 		current = current.add(1, 'day');
 	}
 
-	return data.toSorted((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
+	return data.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
 };
 
 export type LinkVisitsPerReferrer = {
