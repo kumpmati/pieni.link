@@ -1,18 +1,12 @@
-import { linkVisit } from '$lib/server/database/schema/analytics';
-import { eq, sql } from 'drizzle-orm';
-import { db } from '$lib/server/database';
+import {
+	getLinkVisitsPerDay,
+	getLinkVisitsPerReferrer
+} from '$lib/server/database/handlers/analytics';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
 	return {
-		visitsByDay: db
-			.select({
-				day: sql<string>`date_trunc('day', ${linkVisit.timestamp})`,
-				count: sql<number>`cast(count(*) as int)`
-			})
-			.from(linkVisit)
-			.where(eq(linkVisit.linkId, params.id))
-			.orderBy(sql`1`)
-			.groupBy(sql`1`)
+		visitsPerDay: getLinkVisitsPerDay(params.id),
+		visitsPerReferrer: getLinkVisitsPerReferrer(params.id)
 	};
 }) satisfies PageServerLoad;

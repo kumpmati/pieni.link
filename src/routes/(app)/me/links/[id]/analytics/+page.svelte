@@ -1,43 +1,13 @@
 <script lang="ts">
-	import ApexCharts from 'apexcharts';
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
 	import PerLinkStatisticsOverview from '../PerLinkStatisticsOverview.svelte';
 	import { Skeleton } from '$lib/components/ui/skeleton';
+	import LinkVisitsChart from './LinkVisitsChart.svelte';
+	import LinkReferrersChart from './LinkReferrersChart.svelte';
+
+	import * as Card from '$lib/components/ui/card';
 
 	export let data: PageData;
-
-	let chartElement: HTMLDivElement;
-
-	onMount(() => {
-		data.visitsByDay.then((days) => {
-			const chart = new ApexCharts(chartElement, {
-				chart: {
-					type: 'line',
-					foreColor: '#ccc',
-					toolbar: { show: false }
-				},
-				tooltip: { theme: 'dark' },
-				grid: {
-					borderColor: '#222',
-					xaxis: { lines: { show: true } }
-				},
-				series: [
-					{
-						name: 'Visits',
-						data: days.map((item) => ({
-							x: item.day,
-							y: item.count
-						}))
-					}
-				],
-				stroke: { curve: 'smooth' },
-				xaxis: { tickAmount: 10 }
-			});
-
-			chart.render();
-		});
-	});
 </script>
 
 {#await data.stats}
@@ -46,8 +16,32 @@
 	<PerLinkStatisticsOverview {stats} />
 {/await}
 
-{#await data.visitsByDay}
-	<Skeleton class=" h-96 w-full" />
-{:then}
-	<div bind:this={chartElement} />
-{/await}
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Visits per day</Card.Title>
+		<Card.Description>Distribution of visits for each day</Card.Description>
+	</Card.Header>
+
+	<Card.Content>
+		{#await data.visitsPerDay}
+			<Skeleton class=" h-96 w-full" />
+		{:then data}
+			<LinkVisitsChart {data} />
+		{/await}
+	</Card.Content>
+</Card.Root>
+
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Visits per referrer</Card.Title>
+		<Card.Description>Distribution of visits between the unique referrers</Card.Description>
+	</Card.Header>
+
+	<Card.Content>
+		{#await data.visitsPerReferrer}
+			<Skeleton class=" h-96 w-full" />
+		{:then data}
+			<LinkReferrersChart {data} />
+		{/await}
+	</Card.Content>
+</Card.Root>
