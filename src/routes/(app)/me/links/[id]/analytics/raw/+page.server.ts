@@ -1,14 +1,8 @@
-import { linkVisit } from '$lib/server/database/schema/analytics';
-import { desc, eq } from 'drizzle-orm';
-import { db } from '$lib/server/database';
 import type { PageServerLoad } from './$types';
+import { getLinkVisits } from '$lib/server/database/handlers/analytics';
 
 export const load = (async ({ params }) => {
 	return {
-		visits: db
-			.select()
-			.from(linkVisit)
-			.where(eq(linkVisit.linkId, params.id))
-			.orderBy(desc(linkVisit.timestamp))
+		visits: getLinkVisits(params.id)
 	};
 }) satisfies PageServerLoad;

@@ -1,4 +1,4 @@
-import { getLinkStatistics } from '$lib/server/database/handlers/linkVisit';
+import { getLinkStatistics } from '$lib/server/database/handlers/analytics';
 import { getUserLink } from '$lib/server/database/handlers/links.js';
 import { error } from '@sveltejs/kit';
 
