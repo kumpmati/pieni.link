@@ -22,7 +22,7 @@
 			<Table.Header>
 				<Table.Head>Shortened link</Table.Head>
 				<Table.Head>Original link</Table.Head>
-				<Table.Head>Last used</Table.Head>
+				<Table.Head>Last visited</Table.Head>
 				<Table.Head>Created At</Table.Head>
 				<Table.Head>User</Table.Head>
 			</Table.Header>

@@ -1,3 +1,4 @@
+import { getLinkStatistics } from '$lib/server/database/handlers/linkVisit';
 import { getUserLink } from '$lib/server/database/handlers/links.js';
 import { error } from '@sveltejs/kit';
 
@@ -9,6 +10,7 @@ export const load = async ({ params, parent }) => {
 	}
 
 	return {
-		link: await getUserLink(params.id, session.user.id)
+		link: await getUserLink(params.id, session.user.id),
+		stats: getLinkStatistics(params.id)
 	};
 };
