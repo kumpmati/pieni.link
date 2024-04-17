@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 	import PerLinkStatisticsOverview from '../PerLinkStatisticsOverview.svelte';
+	import { Skeleton } from '$lib/components/ui/skeleton';
 
 	export let data: PageData;
 
@@ -45,4 +46,8 @@
 	<PerLinkStatisticsOverview {stats} />
 {/await}
 
-<div bind:this={chartElement} />
+{#await data.visitsByDay}
+	<Skeleton class=" h-96 w-full" />
+{:then}
+	<div bind:this={chartElement} />
+{/await}
