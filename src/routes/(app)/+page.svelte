@@ -82,10 +82,10 @@
 				name="url"
 				type="url"
 				required
-				placeholder="Paste a long link here to shorten..."
+				placeholder="Paste a link here to shorten it"
 				on:paste={handleOnPaste}
 				disabled={loading}
-				class="text-md p-5"
+				class="text-md bg-slate-800 p-5 md:px-5 md:py-6 md:text-lg"
 			/>
 		{:else}
 			<Input
@@ -94,7 +94,7 @@
 				readonly
 				on:focus={(e) => e.currentTarget.select()}
 				value="{PUBLIC_BASEURL}/{shortenedLink.id}"
-				class="text-md rounded-r-none p-5"
+				class="text-md rounded-r-none bg-slate-800 p-5 md:px-5 md:py-6 md:text-lg"
 			/>
 
 			<Button
@@ -103,7 +103,7 @@
 				size="icon"
 				variant="secondary"
 				title="Shorten another link"
-				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
+				class="h-full w-fit rounded-l-none border-l-0 px-4 py-2"
 			>
 				<IconRotate width={20} height={20} />
 			</Button>
