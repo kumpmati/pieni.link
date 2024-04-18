@@ -76,8 +76,7 @@
 
 <Card.Root>
 	<Card.Header class="relative">
-		<Card.Title>Latest shortened links</Card.Title>
-		<Card.Description>Last 5 links that you've shortened.</Card.Description>
+		<Card.Title>Last 5 links</Card.Title>
 
 		<Button href="/me/links" variant="outline" size="sm" class="absolute right-4 top-3 gap-2">
 			See all <IconChevronRight width={16} height={16} />
