@@ -50,8 +50,16 @@ export const getUserLink = async (linkId: Link['id'], userId: AuthUser['id']): P
 	return rows[0];
 };
 
-export const updateLink = async (linkId: Link['id'], data: LinkUpdate): Promise<Link> => {
-	const rows = await db.update(links).set(data).where(eq(links.id, linkId)).returning();
+export const updateUserLink = async (
+	linkId: Link['id'],
+	userId: string,
+	data: LinkUpdate
+): Promise<Link> => {
+	const rows = await db
+		.update(links)
+		.set(data)
+		.where(and(eq(links.id, linkId), eq(links.userId, userId)))
+		.returning();
 
 	if (rows.length === 0) {
 		error(500, 'failed to update');

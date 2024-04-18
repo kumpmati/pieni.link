@@ -85,23 +85,8 @@
 				placeholder="Paste a long link here to shorten..."
 				on:paste={handleOnPaste}
 				disabled={loading}
-				class="text-md rounded-r-none p-5"
+				class="text-md p-5"
 			/>
-
-			<Button
-				type="submit"
-				variant={loading ? 'ghost' : 'default'}
-				size="icon"
-				title="Shorten link"
-				disabled={loading}
-				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
-			>
-				{#if loading}
-					<IconLoader size={24} stroke={1.5} class="animate-spin" />
-				{:else}
-					<IconSend2 size={24} stroke={1.5} />
-				{/if}
-			</Button>
 		{:else}
 			<Input
 				name="url"
@@ -120,7 +105,7 @@
 				title="Shorten another link"
 				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
 			>
-				<IconRotate size={24} stroke={1.5} />
+				<IconRotate size={20} stroke={1.5} />
 			</Button>
 		{/if}
 	</form>

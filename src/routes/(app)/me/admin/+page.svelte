@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { IconChevronLeft, IconLink, IconMail, IconUsers } from '@tabler/icons-svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-
 	import type { PageData } from './$types';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
@@ -12,6 +11,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import Crumbs from '$lib/components/Crumbs.svelte';
 
 	dayjs.extend(relativeTime);
 
@@ -22,7 +22,15 @@
 	<title>Admin panel</title>
 </svelte:head>
 
-<div class="mt-14 flex flex-col gap-2">
+<Crumbs
+	links={[
+		{ label: 'Home', href: '/' },
+		{ label: 'My account', href: '/me' },
+		{ label: 'Admin panel', href: '/me/admin' }
+	]}
+/>
+
+<div class="flex flex-col gap-2">
 	<Tabs.Root
 		value={$page.url.searchParams.get('view') ?? ''}
 		onValueChange={(val) => {
@@ -32,18 +40,14 @@
 		}}
 	>
 		<Tabs.List>
-			<Button href="/me" variant="ghost" class="flex w-fit  gap-1 pl-2">
-				<IconChevronLeft size={16} />
-			</Button>
-
-			<Tabs.Trigger value="links" class="gap-1">
+			<Tabs.Trigger value="links" class="gap-2">
 				<IconLink size={14} /> Links
 			</Tabs.Trigger>
-			<Tabs.Trigger value="users" class="gap-1">
+			<Tabs.Trigger value="users" class="gap-2">
 				<IconUsers size={14} />
 				Users
 			</Tabs.Trigger>
-			<Tabs.Trigger value="invites" class="gap-1">
+			<Tabs.Trigger value="invites" class="gap-2">
 				<IconMail size={14} />
 				Invites
 			</Tabs.Trigger>

@@ -40,8 +40,8 @@ export const signupToken = pgTable('signup_token', {
 	role: text('role', { enum: ['admin', 'member'] })
 		.notNull()
 		.default('member'),
-	createdAt: timestamp('created_at').notNull().defaultNow(),
-	usedAt: timestamp('used_at'),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	usedAt: timestamp('used_at', { withTimezone: true }),
 	userId: varchar('user_id', { length: 15 }).references(() => user.id, {
 		onUpdate: 'cascade',
 		onDelete: 'cascade'
