@@ -7,8 +7,11 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { apiKeySchema } from '$lib/server/database/schema/api';
 
-export const load = (async ({ parent }) => {
-	const { session } = await parent();
+export const load = (async ({ locals }) => {
+	const session = await locals.auth.validate();
+	if (!session) {
+		error(401, 'unauthorized');
+	}
 
 	return {
 		apiKeys: await getUserApiKeys(session.user.id)
