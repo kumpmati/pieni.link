@@ -6,7 +6,7 @@
 	import type { Link } from '$lib/server/database/schema/link';
 	import { flyAndScale } from '$lib/utils';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { IconSend2, IconRotate, IconLoader } from '@tabler/icons-svelte';
+	import IconRotate from '~icons/tabler/rotate';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
@@ -105,7 +105,7 @@
 				title="Shorten another link"
 				class="h-full w-fit rounded-l-none border-l-0 px-2 py-2"
 			>
-				<IconRotate size={20} stroke={1.5} />
+				<IconRotate width={20} height={20} />
 			</Button>
 		{/if}
 	</form>

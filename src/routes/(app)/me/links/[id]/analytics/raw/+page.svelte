@@ -5,7 +5,7 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import type { PageData } from './$types';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconFileExport } from '@tabler/icons-svelte';
+	import IconFileExport from '~icons/tabler/file-export';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { stringify } from 'csv-stringify/browser/esm';
 	import { toast } from 'svelte-sonner';
@@ -46,7 +46,7 @@
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger asChild let:builder>
 					<Button builders={[builder]} variant="outline" size="sm" class="gap-2">
-						<IconFileExport size={16} /> Export
+						<IconFileExport width={16} height={16} /> Export
 					</Button>
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content>

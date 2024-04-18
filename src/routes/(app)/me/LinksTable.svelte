@@ -1,11 +1,9 @@
 <script lang="ts">
-	import {
-		IconChartHistogram,
-		IconDotsVertical,
-		IconEdit,
-		IconExternalLink,
-		IconTrash
-	} from '@tabler/icons-svelte';
+	import IconChartHistogram from '~icons/tabler/chart-histogram';
+	import IconDotsVertical from '~icons/tabler/dots-vertical';
+	import IconEdit from '~icons/tabler/edit';
+	import IconExternalLink from '~icons/tabler/external-link';
+	import IconTrash from '~icons/tabler/trash';
 	import * as Table from '$lib/components/ui/table';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
@@ -44,7 +42,7 @@
 							</a>
 
 							<a href={url.toString()} target="_blank" referrerpolicy="no-referrer">
-								<IconExternalLink size={12} />
+								<IconExternalLink width={12} height={12} />
 							</a>
 						</div>
 					</Table.Cell>
@@ -64,23 +62,23 @@
 							<DropdownMenu.Root>
 								<DropdownMenu.Trigger asChild let:builder>
 									<Button builders={[builder]} variant="ghost" size="icon">
-										<IconDotsVertical size={16} />
+										<IconDotsVertical width={16} height={16} />
 									</Button>
 								</DropdownMenu.Trigger>
 								<DropdownMenu.Content>
 									<DropdownMenu.Item href="/me/links/{link.id}/edit" class="gap-2">
-										<IconEdit size={16} stroke={1.5} />
+										<IconEdit width={16} height={16} stroke-width={1.5} />
 										Edit
 									</DropdownMenu.Item>
 
 									<DropdownMenu.Item href="/me/links/{link.id}/analytics" class="gap-2">
-										<IconChartHistogram size={16} stroke={1.5} />
+										<IconChartHistogram width={16} height={16} stroke-width={1.5} />
 										Analytics
 									</DropdownMenu.Item>
 
 									<AlertDialog.Trigger class="contents">
 										<DropdownMenu.Item class="gap-2 text-destructive">
-											<IconTrash size={16} stroke={1.5} />
+											<IconTrash width={16} height={16} stroke-width={1.5} />
 											Delete
 										</DropdownMenu.Item>
 									</AlertDialog.Trigger>
@@ -102,7 +100,7 @@
 										<input type="hidden" name="id" value={link.id} />
 
 										<AlertDialog.Action type="submit">
-											<IconTrash size={16} /> Delete
+											<IconTrash width={16} height={16} /> Delete
 										</AlertDialog.Action>
 									</form>
 								</AlertDialog.Footer>

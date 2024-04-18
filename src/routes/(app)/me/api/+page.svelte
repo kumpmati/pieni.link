@@ -4,7 +4,9 @@
 	import * as Card from '$lib/components/ui/card';
 	import Crumbs from '$lib/components/Crumbs.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconCheck, IconCopy, IconPlus } from '@tabler/icons-svelte';
+	import IconCheck from '~icons/tabler/check';
+	import IconCopy from '~icons/tabler/copy';
+	import IconPlus from '~icons/tabler/plus';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { enhance } from '$app/forms';
 	import { Input } from '$lib/components/ui/input';
@@ -63,7 +65,7 @@
 
 		<form action="?/create_api_key" method="post" use:enhance={handleCreateEnhance}>
 			<Button type="submit" class="mt-0 gap-2" variant="outline">
-				<IconPlus size={16} /> Create API key
+				<IconPlus width={16} height={16} /> Create API key
 			</Button>
 		</form>
 	</Card.Header>
@@ -94,9 +96,9 @@
 					<Input id="secret" type="text" readonly value={dialogData?.secret} />
 					<Button variant="secondary" size="icon" on:click={copySecret}>
 						{#if isCopied}
-							<IconCheck size={16} />
+							<IconCheck width={16} height={16} />
 						{:else}
-							<IconCopy size={16} />
+							<IconCopy width={16} height={16} />
 						{/if}
 					</Button>
 				</span>

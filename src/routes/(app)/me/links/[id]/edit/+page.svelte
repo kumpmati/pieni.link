@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { IconDeviceFloppy, IconLoader, IconTrash, IconEdit } from '@tabler/icons-svelte';
+	import IconDeviceFloppy from '~icons/tabler/device-floppy';
+	import IconLoader from '~icons/tabler/loader';
+	import IconTrash from '~icons/tabler/trash';
+	import IconEdit from '~icons/tabler/edit';
 	import type { PageData } from './$types';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { enhance } from '$app/forms';
@@ -88,9 +91,9 @@
 
 				<Button type="submit" class="w-fit gap-1" disabled={loading === 'basic'}>
 					{#if loading === 'basic'}
-						<IconLoader size={16} class="animate-spin" /> Saving changes
+						<IconLoader width={16} height={16} class="animate-spin" /> Saving changes
 					{:else}
-						<IconDeviceFloppy size={16} /> Save changes
+						<IconDeviceFloppy width={16} height={16} /> Save changes
 					{/if}
 				</Button>
 			</form>
@@ -121,7 +124,7 @@
 						? 'text-red-300'
 						: ''}"
 				>
-					<IconEdit size={16} />
+					<IconEdit width={16} height={16} />
 
 					{#if data.link.validUntil}
 						{hasExpired ? 'Expired' : 'Expires'} {dayjs(data.link.validUntil).fromNow()}
@@ -141,9 +144,9 @@
 					<Dialog.Footer class="mt-2">
 						<Button type="submit" form="temporary" class="gap-2" disabled={loading === 'temporary'}>
 							{#if loading === 'temporary'}
-								<IconLoader size={16} class="animate-spin" /> Saving changes
+								<IconLoader width={16} height={16} class="animate-spin" /> Saving changes
 							{:else}
-								<IconDeviceFloppy size={16} />
+								<IconDeviceFloppy width={16} height={16} />
 								Save changes
 							{/if}
 						</Button>
@@ -163,7 +166,7 @@
 			<AlertDialog.Root>
 				<AlertDialog.Trigger>
 					<Button type="button" variant="destructive" class="gap-1">
-						<IconTrash size={16} /> Delete link
+						<IconTrash width={16} height={16} /> Delete link
 					</Button>
 				</AlertDialog.Trigger>
 
@@ -180,7 +183,7 @@
 
 						<Button variant="destructive" type="submit" class="gap-1">
 							<AlertDialog.Action type="button" asChild class="contents">
-								<IconTrash size={16} /> Delete
+								<IconTrash width={16} height={16} /> Delete
 							</AlertDialog.Action>
 						</Button>
 					</form>

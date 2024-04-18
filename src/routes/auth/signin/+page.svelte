@@ -2,7 +2,8 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { IconBrandGoogleFilled, IconExternalLink } from '@tabler/icons-svelte';
+	import IconBrandGoogleFilled from '~icons/tabler/brand-google-filled';
+	import IconExternalLink from '~icons/tabler/external-link';
 </script>
 
 <svelte:head>
@@ -17,7 +18,7 @@
 
 	<Card.Content class="w-full flex-col">
 		<Button href="/auth/google?type=signin" class="mt-4 w-full gap-2">
-			<IconBrandGoogleFilled size={16} />
+			<IconBrandGoogleFilled width={16} height={16} />
 			Continue with Google
 		</Button>
 
@@ -33,7 +34,7 @@
 			}}
 		>
 			Got an invite code?
-			<IconExternalLink size={12} />
+			<IconExternalLink width={12} height={12} />
 		</a>
 	</Card.Content>
 </Card.Root>

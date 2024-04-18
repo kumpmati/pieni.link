@@ -1,6 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconKey, IconLogout, IconServerCog, IconTrash } from '@tabler/icons-svelte';
+	import IconKey from '~icons/tabler/key';
+	import IconServerCog from '~icons/tabler/server-cog';
+	import IconLogout from '~icons/tabler/logout';
+	import IconTrash from '~icons/tabler/trash';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import type { PageData } from './$types';
 	import LinksTable from './LinksTable.svelte';
@@ -44,19 +47,19 @@
 				class="w-fit"
 				href="/auth/signout"
 			>
-				<IconLogout size={16} class="mr-2" />
+				<IconLogout width={16} height={16} class="mr-2" />
 				Sign out
 			</Button>
 		</div>
 
 		<div class="mb-4 flex gap-2">
 			<Button href="/me/api" class="w-fit gap-2" variant="secondary">
-				<IconKey size={16} /> API Keys
+				<IconKey width={16} height={16} /> API Keys
 			</Button>
 
 			{#if data.session?.user.role === 'admin'}
 				<Button href="/me/admin" class="w-fit gap-2" variant="secondary">
-					<IconServerCog size={16} />
+					<IconServerCog width={16} height={16} />
 					Admin Panel
 				</Button>
 			{/if}
@@ -90,7 +93,7 @@
 		<AlertDialog.Root>
 			<AlertDialog.Trigger>
 				<Button variant="destructive" class="gap-2">
-					<IconTrash size={16} /> Delete account
+					<IconTrash width={16} height={16} /> Delete account
 				</Button>
 			</AlertDialog.Trigger>
 
@@ -107,7 +110,7 @@
 					<form method="post" action="?/delete_account" class="flex gap-2">
 						<AlertDialog.Cancel type="reset">Keep account</AlertDialog.Cancel>
 						<Button type="submit" variant="destructive" class="gap-2">
-							<IconTrash size={16} /> Delete account
+							<IconTrash width={16} height={16} /> Delete account
 						</Button>
 					</form>
 				</AlertDialog.Footer>
