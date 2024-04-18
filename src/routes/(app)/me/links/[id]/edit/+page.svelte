@@ -181,11 +181,11 @@
 					<form method="post" action="?/delete" use:enhance class="flex justify-end gap-2">
 						<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 
-						<Button variant="destructive" type="submit" class="gap-1">
-							<AlertDialog.Action type="button" asChild class="contents">
+						<AlertDialog.Action type="button" asChild>
+							<Button variant="destructive" type="submit" class="gap-1">
 								<IconTrash width={16} height={16} /> Delete
-							</AlertDialog.Action>
-						</Button>
+							</Button>
+						</AlertDialog.Action>
 					</form>
 				</AlertDialog.Content>
 			</AlertDialog.Root>

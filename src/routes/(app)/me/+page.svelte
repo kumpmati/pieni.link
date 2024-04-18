@@ -4,9 +4,10 @@
 	import IconServerCog from '~icons/tabler/server-cog';
 	import IconLogout from '~icons/tabler/logout';
 	import IconTrash from '~icons/tabler/trash';
+	import IconChevronRight from '~icons/tabler/chevron-right';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import type { PageData } from './$types';
-	import LinksTable from './LinksTable.svelte';
+	import LinksTable from './links/LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
 	import Crumbs from '$lib/components/Crumbs.svelte';
@@ -74,8 +75,13 @@
 {/await}
 
 <Card.Root>
-	<Card.Header>
-		<Card.Title>My Links</Card.Title>
+	<Card.Header class="relative">
+		<Card.Title>Latest shortened links</Card.Title>
+		<Card.Description>Last 5 links that you've shortened.</Card.Description>
+
+		<Button href="/me/links" variant="outline" size="sm" class="absolute right-4 top-3 gap-2">
+			See all <IconChevronRight width={16} height={16} />
+		</Button>
 	</Card.Header>
 
 	<Card.Content>
