@@ -8,6 +8,10 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			auth: import('lucia').AuthRequest;
+
+			/**
+			 * Only used inside /api routes!!
+			 */
 			apiKey: ApiKey;
 		}
 		// interface PageData {}

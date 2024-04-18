@@ -1,6 +1,6 @@
 import { pgTable, varchar, text, primaryKey, timestamp, index } from 'drizzle-orm/pg-core';
 import { user } from './auth';
-import { createInsertSchema } from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
 export const apiKey = pgTable(
@@ -21,7 +21,9 @@ export const apiKey = pgTable(
 );
 
 export type ApiKey = typeof apiKey.$inferSelect;
+export const apiKeySchema = createSelectSchema(apiKey);
 
+export type ApiKeyInsert = typeof apiKey.$inferInsert;
 export const apiKeyInsertSchema = createInsertSchema(apiKey, {
 	id: z.string().length(15),
 	secret: z.string().min(1)

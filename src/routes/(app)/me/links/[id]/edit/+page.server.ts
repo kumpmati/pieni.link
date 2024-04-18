@@ -1,12 +1,17 @@
 import { RESERVED_LINK_IDS } from '$lib/server/constants';
-import { updateLink } from '$lib/server/database/handlers/links.js';
+import { updateUserLink } from '$lib/server/database/handlers/links.js';
 import { db } from '$lib/server/database/index.js';
 import { linkUpdateSchema, links, type Link } from '$lib/server/database/schema/link.js';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
 export const actions = {
-	update: async ({ request, params }) => {
+	update: async ({ request, params, locals }) => {
+		const session = await locals.auth.validate();
+		if (!session) {
+			error(401, 'unauthorized');
+		}
+
 		const raw = Object.fromEntries(await request.formData());
 
 		const body = linkUpdateSchema.safeParse(raw);
@@ -21,7 +26,7 @@ export const actions = {
 		let updated: Link;
 
 		try {
-			updated = await updateLink(params.id, body.data);
+			updated = await updateUserLink(params.id, session.user.id, body.data);
 		} catch (err) {
 			error(500, err as Error);
 		}
