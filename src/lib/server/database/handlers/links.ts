@@ -32,6 +32,20 @@ export const getAllUserLinks = async (userId: AuthUser['id']): Promise<Link[]> =
 	return db.select().from(links).where(eq(links.userId, userId)).orderBy(desc(links.createdAt));
 };
 
+export const getUserLinksPaginated = async (
+	userId: AuthUser['id'],
+	limit: number,
+	offset: number = 0
+): Promise<Link[]> => {
+	return db
+		.select()
+		.from(links)
+		.where(eq(links.userId, userId))
+		.orderBy(desc(links.createdAt))
+		.limit(limit)
+		.offset(offset);
+};
+
 /**
  * Returns a single link that the user must own
  * @param linkId

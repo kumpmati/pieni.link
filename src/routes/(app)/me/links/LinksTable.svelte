@@ -96,11 +96,13 @@
 								<AlertDialog.Footer class="gap-2">
 									<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 
-									<form use:enhance class="contents" method="post" action="?/delete_link">
+									<form use:enhance class="contents" method="post" action="/me/links?/delete_link">
 										<input type="hidden" name="id" value={link.id} />
 
-										<AlertDialog.Action type="submit">
-											<IconTrash width={16} height={16} /> Delete
+										<AlertDialog.Action type="button" asChild>
+											<Button variant="destructive" type="submit" class="gap-1">
+												<IconTrash width={16} height={16} /> Delete
+											</Button>
 										</AlertDialog.Action>
 									</form>
 								</AlertDialog.Footer>
