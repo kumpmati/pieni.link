@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import { db } from '..';
 import { apiKey, type ApiKey } from '../schema/api';
 import { nanoid } from 'nanoid';
@@ -12,7 +12,8 @@ export const getUserApiKeys = async (userId: string): Promise<Omit<ApiKey, 'secr
 	return db
 		.select({ id: apiKey.id, userId: apiKey.userId, createdAt: apiKey.createdAt })
 		.from(apiKey)
-		.where(eq(apiKey.userId, userId));
+		.where(eq(apiKey.userId, userId))
+		.orderBy(desc(apiKey.createdAt));
 };
 
 export const getUserApiKeysUnsafe = async (userId: string): Promise<ApiKey[]> => {

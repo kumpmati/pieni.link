@@ -6,6 +6,7 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import dayjs from 'dayjs';
 
 	export let keys: Omit<ApiKey, 'secret'>[];
 </script>
@@ -22,8 +23,10 @@
 	<Table.Body>
 		{#each keys as key (key.id)}
 			<Table.Row>
-				<Table.Cell>{key.id}</Table.Cell>
-				<Table.Cell>{key.createdAt.toLocaleString()}</Table.Cell>
+				<Table.Cell>
+					<pre>{key.id}</pre>
+				</Table.Cell>
+				<Table.Cell>{dayjs(key.createdAt).format('MMM DD YYYY HH:mm:ss')}</Table.Cell>
 				<Table.Cell>
 					<AlertDialog.Root>
 						<AlertDialog.Trigger>
