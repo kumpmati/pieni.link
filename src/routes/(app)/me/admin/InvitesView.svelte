@@ -3,7 +3,9 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import type { SignupToken } from '$lib/server/database/schema/auth';
-	import { IconCopy, IconMailPlus, IconTrash } from '@tabler/icons-svelte';
+	import IconCopy from '~icons/tabler/copy';
+	import IconMailPlus from '~icons/tabler/mail-plus';
+	import IconTrash from '~icons/tabler/trash';
 	import dayjs from 'dayjs';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import Label from '$lib/components/ui/label/label.svelte';
@@ -23,7 +25,7 @@
 		<Dialog.Root>
 			<Dialog.Trigger>
 				<Button class="mr-6 gap-2" size="sm" variant="secondary">
-					<IconMailPlus size={16} />
+					<IconMailPlus width={16} height={16} />
 					New Invite
 				</Button>
 			</Dialog.Trigger>
@@ -84,7 +86,7 @@
 											.then(() => toast.success(`Copied invite token to clipboard!`))
 											.catch((err) => toast.error(err))}
 								>
-									<IconCopy size={12} />
+									<IconCopy width={12} height={12} />
 								</Button>
 							</span>
 						</Table.Cell>
@@ -102,7 +104,7 @@
 									disabled={!!invite.usedAt}
 									title={invite.usedAt ? 'Cannot delete already used invite' : ''}
 								>
-									<IconTrash size={16} />
+									<IconTrash width={16} height={16} />
 								</Button>
 							</form>
 						</Table.Cell>

@@ -2,10 +2,9 @@
 	import type { ApiKey } from '$lib/server/database/schema/api';
 	import * as Table from '$lib/components/ui/table';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { IconTrash } from '@tabler/icons-svelte';
+	import IconTrash from '~icons/tabler/trash';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
 	import dayjs from 'dayjs';
 
 	export let keys: Omit<ApiKey, 'secret'>[];
@@ -31,7 +30,7 @@
 					<AlertDialog.Root>
 						<AlertDialog.Trigger>
 							<Button variant="ghost" size="icon">
-								<IconTrash size={16} />
+								<IconTrash width={16} height={16} />
 							</Button>
 						</AlertDialog.Trigger>
 
@@ -50,7 +49,7 @@
 									<AlertDialog.Cancel type="reset">Cancel</AlertDialog.Cancel>
 
 									<Button type="submit" variant="destructive" class="gap-2">
-										<IconTrash size={16} /> Delete
+										<IconTrash width={16} height={16} /> Delete
 									</Button>
 								</form>
 							</AlertDialog.Footer>

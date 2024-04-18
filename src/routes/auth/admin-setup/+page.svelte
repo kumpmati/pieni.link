@@ -1,8 +1,7 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
-
 	import * as Card from '$lib/components/ui/card';
-	import { IconBrandGoogleFilled } from '@tabler/icons-svelte';
+	import IconBrandGoogleFilled from '~icons/tabler/brand-google-filled';
 </script>
 
 <Card.Root class="w-full max-w-sm">
@@ -13,7 +12,7 @@
 
 	<Card.Content class="w-full flex-col">
 		<Button href="/auth/google?type=signup" class="mt-4 w-full gap-2">
-			<IconBrandGoogleFilled size={16} />
+			<IconBrandGoogleFilled width={16} height={16} />
 			Continue with Google
 		</Button>
 	</Card.Content>

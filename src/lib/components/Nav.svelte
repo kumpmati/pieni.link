@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { IconLogin, IconUser } from '@tabler/icons-svelte';
+	import IconLogin from '~icons/tabler/login';
+	import IconUser from '~icons/tabler/user';
 	import Logo from './Logo.svelte';
-
 	import { Button } from './ui/button';
 	import type { Session } from 'lucia';
 
@@ -17,11 +17,11 @@
 	<div class="flex gap-2">
 		{#if session}
 			<Button href="/me" size="icon" variant={$page.url.pathname === '/me' ? 'default' : 'ghost'}>
-				<IconUser size={16} />
+				<IconUser />
 			</Button>
 		{:else}
 			<Button href="/auth/signin" size="icon" variant="ghost">
-				<IconLogin size={16} />
+				<IconLogin />
 			</Button>
 		{/if}
 	</div>

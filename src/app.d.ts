@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
-
 import type { ApiKey } from '$lib/server/database/schema/api';
+import 'unplugin-icons/types/svelte';
 
 // for information about these interfaces
 declare global {

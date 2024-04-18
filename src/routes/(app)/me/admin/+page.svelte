@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { IconChevronLeft, IconLink, IconMail, IconUsers } from '@tabler/icons-svelte';
-	import Button from '$lib/components/ui/button/button.svelte';
+	import IconLink from '~icons/tabler/link';
+	import IconMail from '~icons/tabler/mail';
+	import IconUsers from '~icons/tabler/users';
 	import type { PageData } from './$types';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
@@ -41,14 +42,14 @@
 	>
 		<Tabs.List>
 			<Tabs.Trigger value="links" class="gap-2">
-				<IconLink size={14} /> Links
+				<IconLink width={14} height={14} /> Links
 			</Tabs.Trigger>
 			<Tabs.Trigger value="users" class="gap-2">
-				<IconUsers size={14} />
+				<IconUsers width={14} height={14} />
 				Users
 			</Tabs.Trigger>
 			<Tabs.Trigger value="invites" class="gap-2">
-				<IconMail size={14} />
+				<IconMail width={14} height={14} />
 				Invites
 			</Tabs.Trigger>
 		</Tabs.List>
