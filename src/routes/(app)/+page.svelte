@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { PUBLIC_BASEURL } from '$env/static/public';
-	import Input from '$lib/components/ui/input/input.svelte';
 	import IconX from '~icons/tabler/x';
 	import IconCopy from '~icons/tabler/copy';
 	import type { Link } from '$lib/server/database/schema/link';
-	import { flyAndScale } from '$lib/utils';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
@@ -19,7 +17,6 @@
 	let inputElement: HTMLInputElement;
 	let loading = false;
 	let shortenedLink: Link | null = null;
-	let error: any = null;
 	let links: Link[] = [];
 
 	const copyLink = async (link: Link) => {
@@ -41,7 +38,6 @@
 	const handleSubmit: SubmitFunction = ({ formElement }) => {
 		loading = true;
 		shortenedLink = null;
-		error = null;
 
 		return async ({ result, update }) => {
 			switch (result.type) {
@@ -52,7 +48,11 @@
 					break;
 
 				case 'error':
-					error = result.error;
+					toast.error('Failed to shorten link', {
+						description: (result.error as Error)?.message ?? 'unknown error',
+						dismissable: true
+					});
+
 					break;
 
 				case 'redirect':
@@ -88,7 +88,7 @@
 			placeholder="Paste a link here to shorten it"
 			on:paste={handleOnPaste}
 			disabled={loading}
-			class="text-md flex h-9 w-full rounded-md border border-input bg-slate-800 p-5 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:px-5 md:py-6 md:text-lg"
+			class="text-md flex w-full rounded-md border border-input bg-slate-800 px-5 py-4 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:px-5 sm:py-4 sm:text-lg"
 			value={shortenedLink ? `${PUBLIC_BASEURL}/${shortenedLink.id}` : ''}
 		/>
 	</form>
@@ -126,11 +126,5 @@
 				</li>
 			{/each}
 		</ul>
-	{/if}
-
-	{#if error}
-		<p class="text-destructive" transition:flyAndScale>
-			{error?.message ?? 'unknown error'}
-		</p>
 	{/if}
 </div>
