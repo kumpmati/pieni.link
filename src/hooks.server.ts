@@ -29,10 +29,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
 	const end = performance.now();
 
-	// don't bloat logs page with debug logs
+	// ignore /me/admin/logs so that refreshing it doesn't bloat the logs
 	if (!event.url.pathname.startsWith('/me/admin/logs')) {
 		logger.debug(
-			`${event.request.method} ${event.url.pathname}: took ${Math.round(end - start)} ms`
+			`${event.request.method} ${event.url.pathname}${event.url.search}: took ${Math.round(end - start)} ms`
 		);
 	}
 

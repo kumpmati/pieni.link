@@ -6,9 +6,9 @@ import { redirect } from '@sveltejs/kit';
 export const GET = async ({ params, request }) => {
 	const link = await consumeLink(params.id);
 
-	await insertLinkVisitFromRequest(params.id, request);
-
-	logger.info(`Link ${params.id} visited`);
+	insertLinkVisitFromRequest(params.id, request).then(() =>
+		logger.info(`Link ${params.id} visited`)
+	);
 
 	redirect(302, link.url);
 };
