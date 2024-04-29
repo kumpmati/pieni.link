@@ -15,6 +15,11 @@ The [pieni.link](https://pieni.link) website is hosted on [Netlify](https://app.
   - [x] Basic per-link usage tracking
   - [ ] Password-protected links (TODO)
   - [x] Temporary links
+- [ ] API
+  - [x] API Keys
+  - [x] Link API
+  - [ ] Link visits API
+  - [ ] User API
 - [x] User accounts with roles (admin / member)
   - [x] New users are invite-only (managed by admin users)
 
