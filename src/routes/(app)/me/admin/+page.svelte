@@ -20,16 +20,20 @@
 
 	export let data: PageData;
 
+	$: tab = $page.url.searchParams.get('view')?.toString() ?? 'links';
+
 	const changeTab = (val: string | undefined) => {
 		if (!browser) return;
 
 		$page.url.searchParams.set('view', val ?? '');
 		goto(`?${$page.url.searchParams.toString()}`, { replaceState: true, keepFocus: true });
+
+		tab = val ?? 'links';
 	};
 </script>
 
 <svelte:head>
-	<title>Admin panel</title>
+	<title>Admin panel ({tab})</title>
 </svelte:head>
 
 <Crumbs
