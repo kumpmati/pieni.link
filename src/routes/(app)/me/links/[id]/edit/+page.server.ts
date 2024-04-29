@@ -33,7 +33,7 @@ export const actions = {
 		}
 
 		logger.info(
-			`Link ${params.id} updated to ${JSON.stringify(updated)} by user ${session.user.id} (${session.user.name})`
+			`Link ${params.id} updated to ${JSON.stringify(updated, null, 2)} by user ${session.user.id} (${session.user.name})`
 		);
 
 		redirect(301, `/me/links/${updated.id}/edit`);
