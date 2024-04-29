@@ -33,8 +33,8 @@
 	};
 
 	const levelColor: Record<number, string> = {
-		10: 'text-blue-200',
-		20: 'text-slate-200',
+		10: 'text-cyan-300',
+		20: 'text-purple-300',
 		30: 'text-blue-400',
 		40: 'text-orange-400',
 		50: 'text-red-400',

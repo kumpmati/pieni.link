@@ -21,10 +21,22 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return await resolve(event);
 	}
 
+	const start = performance.now();
+
 	// we can pass `event` because we used the SvelteKit middleware
 	event.locals.auth = auth.handleRequest(event);
 
-	return await resolve(event);
+	const response = await resolve(event);
+	const end = performance.now();
+
+	// don't bloat logs page with debug logs
+	if (!event.url.pathname.startsWith('/me/admin/logs')) {
+		logger.debug(
+			`${event.request.method} ${event.url.pathname}: took ${Math.round(end - start)} ms`
+		);
+	}
+
+	return response;
 };
 
 export const handleError: HandleServerError = async ({ message, event }) => {
