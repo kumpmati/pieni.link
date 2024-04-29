@@ -99,12 +99,12 @@
 					<AlertDialog.Header>
 						<AlertDialog.Title>Are you sure?</AlertDialog.Title>
 						<AlertDialog.Description>
-							This will delete all application logs permanently
+							This will delete all application logs permanently.
 						</AlertDialog.Description>
 					</AlertDialog.Header>
 
-					<AlertDialog.Footer>
-						<form method="post" action="?/delete_all_logs" class="flex gap-2" use:enhance>
+					<form method="post" action="?/delete_all_logs" class="contents" use:enhance>
+						<AlertDialog.Footer>
 							<AlertDialog.Cancel type="reset">Cancel</AlertDialog.Cancel>
 
 							<AlertDialog.Action
@@ -113,8 +113,8 @@
 							>
 								<IconTrash width={16} height={16} /> Delete all logs
 							</AlertDialog.Action>
-						</form>
-					</AlertDialog.Footer>
+						</AlertDialog.Footer>
+					</form>
 				</AlertDialog.Content>
 			</AlertDialog.Root>
 		</div>
