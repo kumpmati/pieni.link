@@ -4,6 +4,7 @@ import { auth, googleAuth } from '$lib/server/auth/lucia';
 import { consumeSignupToken } from '$lib/server/auth/signupToken';
 import { db } from '$lib/server/database/index.js';
 import { signupToken } from '$lib/server/database/schema/auth.js';
+import { logger } from '$lib/server/logger/index.js';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 
@@ -61,6 +62,10 @@ export const GET = async ({ locals, url, cookies }) => {
 				.update(signupToken)
 				.set({ userId: newUser.id })
 				.where(eq(signupToken.id, signupTokenCookie));
+
+			logger.info(
+				`New user ${newUser.id} (${newUser.name}) registered using invite ${signupTokenCookie}`
+			);
 
 			const session = await auth.createSession({ userId: newUser.userId, attributes: {} });
 			locals.auth.setSession(session);

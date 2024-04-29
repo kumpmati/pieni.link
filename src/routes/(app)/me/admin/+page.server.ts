@@ -1,5 +1,6 @@
 import { createSignupToken, deleteSignupToken } from '$lib/server/database/handlers/signupToken.js';
 import { createSignupTokenSchema } from '$lib/server/database/schema/auth.js';
+import { logger } from '$lib/server/logger/index.js';
 import { error, redirect } from '@sveltejs/kit';
 
 import { z } from 'zod';
@@ -20,6 +21,10 @@ export const actions = {
 
 		await createSignupToken(body.data.role);
 
+		logger.info(
+			`New ${body.data.role} invite created by ${session.user.id} (${session.user.name})`
+		);
+
 		redirect(302, '/me/admin?view=invites');
 	},
 
@@ -36,5 +41,7 @@ export const actions = {
 		}
 
 		await deleteSignupToken(body.data.id);
+
+		logger.info(`Invite ${body.data.id} deleted by ${session.user.id} (${session.user.name})`);
 	}
 };

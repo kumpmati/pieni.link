@@ -4,6 +4,7 @@ import { getUserLinksPaginated } from '$lib/server/database/handlers/links';
 import { getOverallLinkStatistics } from '$lib/server/database/handlers/analytics';
 import { deleteUser } from '$lib/server/database/handlers/user';
 import { getUserApiKeys } from '$lib/server/database/handlers/api';
+import { logger } from '$lib/server/logger';
 
 export const load = (async ({ parent }) => {
 	const { session } = await parent();
@@ -28,6 +29,8 @@ export const actions = {
 
 		await deleteUser(session.user.id);
 		locals.auth.invalidate();
+
+		logger.warn(`Account deleted: ${session.user.id} (${session.user.name})`);
 
 		redirect(302, '/');
 	}

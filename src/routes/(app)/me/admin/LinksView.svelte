@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Link } from '$lib/server/database/schema/link';
-	import type { Session } from 'lucia';
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import dayjs from 'dayjs';
