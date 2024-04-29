@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import type { SignupToken } from '$lib/server/database/schema/auth';
@@ -8,9 +8,11 @@
 	import IconTrash from '~icons/tabler/trash';
 	import dayjs from 'dayjs';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import Label from '$lib/components/ui/label/label.svelte';
 	import { enhance } from '$app/forms';
 	import { toast } from 'svelte-sonner';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import AlertDialogAction from '$lib/components/ui/alert-dialog/alert-dialog-action.svelte';
+	import { PUBLIC_BASEURL } from '$env/static/public';
 
 	export let invites: SignupToken[];
 </script>
@@ -23,11 +25,9 @@
 		</Card.Header>
 
 		<Dialog.Root>
-			<Dialog.Trigger>
-				<Button class="mr-6 gap-2" size="sm" variant="secondary">
-					<IconMailPlus width={16} height={16} />
-					New Invite
-				</Button>
+			<Dialog.Trigger class="mr-6 gap-2 {buttonVariants({ variant: 'secondary', size: 'sm' })}">
+				<IconMailPlus width={16} height={16} />
+				New Invite
 			</Dialog.Trigger>
 
 			<Dialog.Content>
@@ -38,16 +38,12 @@
 					</Dialog.Description>
 				</Dialog.Header>
 
-				<form method="post" action="?/create_invite" class="flex flex-col gap-2" use:enhance>
-					<Label>
-						Role
-
-						<select name="role" required>
-							<option value="">Choose a role</option>
-							<option value="member">Member</option>
-							<option value="admin">Administrator</option>
-						</select>
-					</Label>
+				<form method="post" action="?/create_invite" class="contents">
+					<select name="role" required class="rounded-md p-2">
+						<option value="">Choose a role</option>
+						<option value="member">Member</option>
+						<option value="admin">Administrator</option>
+					</select>
 
 					<Dialog.Footer>
 						<Button type="submit">Create invite</Button>
@@ -62,18 +58,19 @@
 			<Table.Header>
 				<Table.Head>Token</Table.Head>
 				<Table.Head>Role</Table.Head>
-				<Table.Head>User</Table.Head>
-				<Table.Head>Used At</Table.Head>
-				<Table.Head>Created At</Table.Head>
+				<Table.Head>Created</Table.Head>
+				<Table.Head>Used</Table.Head>
+				<Table.Head>Used by</Table.Head>
 				<Table.Head />
 			</Table.Header>
 
 			<Table.Body>
 				{#each invites as invite (invite.id)}
+					{@const link = `${PUBLIC_BASEURL}/auth/signup?token=${invite.id}`}
 					<Table.Row>
 						<Table.Cell class="whitespace-nowrap">
-							<span class="inline-flex items-center gap-1">
-								<pre>{invite.id.substring(0, 15)}...</pre>
+							<span class="inline-flex items-center gap-1" title={link}>
+								<pre>{link.slice(0, 12)}...{link.slice(-5)}</pre>
 
 								<Button
 									size="icon"
@@ -82,7 +79,7 @@
 									title="Copy to clipboard"
 									on:click={async () =>
 										navigator.clipboard
-											.writeText(invite.id)
+											.writeText(link)
 											.then(() => toast.success(`Copied invite token to clipboard!`))
 											.catch((err) => toast.error(err))}
 								>
@@ -91,22 +88,45 @@
 							</span>
 						</Table.Cell>
 						<Table.Cell>{invite.role}</Table.Cell>
-						<Table.Cell>{invite.userId ?? '-'}</Table.Cell>
-						<Table.Cell>{invite.usedAt ? dayjs().to(invite.usedAt) : '-'}</Table.Cell>
 						<Table.Cell>{dayjs().to(invite.createdAt)}</Table.Cell>
+						<Table.Cell>{invite.usedAt ? dayjs().to(invite.usedAt) : '-'}</Table.Cell>
+						<Table.Cell>{invite.userId ?? '-'}</Table.Cell>
 						<Table.Cell>
-							<form class="contents" use:enhance method="post" action="?/delete_invite">
-								<input type="hidden" name="id" value={invite.id} />
-								<Button
-									type="submit"
-									size="icon"
-									variant="ghost"
+							<AlertDialog.Root>
+								<AlertDialog.Trigger
+									class="gap-2 {buttonVariants({ variant: 'ghost', size: 'icon' })}"
 									disabled={!!invite.usedAt}
-									title={invite.usedAt ? 'Cannot delete already used invite' : ''}
 								>
 									<IconTrash width={16} height={16} />
-								</Button>
-							</form>
+								</AlertDialog.Trigger>
+
+								<AlertDialog.Content>
+									<AlertDialog.Header>
+										<AlertDialog.Title>Are you sure?</AlertDialog.Title>
+										<AlertDialog.Description>
+											Do you want to delete the unused {invite.role} invite link:
+											<p>{invite.id}</p>
+										</AlertDialog.Description>
+									</AlertDialog.Header>
+
+									<form class="contents" use:enhance method="post" action="?/delete_invite">
+										<input type="hidden" name="id" value={invite.id} />
+										<AlertDialog.Footer>
+											<AlertDialog.Cancel type="reset">Cancel</AlertDialog.Cancel>
+
+											<AlertDialog.Action
+												type="submit"
+												class="gap-2 {buttonVariants({ variant: 'destructive' })}"
+												disabled={!!invite.usedAt}
+												title={invite.usedAt ? 'Cannot delete already used invite' : ''}
+											>
+												<IconTrash width={16} height={16} />
+												Delete invite
+											</AlertDialog.Action>
+										</AlertDialog.Footer>
+									</form>
+								</AlertDialog.Content>
+							</AlertDialog.Root>
 						</Table.Cell>
 					</Table.Row>
 				{/each}

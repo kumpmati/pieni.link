@@ -1,6 +1,4 @@
-![logo](/static/favicon.png)
-
-# Pieni
+# <img src="static/favicon.png" width="32" height="32" /> Pieni
 
 > A modern, minimal URL shortener
 
