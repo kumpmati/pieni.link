@@ -1,6 +1,7 @@
 import { RESERVED_LINK_IDS } from '$lib/server/constants.js';
 import { insertLink } from '$lib/server/database/handlers/links.js';
 import { linkInsertSchema } from '$lib/server/database/schema/link.js';
+import { logger } from '$lib/server/logger/index.js';
 import { error, redirect } from '@sveltejs/kit';
 import { fromZodError } from 'zod-validation-error';
 
@@ -23,6 +24,12 @@ export const actions = {
 			error(400, 'cannot use a reserved url as an ID');
 		}
 
-		return await insertLink(body.data);
+		const link = await insertLink(body.data);
+
+		logger.info(
+			`New link: ${link.id} -> ${link.url} by user ${link.userId} (${session.user.name})`
+		);
+
+		return link;
 	}
 };

@@ -6,6 +6,7 @@ import {
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { apiKeySchema } from '$lib/server/database/schema/api';
+import { logger } from '$lib/server/logger';
 
 export const load = (async ({ locals }) => {
 	const session = await locals.auth.validate();
@@ -25,7 +26,11 @@ export const actions = {
 			error(401, 'unauthorized');
 		}
 
-		return await createUserApiKey(session.user.id);
+		const key = await createUserApiKey(session.user.id);
+
+		logger.info(`API key ${key.id} created by ${session.user.id} (${session.user.name})`);
+
+		return key;
 	},
 
 	delete_api_key: async ({ locals, request }) => {
@@ -42,5 +47,9 @@ export const actions = {
 		}
 
 		await deleteUserApiKey(result.data.id, session.user.id);
+
+		logger.info(
+			`API key ${result.data.id} was deleted by ${session.user.id} (${session.user.name})`
+		);
 	}
 };
