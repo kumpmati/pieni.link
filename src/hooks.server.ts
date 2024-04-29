@@ -1,5 +1,6 @@
 import { auth } from '$lib/server/auth/lucia';
 import { getApiKeyBySecret } from '$lib/server/database/handlers/api';
+import { logger } from '$lib/server/logger';
 import { error, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 
@@ -26,7 +27,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handleError: HandleServerError = async ({ message }) => {
+export const handleError: HandleServerError = async ({ message, event }) => {
+	logger.error(`${event.request.method} ${event.url.pathname}: ${message}`);
+
 	return {
 		message,
 		errorId: nanoid()
