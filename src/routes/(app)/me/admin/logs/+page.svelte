@@ -21,9 +21,7 @@
 
 	export let data: PageData;
 
-	$: level = $page.url.searchParams.get('level')
-		? parseInt($page.url.searchParams.get('level') || '40')
-		: null;
+	$: level = parseInt($page.url.searchParams.get('level') || '40');
 
 	const levelToString: Record<number, Level> = {
 		10: 'trace',
@@ -74,7 +72,7 @@
 				<IconRefresh width={16} height={16} />
 			</Button>
 
-			<Select.Root selected={level ? { label: levelToString[level], value: level } : undefined}>
+			<Select.Root selected={{ label: levelToString[level], value: level }}>
 				<Select.Trigger class="w-[7rem]">
 					<Select.Value placeholder="Log level" />
 				</Select.Trigger>
