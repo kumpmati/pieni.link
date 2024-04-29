@@ -126,22 +126,26 @@
 		<Table.Root>
 			<Table.Header>
 				<Table.Head class="w-[2rem] text-right">Level</Table.Head>
-				<Table.Head class="w-[10rem]">Message</Table.Head>
+				<Table.Head class="w-full">Message</Table.Head>
 				<Table.Head class="min-w-[11.25rem] max-w-[11.25rem]">Time</Table.Head>
 			</Table.Header>
 
 			<Table.Body>
 				{#await data.logs}
 					<Table.Row>
-						<Table.Cell>
-							<Skeleton class="h-10 w-full" />
-						</Table.Cell>
-						<Table.Cell>
-							<Skeleton class="h-10 w-full" />
-						</Table.Cell>
-						<Table.Cell>
-							<Skeleton class="h-10 w-full" />
-						</Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
+						<Table.Cell><Skeleton class="h-8 w-full" /></Table.Cell>
 					</Table.Row>
 				{:then logs}
 					{#each logs as row (row.id)}
