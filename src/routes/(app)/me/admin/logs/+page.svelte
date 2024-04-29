@@ -72,7 +72,7 @@
 				<IconRefresh width={16} height={16} />
 			</Button>
 
-			<Select.Root selected={{ label: levelToString[level], value: level }}>
+			<Select.Root selected={{ label: levelToString[level], value: level.toString() }}>
 				<Select.Trigger class="w-[7rem]">
 					<Select.Value placeholder="Log level" />
 				</Select.Trigger>
