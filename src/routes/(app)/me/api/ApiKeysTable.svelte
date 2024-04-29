@@ -6,6 +6,7 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { enhance } from '$app/forms';
 	import dayjs from 'dayjs';
+	import { buttonVariants } from '$lib/components/ui/button';
 
 	export let keys: Omit<ApiKey, 'secret'>[];
 </script>
@@ -42,17 +43,20 @@
 								</AlertDialog.Description>
 							</AlertDialog.Header>
 
-							<AlertDialog.Footer>
-								<form method="post" action="?/delete_api_key" use:enhance class="flex gap-2">
-									<input type="hidden" name="id" value={key.id} />
+							<form method="post" action="?/delete_api_key" use:enhance class="contents">
+								<input type="hidden" name="id" value={key.id} />
 
+								<AlertDialog.Footer>
 									<AlertDialog.Cancel type="reset">Cancel</AlertDialog.Cancel>
 
-									<Button type="submit" variant="destructive" class="gap-2">
+									<AlertDialog.Action
+										type="submit"
+										class="gap-2 {buttonVariants({ variant: 'destructive' })}"
+									>
 										<IconTrash width={16} height={16} /> Delete
-									</Button>
-								</form>
-							</AlertDialog.Footer>
+									</AlertDialog.Action>
+								</AlertDialog.Footer>
+							</form>
 						</AlertDialog.Content>
 					</AlertDialog.Root>
 				</Table.Cell>
