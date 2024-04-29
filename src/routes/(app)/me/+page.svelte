@@ -11,6 +11,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
 	import Crumbs from '$lib/components/Crumbs.svelte';
+	import { buttonVariants } from '$lib/components/ui/button';
 
 	export let data: PageData;
 </script>
@@ -111,14 +112,18 @@
 					</AlertDialog.Description>
 				</AlertDialog.Header>
 
-				<AlertDialog.Footer>
-					<form method="post" action="?/delete_account" class="flex gap-2">
+				<form method="post" action="?/delete_account" class="contents">
+					<AlertDialog.Footer>
 						<AlertDialog.Cancel type="reset">Keep account</AlertDialog.Cancel>
-						<Button type="submit" variant="destructive" class="gap-2">
+
+						<AlertDialog.Action
+							type="submit"
+							class="gap-2 {buttonVariants({ variant: 'destructive' })}"
+						>
 							<IconTrash width={16} height={16} /> Delete account
-						</Button>
-					</form>
-				</AlertDialog.Footer>
+						</AlertDialog.Action>
+					</AlertDialog.Footer>
+				</form>
 			</AlertDialog.Content>
 		</AlertDialog.Root>
 	</Card.Content>

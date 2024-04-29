@@ -178,14 +178,17 @@
 						</AlertDialog.Description>
 					</AlertDialog.Header>
 
-					<form method="post" action="?/delete" use:enhance class="flex justify-end gap-2">
-						<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+					<form method="post" action="?/delete" use:enhance class="contents">
+						<AlertDialog.Footer>
+							<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 
-						<AlertDialog.Action type="button" asChild>
-							<Button variant="destructive" type="submit" class="gap-1">
+							<AlertDialog.Action
+								type="submit"
+								class="gap-2 {buttonVariants({ variant: 'destructive' })}"
+							>
 								<IconTrash width={16} height={16} /> Delete
-							</Button>
-						</AlertDialog.Action>
+							</AlertDialog.Action>
+						</AlertDialog.Footer>
 					</form>
 				</AlertDialog.Content>
 			</AlertDialog.Root>

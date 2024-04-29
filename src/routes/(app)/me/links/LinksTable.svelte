@@ -11,7 +11,7 @@
 	import type { Link } from '$lib/server/database/schema/link';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { enhance } from '$app/forms';
 
 	dayjs.extend(relativeTime);
@@ -93,19 +93,20 @@
 									</AlertDialog.Description>
 								</AlertDialog.Header>
 
-								<AlertDialog.Footer class="gap-2">
-									<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+								<form use:enhance class="contents" method="post" action="/me/links?/delete_link">
+									<input type="hidden" name="id" value={link.id} />
 
-									<form use:enhance class="contents" method="post" action="/me/links?/delete_link">
-										<input type="hidden" name="id" value={link.id} />
+									<AlertDialog.Footer>
+										<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 
-										<AlertDialog.Action type="button" asChild>
-											<Button variant="destructive" type="submit" class="gap-1">
-												<IconTrash width={16} height={16} /> Delete
-											</Button>
+										<AlertDialog.Action
+											type="submit"
+											class="gap-2 {buttonVariants({ variant: 'destructive' })}"
+										>
+											<IconTrash width={16} height={16} /> Delete
 										</AlertDialog.Action>
-									</form>
-								</AlertDialog.Footer>
+									</AlertDialog.Footer>
+								</form>
 							</AlertDialog.Content>
 						</AlertDialog.Root>
 					</Table.Cell>
