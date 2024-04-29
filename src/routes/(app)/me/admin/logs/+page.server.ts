@@ -4,11 +4,12 @@ import { and, desc, gte, lt } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import dayjs from 'dayjs';
 import { error } from '@sveltejs/kit';
+import { logger } from '$lib/server/logger';
 
 export const load = (async ({ url }) => {
 	const lastMonth = dayjs().subtract(30, 'days').toDate();
 
-	const level = parseInt(url.searchParams.get('level') || '0');
+	const level = parseInt(url.searchParams.get('level') || '40'); // default to 'warn'
 
 	// delete old logs automatically
 	await db.delete(log).where(lt(log.timestamp, lastMonth));
@@ -31,8 +32,6 @@ export const actions = {
 
 		await db.delete(log);
 
-		await db
-			.insert(log)
-			.values({ level: 30, message: `Logs cleared by ${session.user.id} (${session.user.name})` });
+		logger.warn(`Logs cleared by ${session.user.id} (${session.user.name})`);
 	}
 };

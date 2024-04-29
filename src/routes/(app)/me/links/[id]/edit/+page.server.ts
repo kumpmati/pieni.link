@@ -2,6 +2,7 @@ import { RESERVED_LINK_IDS } from '$lib/server/constants';
 import { updateUserLink } from '$lib/server/database/handlers/links.js';
 import { db } from '$lib/server/database/index.js';
 import { linkUpdateSchema, links, type Link } from '$lib/server/database/schema/link.js';
+import { logger } from '$lib/server/logger/index.js';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
@@ -31,6 +32,10 @@ export const actions = {
 			error(500, err as Error);
 		}
 
+		logger.info(
+			`Link ${params.id} updated to ${JSON.stringify(updated)} by user ${session.user.id} (${session.user.name})`
+		);
+
 		redirect(301, `/me/links/${updated.id}/edit`);
 	},
 
@@ -47,6 +52,8 @@ export const actions = {
 		if (result.rowCount === 0) {
 			error(500, 'failed to delete link');
 		}
+
+		logger.info(`Link ${params.id} deleted by user ${session.user.id} (${session.user.name})`);
 
 		redirect(302, '/me');
 	}

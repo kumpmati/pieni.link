@@ -14,10 +14,16 @@
 	import IconTrash from '~icons/tabler/trash';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import { goto } from '$app/navigation';
+	import IconRefresh from '~icons/tabler/refresh';
 
 	dayjs.extend(relativeTime);
 
 	export let data: PageData;
+
+	$: level = $page.url.searchParams.get('level')
+		? parseInt($page.url.searchParams.get('level') || '40')
+		: null;
 
 	const levelToString: Record<number, Level> = {
 		10: 'trace',
@@ -38,6 +44,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Logs ({level ? levelToString[level] : 'warn'})</title>
+</svelte:head>
+
 <Crumbs
 	links={[
 		{ href: '/', label: 'Home' },
@@ -48,20 +58,33 @@
 />
 
 <Card.Root class="mt-4">
-	<Card.Header class="relative">
-		<Card.Title>Logs</Card.Title>
-		<Card.Description>Last 30 days of application logs</Card.Description>
+	<Card.Header class="flex-row justify-between">
+		<div class="flex flex-col gap-1">
+			<Card.Title>Logs</Card.Title>
+			<Card.Description>Last 30 days of application logs</Card.Description>
+		</div>
 
-		<div class="absolute right-4 top-3 flex gap-2">
-			<Select.Root portal={null}>
-				<Select.Trigger class="min-w-[8rem]">
+		<div class="flex w-fit flex-row items-start gap-2">
+			<Button
+				on:click={() => goto($page.url, { invalidateAll: true, replaceState: true })}
+				variant="outline"
+				size="icon"
+				class="min-w-9"
+			>
+				<IconRefresh width={16} height={16} />
+			</Button>
+
+			<Select.Root selected={level ? { label: levelToString[level], value: level } : undefined}>
+				<Select.Trigger class="w-[7rem]">
 					<Select.Value placeholder="Log level" />
 				</Select.Trigger>
 
 				<Select.Content>
 					{#each Object.entries(levelToString) as [val, name] (val)}
-						<a href="/me/admin/logs?level={val}">
-							<Select.Item value={val} label="Level: {name}">{name}</Select.Item>
+						<a href="/me/admin/logs?level={val}" data-sveltekit-replacestate>
+							<Select.Item value={val} label={name} class="gap-2">
+								{name}
+							</Select.Item>
 						</a>
 					{/each}
 				</Select.Content>
@@ -101,28 +124,44 @@
 
 	<Card.Content>
 		<Table.Root>
+			<Table.Header>
+				<Table.Head class="w-[2rem] text-right">Level</Table.Head>
+				<Table.Head class="w-[10rem]">Message</Table.Head>
+				<Table.Head class="min-w-[11.25rem] max-w-[11.25rem]">Time</Table.Head>
+			</Table.Header>
+
 			<Table.Body>
 				{#await data.logs}
-					<Table.Row><Skeleton class="h-10 w-full" /></Table.Row>
+					<Table.Row>
+						<Table.Cell>
+							<Skeleton class="h-10 w-full" />
+						</Table.Cell>
+						<Table.Cell>
+							<Skeleton class="h-10 w-full" />
+						</Table.Cell>
+						<Table.Cell>
+							<Skeleton class="h-10 w-full" />
+						</Table.Cell>
+					</Table.Row>
 				{:then logs}
 					{#each logs as row (row.id)}
-						<Table.Row>
-							<Table.Cell class="w-[2rem] text-right font-mono {levelColor[row.level]}">
+						<Table.Row class="font-mono">
+							<Table.Cell class={levelColor[row.level]}>
 								{levelToString[row.level] ?? '-'}
 							</Table.Cell>
-							<Table.Cell class="font-mono ">{row.message}</Table.Cell>
 
-							<Table.Cell
-								class="w-[11.25rem] font-mono text-slate-600"
-								title={row.timestamp.toString()}
-							>
+							<Table.Cell>{row.message}</Table.Cell>
+
+							<Table.Cell class="text-slate-600" title={row.timestamp.toString()}>
 								{dayjs(row.timestamp).format('YYYY-MM-DD HH:mm:ss')}
 							</Table.Cell>
 						</Table.Row>
 					{:else}
 						<Table.Row>
-							<Table.Cell>No logs.</Table.Cell>
 							<Table.Cell />
+							<Table.Cell class="text-slate-600 font-mono">
+								No logs. (showing {level ? levelToString[level] : 'warn'} or above)
+							</Table.Cell>
 							<Table.Cell />
 						</Table.Row>
 					{/each}

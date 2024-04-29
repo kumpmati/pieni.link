@@ -26,7 +26,9 @@ export const actions = {
 
 		const link = await insertLink(body.data);
 
-		logger.info(`New link: ${link.id} -> ${link.url}`);
+		logger.info(
+			`New link: ${link.id} -> ${link.url} by user ${link.userId} (${session.user.name})`
+		);
 
 		return link;
 	}
