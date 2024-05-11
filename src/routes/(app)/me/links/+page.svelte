@@ -7,14 +7,6 @@
 	export let data: PageData;
 </script>
 
-<Crumbs
-	links={[
-		{ label: 'Home', href: '/' },
-		{ label: 'My account', href: '/me' },
-		{ label: 'Links', href: '/me/link' }
-	]}
-/>
-
 <Card.Root>
 	<Card.Header>
 		<Card.Title>All links</Card.Title>

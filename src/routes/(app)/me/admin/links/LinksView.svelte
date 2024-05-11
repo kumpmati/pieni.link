@@ -13,7 +13,7 @@
 <Card.Root>
 	<Card.Header>
 		<Card.Title>Links ({links.length})</Card.Title>
-		<Card.Description>View and manage all links</Card.Description>
+		<Card.Description>View all links in the system</Card.Description>
 	</Card.Header>
 
 	<Card.Content>

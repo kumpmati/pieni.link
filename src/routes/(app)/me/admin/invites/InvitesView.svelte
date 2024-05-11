@@ -11,7 +11,6 @@
 	import { enhance } from '$app/forms';
 	import { toast } from 'svelte-sonner';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import AlertDialogAction from '$lib/components/ui/alert-dialog/alert-dialog-action.svelte';
 	import { PUBLIC_BASEURL } from '$env/static/public';
 
 	export let invites: SignupToken[];

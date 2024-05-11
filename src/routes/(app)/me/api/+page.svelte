@@ -48,14 +48,6 @@
 	};
 </script>
 
-<Crumbs
-	links={[
-		{ label: 'Home', href: '/' },
-		{ label: 'My account', href: '/me' },
-		{ label: 'API Keys', href: '/me/api' }
-	]}
-/>
-
 <Card.Root>
 	<Card.Header class="flex-row items-start justify-between space-y-0">
 		<span class="flex flex-col gap-1">

@@ -46,15 +46,6 @@
 	<title>Logs ({level ? levelToString[level] : 'warn'})</title>
 </svelte:head>
 
-<Crumbs
-	links={[
-		{ href: '/', label: 'Home' },
-		{ href: '/me', label: 'My account' },
-		{ href: '/me/admin', label: 'Admin panel' },
-		{ href: '/me/admin/logs', label: 'Logs' }
-	]}
-/>
-
 <Card.Root class="mt-4">
 	<Card.Header class="flex-row justify-between">
 		<div class="flex flex-col gap-1">
