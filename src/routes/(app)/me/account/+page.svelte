@@ -4,7 +4,14 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { getPageTitleStore } from '../store';
+
+	getPageTitleStore().set('Account settings');
 </script>
+
+<svelte:head>
+	<title>Account settings</title>
+</svelte:head>
 
 <Card.Root>
 	<Card.Header>

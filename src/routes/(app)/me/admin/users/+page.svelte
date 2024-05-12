@@ -1,8 +1,11 @@
 <script lang="ts">
 	import UsersView from './UsersView.svelte';
 	import type { PageData } from './$types';
+	import { getPageTitleStore } from '../../store';
 
 	export let data: PageData;
+
+	getPageTitleStore().set('All users');
 </script>
 
 <svelte:head>

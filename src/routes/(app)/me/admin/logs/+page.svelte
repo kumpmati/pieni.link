@@ -16,6 +16,7 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { goto } from '$app/navigation';
 	import IconRefresh from '~icons/tabler/refresh';
+	import { getPageTitleStore } from '../../store';
 
 	dayjs.extend(relativeTime);
 
@@ -40,6 +41,8 @@
 		50: 'text-red-400',
 		60: 'text-red-500'
 	};
+
+	getPageTitleStore().set('Logs');
 </script>
 
 <svelte:head>

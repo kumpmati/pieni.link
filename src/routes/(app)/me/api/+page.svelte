@@ -13,6 +13,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import type { ApiKey } from '$lib/server/database/schema/api';
 	import { toast } from 'svelte-sonner';
+	import { getPageTitleStore } from '../store';
 
 	export let data: PageData;
 
@@ -46,6 +47,8 @@
 			toast.error('Copy failed', { description: (err as Error)?.message ?? 'unknown error' });
 		}
 	};
+
+	getPageTitleStore().set('API Keys');
 </script>
 
 <Card.Root>

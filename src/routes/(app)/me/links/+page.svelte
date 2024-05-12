@@ -1,10 +1,12 @@
 <script lang="ts">
-	import Crumbs from '$lib/components/Crumbs.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import LinksTable from './LinksTable.svelte';
 	import type { PageData } from './$types';
+	import { getPageTitleStore } from '../store';
 
 	export let data: PageData;
+
+	getPageTitleStore().set('My links');
 </script>
 
 <Card.Root>

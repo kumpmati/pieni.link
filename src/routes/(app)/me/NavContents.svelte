@@ -20,7 +20,7 @@
 	export { className as class };
 </script>
 
-<aside class={cn('fixed top-0 flex h-full w-64 flex-col gap-4 overflow-y-auto p-2', className)}>
+<aside class={cn('flex h-full flex-col gap-4 p-2', className)}>
 	<Button href="/" variant="link" size="sm" class="w-fit justify-start gap-2">
 		<TablerChevronLeft />
 		Home
@@ -40,8 +40,8 @@
 		</span>
 	</h3>
 
-	<nav>
-		<ul class="flex w-full flex-col gap-1 overflow-y-auto">
+	<nav class="overflow-y-auto">
+		<ul class="flex w-full flex-col gap-1">
 			<h3 class="mx-4 mb-1 mt-4 text-xs font-semibold text-slate-500">General</h3>
 
 			<li>

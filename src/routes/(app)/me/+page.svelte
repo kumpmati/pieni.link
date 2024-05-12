@@ -6,8 +6,11 @@
 	import LinksTable from './links/LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
+	import { getPageTitleStore } from './store';
 
 	export let data: PageData;
+
+	getPageTitleStore().set('Overview');
 </script>
 
 <svelte:head>
