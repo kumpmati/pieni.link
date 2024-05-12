@@ -14,9 +14,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { Session } from 'lucia';
 	import { cn } from '$lib/utils';
+	import type { UserCounts } from '$lib/server/database/handlers/dashboard';
 
 	let className: string = '';
 	export let session: Session | null;
+	export let counts: UserCounts | null;
 
 	export { className as class };
 </script>
@@ -33,7 +35,7 @@
 			<Avatar.Fallback>{session?.user.name}</Avatar.Fallback>
 		</Avatar.Root>
 
-		<span class="font-display flex flex-col">
+		<span class="flex flex-col font-display">
 			{session?.user.name}
 			<small class="font-sans text-sm font-normal text-slate-500">
 				{session?.user.role}
@@ -52,7 +54,7 @@
 				</NavLink>
 			</li>
 			<li>
-				<NavLink href="/me/links">
+				<NavLink href="/me/links" count={counts?.numLinks}>
 					<TablerList width={16} height={16} />
 					My links
 				</NavLink>
@@ -67,7 +69,7 @@
 			<h3 class="mx-4 mb-1 mt-4 text-xs font-semibold text-slate-500">Advanced</h3>
 
 			<li>
-				<NavLink href="/me/api">
+				<NavLink href="/me/api" count={counts?.numApiKeys}>
 					<TablerKey width={16} height={16} />
 					API keys
 				</NavLink>
@@ -77,19 +79,19 @@
 				<h3 class="mx-4 mb-1 mt-4 text-xs font-semibold text-slate-500">Admin</h3>
 
 				<li>
-					<NavLink href="/me/admin/users">
+					<NavLink href="/me/admin/users" count={counts?.numAllUsers}>
 						<TablerUsers width={16} height={16} />
 						All users
 					</NavLink>
 				</li>
 				<li>
-					<NavLink href="/me/admin/invites">
+					<NavLink href="/me/admin/invites" count={counts?.numInvites}>
 						<IconMail width={16} height={16} />
-						User invites
+						Invites
 					</NavLink>
 				</li>
 				<li>
-					<NavLink href="/me/admin/links">
+					<NavLink href="/me/admin/links" count={counts?.numAllLinks}>
 						<TablerList width={16} height={16} />
 						All links
 					</NavLink>

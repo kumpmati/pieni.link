@@ -6,6 +6,10 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>Health</title>
+</svelte:head>
+
 <Header title="Health" description="Monitor the system's health" />
 
 <Card.Root>

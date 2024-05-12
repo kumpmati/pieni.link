@@ -7,8 +7,10 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import { fly } from 'svelte/transition';
 	import { setMenuStore } from './store';
+	import type { UserCounts } from '$lib/server/database/handlers/dashboard';
 
 	export let session: Session | null;
+	export let counts: UserCounts | null;
 
 	const showMenu = setMenuStore();
 </script>
@@ -16,7 +18,7 @@
 <!-- Mobile: show only on md-breakpoint or smaller -->
 <div class="md:hidden">
 	<div class="fixed top-0 z-20 flex w-full justify-between bg-slate-900 p-2">
-		<a href="/" class="font-display flex flex-row items-center gap-2 text-lg font-bold">
+		<a href="/" class="flex flex-row items-center gap-2 font-display text-lg font-bold">
 			<Logo size={32} />
 			Pieni
 		</a>
@@ -37,14 +39,14 @@
 			transition:fly={{ duration: 150, y: -15 }}
 			class="fixed top-0 z-10 h-full w-full bg-slate-900 pt-14"
 		>
-			<NavContents {session} class="relative w-full" />
+			<NavContents {session} class="relative w-full" {counts} />
 		</span>
 	{/if}
 </div>
 
 <!-- Desktop: show only after md-breakpoint -->
 <div class="hidden md:flex">
-	<NavContents {session} class="fixed top-0 w-64" />
+	<NavContents {session} class="fixed top-0 w-64" {counts} />
 </div>
 
 <main class="flex w-full flex-col gap-2 p-4 pt-[4.5rem] md:pl-72 md:pt-6">

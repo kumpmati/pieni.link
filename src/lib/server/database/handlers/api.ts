@@ -1,7 +1,8 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 import { db } from '..';
 import { apiKey, type ApiKey } from '../schema/api';
 import { nanoid } from 'nanoid';
+import type { AuthUser } from '../schema/auth';
 
 export const getApiKeyBySecret = async (secret: string): Promise<ApiKey | null> => {
 	const rows = await db.select().from(apiKey).where(eq(apiKey.secret, secret)).limit(1);
@@ -31,4 +32,15 @@ export const createUserApiKey = async (userId: string): Promise<ApiKey> => {
 
 export const deleteUserApiKey = async (keyId: string, userId: string) => {
 	await db.delete(apiKey).where(and(eq(apiKey.id, keyId), eq(apiKey.userId, userId)));
+};
+
+export const getUserNumApiKeys = async (userId: AuthUser['id']) => {
+	const data = await db
+		.select({
+			count: sql<number>`cast(count(*) as int)`
+		})
+		.from(apiKey)
+		.where(eq(apiKey.userId, userId));
+
+	return data[0]?.count ?? 0;
 };

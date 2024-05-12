@@ -4,6 +4,7 @@
 	import { getMenuStore } from './store';
 
 	export let href: string;
+	export let count: number | null = null;
 
 	const showMenu = getMenuStore();
 
@@ -17,4 +18,8 @@
 	on:click={() => ($showMenu = false)}
 >
 	<slot />
+
+	{#if count !== null && count !== undefined}
+		<span class="ml-auto text-slate-500">{count}</span>
+	{/if}
 </Button>

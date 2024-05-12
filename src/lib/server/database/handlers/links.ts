@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, isNull, or } from 'drizzle-orm';
+import { and, desc, eq, gt, isNull, or, sql } from 'drizzle-orm';
 import { db } from '..';
 import type { AuthUser } from '../schema/auth';
 import { links, type Link, type LinkUpdate, type LinkInsert } from '../schema/link';
@@ -94,4 +94,25 @@ export const insertLink = async (data: LinkInsert) => {
 	}
 
 	return result[0];
+};
+
+export const getNumLinksByUser = async (userId: AuthUser['id']) => {
+	const data = await db
+		.select({
+			count: sql<number>`cast(count(*) as int)`
+		})
+		.from(links)
+		.where(eq(links.userId, userId));
+
+	return data[0]?.count ?? 0;
+};
+
+export const getNumAllLinks = async () => {
+	const data = await db
+		.select({
+			count: sql<number>`cast(count(*) as int)`
+		})
+		.from(links);
+
+	return data[0]?.count ?? 0;
 };

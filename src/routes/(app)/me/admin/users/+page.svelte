@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin - Manage users</title>
+	<title>All users</title>
 </svelte:head>
 
 <Header title="All users" description="Manage all users in the system" />

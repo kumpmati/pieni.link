@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin - Manage links</title>
+	<title>All links</title>
 </svelte:head>
 
 <Header title="All links" description="Manage all links within the system" />

@@ -1,4 +1,4 @@
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 import { db } from '..';
 import { signupToken, type SignupToken } from '../schema/auth';
 import { error } from '@sveltejs/kit';
@@ -23,4 +23,14 @@ export const deleteSignupToken = async (tokenId: SignupToken['id']) => {
 	}
 
 	return true;
+};
+
+export const getNumSignupTokens = async () => {
+	const data = await db
+		.select({
+			count: sql<number>`cast(count(*) as int)`
+		})
+		.from(signupToken);
+
+	return data[0]?.count ?? 0;
 };

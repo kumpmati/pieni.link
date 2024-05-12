@@ -47,6 +47,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>API keys</title>
+</svelte:head>
+
 <Header title="API keys" description="Give other applications access to Pieni.link's data" />
 
 <Dialog.Root

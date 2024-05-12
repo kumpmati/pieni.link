@@ -7,9 +7,9 @@
 </script>
 
 <svelte:head>
-	<title>Admin - User invites</title>
+	<title>Invites</title>
 </svelte:head>
 
-<Header title="User invites" description="Manage user invites" />
+<Header title="Invites" description="Manage user invites" />
 
 <InvitesView invites={data.invites} />
