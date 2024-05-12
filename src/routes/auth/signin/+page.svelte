@@ -12,7 +12,7 @@
 
 <Card.Root class="w-full max-w-sm">
 	<Card.Header>
-		<Card.Title class="scroll-m-20 text-4xl font-extrabold tracking-tight">Sign In</Card.Title>
+		<Card.Title class="scroll-m-20 text-4xl font-extrabold tracking-tight font-display">Sign In</Card.Title>
 		<Card.Description>You need to be signed in to shorten links.</Card.Description>
 	</Card.Header>
 
