@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
-	import Header from '../../Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data;
 </script>

@@ -11,7 +11,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import type { ApiKey } from '$lib/server/database/schema/api';
 	import { toast } from 'svelte-sonner';
-	import Header from '../Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data: PageData;
 

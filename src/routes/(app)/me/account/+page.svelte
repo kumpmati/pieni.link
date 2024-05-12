@@ -4,7 +4,7 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import Header from '../Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
 <svelte:head>

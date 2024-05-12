@@ -1,7 +1,7 @@
 <script lang="ts">
 	import UsersView from './UsersView.svelte';
 	import type { PageData } from './$types';
-	import Header from '../../Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data: PageData;
 </script>

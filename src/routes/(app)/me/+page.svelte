@@ -5,8 +5,7 @@
 	import LinksTable from './links/LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
-
-	import Header from './Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data: PageData;
 </script>

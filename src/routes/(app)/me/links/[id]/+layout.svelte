@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import IconChartHistogram from '~icons/tabler/chart-histogram';
 	import IconEdit from '~icons/tabler/edit';
-	import Header from '../../Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 
