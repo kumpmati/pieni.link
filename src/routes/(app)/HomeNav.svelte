@@ -2,14 +2,14 @@
 	import { page } from '$app/stores';
 	import IconLogin from '~icons/tabler/login';
 	import IconUser from '~icons/tabler/user';
-	import Logo from './Logo.svelte';
-	import { Button } from './ui/button';
+	import Logo from '$lib/components/Logo.svelte';
+	import { Button } from '$lib/components/ui/button';
 	import type { Session } from 'lucia';
 
 	export let session: Session | null;
 </script>
 
-<nav class="absolute flex w-full flex-row items-center justify-between p-2">
+<nav class="absolute flex w-full flex-row items-center justify-between p-4">
 	<a href="/" class="flex flex-row items-center gap-2 text-lg">
 		<Logo size={32} /> Pieni
 	</a>

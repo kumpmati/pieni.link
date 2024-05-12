@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Manage links</title>
+	<title>Admin - Manage links</title>
 </svelte:head>
 
 <LinksView links={data.links} />

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Manage users</title>
+	<title>Admin - Manage users</title>
 </svelte:head>
 
 <UsersView users={data.users} session={data.session} />

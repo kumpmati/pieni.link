@@ -12,6 +12,9 @@
 	import { toast } from 'svelte-sonner';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { PUBLIC_BASEURL } from '$env/static/public';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+
+	dayjs.extend(relativeTime);
 
 	export let invites: SignupToken[];
 </script>
@@ -55,7 +58,7 @@
 	<Card.Content>
 		<Table.Root>
 			<Table.Header>
-				<Table.Head>Token</Table.Head>
+				<Table.Head>Link</Table.Head>
 				<Table.Head>Role</Table.Head>
 				<Table.Head>Created</Table.Head>
 				<Table.Head>Used</Table.Head>
@@ -66,10 +69,11 @@
 			<Table.Body>
 				{#each invites as invite (invite.id)}
 					{@const link = `${PUBLIC_BASEURL}/auth/signup?token=${invite.id}`}
+
 					<Table.Row>
 						<Table.Cell class="whitespace-nowrap">
 							<span class="inline-flex items-center gap-1" title={link}>
-								<pre>{link.slice(0, 12)}...{link.slice(-5)}</pre>
+								<pre>{link.slice(0, 15)}...{link.slice(-6)}</pre>
 
 								<Button
 									size="icon"

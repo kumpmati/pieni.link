@@ -46,7 +46,7 @@
 	<title>Logs ({level ? levelToString[level] : 'warn'})</title>
 </svelte:head>
 
-<Card.Root class="mt-4">
+<Card.Root>
 	<Card.Header class="flex-row justify-between">
 		<div class="flex flex-col gap-1">
 			<Card.Title>Logs</Card.Title>

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Manage invites</title>
+	<title>Admin - Manage invites</title>
 </svelte:head>
 
 <InvitesView invites={data.invites} />
