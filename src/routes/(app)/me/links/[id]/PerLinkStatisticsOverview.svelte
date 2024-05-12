@@ -8,7 +8,7 @@
 
 <div
 	class="grid justify-center gap-2"
-	style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))"
+	style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
 >
 	<Card.Root>
 		<Card.Content class="mt-5 flex flex-col text-sm text-muted-foreground">

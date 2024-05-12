@@ -40,7 +40,8 @@ export const getLinkVisitsPerDay = async (linkId: string): Promise<LinkVisitsPer
 		const hasVisits = data.find((d) => Math.abs(current.diff(d.day)) < 1);
 
 		if (!hasVisits) {
-			data.push({ day: current.format('YYYY-MM-DD 00:00:00'), count: 0 });
+			// same format as the truncated date coming from database
+			data.push({ day: current.format('YYYY-MM-DD 00:00:00+00'), count: 0 });
 		}
 
 		current = current.add(1, 'day');

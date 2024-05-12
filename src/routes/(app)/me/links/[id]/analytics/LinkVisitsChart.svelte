@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import dayjs from 'dayjs';
 	import type { LinkVisitsPerDay } from '$lib/server/database/handlers/analytics';
-	import { Skeleton } from '$lib/components/ui/skeleton';
 
 	export let data: LinkVisitsPerDay;
 

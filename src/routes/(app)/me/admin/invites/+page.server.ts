@@ -1,9 +1,19 @@
-import { createSignupToken, deleteSignupToken } from '$lib/server/database/handlers/signupToken.js';
-import { createSignupTokenSchema } from '$lib/server/database/schema/auth.js';
-import { logger } from '$lib/server/logger/index.js';
+import {
+	createSignupToken,
+	deleteSignupToken,
+	getAllSignupTokens
+} from '$lib/server/database/handlers/signupToken';
 import { error, redirect } from '@sveltejs/kit';
-
+import type { PageServerLoad } from './$types';
+import { createSignupTokenSchema } from '$lib/server/database/schema/auth';
+import { logger } from '$lib/server/logger';
 import { z } from 'zod';
+
+export const load = (async () => {
+	return {
+		invites: await getAllSignupTokens()
+	};
+}) satisfies PageServerLoad;
 
 export const actions = {
 	create_invite: async ({ request, locals }) => {
@@ -25,7 +35,7 @@ export const actions = {
 			`New ${body.data.role} invite created by ${session.user.id} (${session.user.name})`
 		);
 
-		redirect(302, '/me/admin?view=invites');
+		redirect(302, '/me/admin/invites');
 	},
 
 	delete_invite: async ({ request, locals }) => {
