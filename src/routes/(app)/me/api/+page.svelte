@@ -92,8 +92,8 @@
 </Dialog.Root>
 
 <form action="?/create_api_key" method="post" use:enhance={handleCreateEnhance}>
-	<Button type="submit" class="mt-0 gap-2" variant="outline">
-		<IconPlus width={16} height={16} /> Create API key
+	<Button type="submit" class="mt-0 gap-2" variant="default">
+		<IconPlus width={16} height={16} /> New API key
 	</Button>
 </form>
 

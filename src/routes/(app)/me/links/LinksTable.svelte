@@ -77,7 +77,7 @@
 									</DropdownMenu.Item>
 
 									<AlertDialog.Trigger class="contents">
-										<DropdownMenu.Item class="gap-2 text-destructive">
+										<DropdownMenu.Item class="gap-2 text-red-400">
 											<IconTrash width={16} height={16} stroke-width={1.5} />
 											Delete
 										</DropdownMenu.Item>

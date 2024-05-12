@@ -19,7 +19,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="mr-6 w-fit gap-2 {buttonVariants({ variant: 'secondary', size: 'sm' })}">
+	<Dialog.Trigger class="mr-6 w-fit gap-2 {buttonVariants({ variant: 'default' })}">
 		<IconMailPlus width={16} height={16} />
 		New Invite
 	</Dialog.Trigger>
