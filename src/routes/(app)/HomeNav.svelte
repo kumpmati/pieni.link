@@ -9,7 +9,7 @@
 </script>
 
 <nav class="absolute flex w-full flex-row items-center justify-between p-2">
-	<a href="/" class="flex flex-row items-center gap-2 text-lg">
+	<a href="/" class="font-display flex flex-row items-center gap-2 text-lg font-bold">
 		<Logo size={32} /> Pieni
 	</a>
 

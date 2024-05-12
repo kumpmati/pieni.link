@@ -27,15 +27,15 @@
 		Home
 	</Button>
 
-	<h3 class="text-md ml-2 mt-0 flex items-center gap-3 font-semibold text-primary">
+	<h3 class="text-md ml-2 mt-0 flex items-center gap-3 font-bold text-primary">
 		<Avatar.Root class="h-9 w-9">
 			<Avatar.Image src={session?.user.image} alt={session?.user.name} />
 			<Avatar.Fallback>{session?.user.name}</Avatar.Fallback>
 		</Avatar.Root>
 
-		<span class="flex flex-col">
+		<span class="font-display flex flex-col">
 			{session?.user.name}
-			<small class="text-slate-500">
+			<small class="font-sans text-sm font-normal text-slate-500">
 				{session?.user.role}
 			</small>
 		</span>

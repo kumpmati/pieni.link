@@ -16,7 +16,7 @@
 	)}
 >
 	<div class="flex flex-col gap-1">
-		<h1 class="text-4xl font-black">
+		<h1 class="font-display text-4xl font-black">
 			{title}
 		</h1>
 

@@ -16,7 +16,7 @@
 <!-- Mobile: show only on md-breakpoint or smaller -->
 <div class="md:hidden">
 	<div class="fixed top-0 z-20 flex w-full justify-between bg-slate-900 p-2">
-		<a href="/" class="flex flex-row items-center gap-2 text-lg">
+		<a href="/" class="font-display flex flex-row items-center gap-2 text-lg font-bold">
 			<Logo size={32} />
 			Pieni
 		</a>
