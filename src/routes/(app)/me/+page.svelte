@@ -1,21 +1,21 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-
 	import IconChevronRight from '~icons/tabler/chevron-right';
 	import type { PageData } from './$types';
 	import LinksTable from './links/LinksTable.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import OverallStatisticsOverview from './OverallStatisticsOverview.svelte';
-	import { getPageTitleStore } from './store';
+
+	import Header from './Header.svelte';
 
 	export let data: PageData;
-
-	getPageTitleStore().set('Overview');
 </script>
 
 <svelte:head>
 	<title>Me</title>
 </svelte:head>
+
+<Header title="Overview" description="A summary of the most important things" />
 
 {#await data.stats}
 	<OverallStatisticsOverview stats={null} />

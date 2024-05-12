@@ -6,15 +6,18 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { enhance } from '$app/forms';
 	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
 	import { buttonVariants } from '$lib/components/ui/button';
+
+	dayjs.extend(relativeTime);
 
 	export let keys: Omit<ApiKey, 'secret'>[];
 </script>
 
-<Table.Root>
+<Table.Root class="max-w-lg">
 	<Table.Header>
 		<Table.Row>
-			<Table.Head>ID</Table.Head>
+			<Table.Head class="w-48">ID</Table.Head>
 			<Table.Head>Created</Table.Head>
 			<Table.Head class="w-14" />
 		</Table.Row>
@@ -26,7 +29,7 @@
 				<Table.Cell>
 					<pre>{key.id}</pre>
 				</Table.Cell>
-				<Table.Cell>{dayjs(key.createdAt).format('MMM DD YYYY HH:mm:ss')}</Table.Cell>
+				<Table.Cell>{dayjs().to(key.createdAt)}</Table.Cell>
 				<Table.Cell>
 					<AlertDialog.Root>
 						<AlertDialog.Trigger>

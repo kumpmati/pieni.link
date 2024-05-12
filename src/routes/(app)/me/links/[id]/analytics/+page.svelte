@@ -16,32 +16,42 @@
 	<PerLinkStatisticsOverview {stats} />
 {/await}
 
-<Card.Root>
-	<Card.Header>
-		<Card.Title>Visits per day</Card.Title>
-		<Card.Description>Distribution of visits for each day</Card.Description>
-	</Card.Header>
+<div class="custom-grid">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Visits per day</Card.Title>
+			<Card.Description>Distribution of visits for each day</Card.Description>
+		</Card.Header>
 
-	<Card.Content>
-		{#await data.visitsPerDay}
-			<Skeleton class=" h-96 w-full" />
-		{:then data}
-			<LinkVisitsChart {data} />
-		{/await}
-	</Card.Content>
-</Card.Root>
+		<Card.Content>
+			{#await data.visitsPerDay}
+				<Skeleton class=" h-96 w-full" />
+			{:then data}
+				<LinkVisitsChart {data} />
+			{/await}
+		</Card.Content>
+	</Card.Root>
 
-<Card.Root>
-	<Card.Header>
-		<Card.Title>Visits per referrer</Card.Title>
-		<Card.Description>Distribution of visits between the unique referrers</Card.Description>
-	</Card.Header>
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Visits per referrer</Card.Title>
+			<Card.Description>Distribution of visits between the unique referrers</Card.Description>
+		</Card.Header>
 
-	<Card.Content>
-		{#await data.visitsPerReferrer}
-			<Skeleton class=" h-96 w-full" />
-		{:then data}
-			<LinkReferrersChart {data} />
-		{/await}
-	</Card.Content>
-</Card.Root>
+		<Card.Content>
+			{#await data.visitsPerReferrer}
+				<Skeleton class=" h-96 w-full" />
+			{:then data}
+				<LinkReferrersChart {data} />
+			{/await}
+		</Card.Content>
+	</Card.Root>
+</div>
+
+<style>
+	.custom-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+		gap: 0.5rem;
+	}
+</style>

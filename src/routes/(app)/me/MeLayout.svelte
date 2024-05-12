@@ -6,20 +6,19 @@
 	import TablerMenu from '~icons/tabler/menu';
 	import Logo from '$lib/components/Logo.svelte';
 	import { fly } from 'svelte/transition';
-	import { setMenuStore, setPageTitleStore } from './store';
+	import { setMenuStore } from './store';
 
 	export let session: Session | null;
 
-	const mobilePageTitle = setPageTitleStore();
 	const showMenu = setMenuStore();
 </script>
 
-<!-- show only on md-breakpoint or smaller -->
+<!-- Mobile: show only on md-breakpoint or smaller -->
 <div class="md:hidden">
 	<div class="fixed top-0 z-20 flex w-full justify-between bg-slate-900 p-2">
 		<a href="/" class="flex flex-row items-center gap-2 text-lg">
 			<Logo size={32} />
-			{$mobilePageTitle}
+			Pieni
 		</a>
 
 		<Button on:click={() => ($showMenu = !$showMenu)} size="icon" variant="ghost">
@@ -43,11 +42,11 @@
 	{/if}
 </div>
 
-<!-- show only after md-breakpoint -->
-<div class="hidden md:block">
+<!-- Desktop: show only after md-breakpoint -->
+<div class="hidden md:flex">
 	<NavContents {session} class="fixed top-0 w-64" />
 </div>
 
-<main class="flex w-full flex-col gap-2 p-4 pt-20 md:pl-64 md:pt-4">
+<main class="flex w-full flex-col gap-2 p-4 pt-[4.5rem] md:pl-72 md:pt-6">
 	<slot />
 </main>

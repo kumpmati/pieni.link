@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import IconLogin from '~icons/tabler/login';
-	import IconUser from '~icons/tabler/user';
+	import TablerLogin from '~icons/tabler/login';
 	import Logo from '$lib/components/Logo.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { Session } from 'lucia';
+	import * as Avatar from '$lib/components/ui/avatar';
 
 	export let session: Session | null;
 </script>
@@ -16,12 +15,16 @@
 
 	<div class="flex gap-2">
 		{#if session}
-			<Button href="/me" size="icon" variant={$page.url.pathname === '/me' ? 'default' : 'ghost'}>
-				<IconUser />
-			</Button>
+			<a href="/me" title="Go to dashboard">
+				<Avatar.Root class="h-8 w-8">
+					<Avatar.Image src={session.user.image} alt={session.user.name} />
+					<Avatar.Fallback>{session.user.name}</Avatar.Fallback>
+				</Avatar.Root>
+			</a>
 		{:else}
-			<Button href="/auth/signin" size="icon" variant="ghost">
-				<IconLogin />
+			<Button href="/auth/signin" variant="ghost" class="gap-2">
+				<TablerLogin />
+				Sign In
 			</Button>
 		{/if}
 	</div>

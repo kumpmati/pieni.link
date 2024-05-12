@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { PageData, SubmitFunction } from './$types';
 	import ApiKeysTable from './ApiKeysTable.svelte';
-	import * as Card from '$lib/components/ui/card';
-	import Crumbs from '$lib/components/Crumbs.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import IconCheck from '~icons/tabler/check';
 	import IconCopy from '~icons/tabler/copy';
@@ -13,7 +11,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import type { ApiKey } from '$lib/server/database/schema/api';
 	import { toast } from 'svelte-sonner';
-	import { getPageTitleStore } from '../store';
+	import Header from '../Header.svelte';
 
 	export let data: PageData;
 
@@ -47,69 +45,58 @@
 			toast.error('Copy failed', { description: (err as Error)?.message ?? 'unknown error' });
 		}
 	};
-
-	getPageTitleStore().set('API Keys');
 </script>
 
-<Card.Root>
-	<Card.Header class="flex-row items-start justify-between space-y-0">
-		<span class="flex flex-col gap-1">
-			<Card.Title>API Keys</Card.Title>
-			<Card.Description>Give other applications access to Pieni.link's data</Card.Description>
-		</span>
+<Header title="API keys" description="Give other applications access to Pieni.link's data" />
 
-		<form action="?/create_api_key" method="post" use:enhance={handleCreateEnhance}>
-			<Button type="submit" class="mt-0 gap-2" variant="outline">
-				<IconPlus width={16} height={16} /> Create API key
-			</Button>
-		</form>
-	</Card.Header>
+<Dialog.Root
+	bind:open={dialogOpen}
+	closeOnOutsideClick={false}
+	closeOnEscape={false}
+	onOpenChange={(isOpen) => {
+		if (!isOpen) dialogData = null;
+	}}
+>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>API key created</Dialog.Title>
+			<Dialog.Description>
+				Make sure to save the below secret somewhere, as you won't be able to see it after closing
+				this dialog.
+			</Dialog.Description>
+		</Dialog.Header>
 
-	<Dialog.Root
-		bind:open={dialogOpen}
-		closeOnOutsideClick={false}
-		closeOnEscape={false}
-		onOpenChange={(isOpen) => {
-			if (!isOpen) dialogData = null;
-		}}
-	>
-		<Dialog.Content>
-			<Dialog.Header>
-				<Dialog.Title>API key created</Dialog.Title>
-				<Dialog.Description>
-					Make sure to save the below secret somewhere, as you won't be able to see it after closing
-					this dialog.
-				</Dialog.Description>
-			</Dialog.Header>
+		<div class="flex flex-col gap-2">
+			<Label for="key">Key ID</Label>
+			<Input id="key" type="text" readonly value={dialogData?.id} />
 
-			<div class="flex flex-col gap-2">
-				<Label for="key">Key ID</Label>
-				<Input id="key" type="text" readonly value={dialogData?.id} />
-
-				<Label for="secret">Secret</Label>
-				<span class="flex gap-1">
-					<Input id="secret" type="text" readonly value={dialogData?.secret} />
-					<Button variant="secondary" size="icon" on:click={copySecret}>
-						{#if isCopied}
-							<IconCheck width={16} height={16} />
-						{:else}
-							<IconCopy width={16} height={16} />
-						{/if}
-					</Button>
-				</span>
-			</div>
-
-			<Dialog.Footer>
-				<Button class="ml-auto w-fit" on:click={() => (dialogOpen = false)}>
-					I've copied the values
+			<Label for="secret">Secret</Label>
+			<span class="flex gap-1">
+				<Input id="secret" type="text" readonly value={dialogData?.secret} />
+				<Button variant="secondary" size="icon" on:click={copySecret}>
+					{#if isCopied}
+						<IconCheck width={16} height={16} />
+					{:else}
+						<IconCopy width={16} height={16} />
+					{/if}
 				</Button>
-			</Dialog.Footer>
-		</Dialog.Content>
-	</Dialog.Root>
+			</span>
+		</div>
 
-	<Card.Content class={data.apiKeys.length === 0 ? 'pb-0' : ''}>
-		{#if data.apiKeys.length > 0}
-			<ApiKeysTable keys={data.apiKeys} />
-		{/if}
-	</Card.Content>
-</Card.Root>
+		<Dialog.Footer>
+			<Button class="ml-auto w-fit" on:click={() => (dialogOpen = false)}>
+				I've copied the values
+			</Button>
+		</Dialog.Footer>
+	</Dialog.Content>
+</Dialog.Root>
+
+<form action="?/create_api_key" method="post" use:enhance={handleCreateEnhance}>
+	<Button type="submit" class="mt-0 gap-2" variant="outline">
+		<IconPlus width={16} height={16} /> Create API key
+	</Button>
+</form>
+
+{#if data.apiKeys.length > 0}
+	<ApiKeysTable keys={data.apiKeys} />
+{/if}

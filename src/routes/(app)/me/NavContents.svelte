@@ -4,9 +4,10 @@
 	import TablerKey from '~icons/tabler/key';
 	import TablerChevronLeft from '~icons/tabler/chevron-left';
 	import TablerUserCog from '~icons/tabler/user-cog';
-	import TablerUser from '~icons/tabler/user';
+	import TablerUsers from '~icons/tabler/users';
 	import TablerReportSearch from '~icons/tabler/report-search';
 	import TablerLogout from '~icons/tabler/logout';
+	import TablerActivityHeartbeat from '~icons/tabler/activity-heartbeat';
 	import IconMail from '~icons/tabler/mail';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import NavLink from './NavLink.svelte';
@@ -77,7 +78,7 @@
 
 				<li>
 					<NavLink href="/me/admin/users">
-						<TablerUser width={16} height={16} />
+						<TablerUsers width={16} height={16} />
 						All users
 					</NavLink>
 				</li>
@@ -100,6 +101,13 @@
 					<NavLink href="/me/admin/logs">
 						<TablerReportSearch width={16} height={16} />
 						Logs
+					</NavLink>
+				</li>
+
+				<li>
+					<NavLink href="/me/admin/health">
+						<TablerActivityHeartbeat width={16} height={16} />
+						Health
 					</NavLink>
 				</li>
 			{/if}

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { page } from '$app/stores';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import { getMenuStore } from './store';
 
 	export let href: string;
 
-	const showMenu = getContext<Writable<boolean>>('menu');
+	const showMenu = getMenuStore();
 
 	$: isActive = $page.url.pathname === href;
 </script>

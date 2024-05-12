@@ -4,19 +4,19 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { getPageTitleStore } from '../store';
-
-	getPageTitleStore().set('Account settings');
+	import Header from '../Header.svelte';
 </script>
 
 <svelte:head>
 	<title>Account settings</title>
 </svelte:head>
 
-<Card.Root>
+<Header title="Account settings" description="Manage your account" />
+
+<Card.Root class="max-w-lg">
 	<Card.Header>
 		<Card.Title>Danger zone</Card.Title>
-		<Card.Description>Be careful now!</Card.Description>
+		<Card.Description>Be careful now, these actions are irreversible!</Card.Description>
 	</Card.Header>
 
 	<Card.Content>
