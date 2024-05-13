@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import IconTrash from '~icons/tabler/trash';
+	import TablerTrash from '~icons/tabler/trash';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -23,7 +23,7 @@
 		<AlertDialog.Root>
 			<AlertDialog.Trigger>
 				<Button variant="destructive" class="gap-2">
-					<IconTrash width={16} height={16} /> Delete account
+					<TablerTrash width={16} height={16} /> Delete account
 				</Button>
 			</AlertDialog.Trigger>
 
@@ -44,7 +44,7 @@
 							type="submit"
 							class="gap-2 {buttonVariants({ variant: 'destructive' })}"
 						>
-							<IconTrash width={16} height={16} /> Delete account
+							<TablerTrash width={16} height={16} /> Delete account
 						</AlertDialog.Action>
 					</AlertDialog.Footer>
 				</form>
