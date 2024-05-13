@@ -10,6 +10,7 @@
 	import TablerActivityHeartbeat from '~icons/tabler/activity-heartbeat';
 	import TablerMail from '~icons/tabler/mail';
 	import TablerFileText from '~icons/tabler/file-text';
+	import TablerFolder from '~icons/tabler/folder';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import NavLink from './NavLink.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -58,6 +59,12 @@
 				<NavLink href="/me/links" count={counts?.numLinks}>
 					<TablerList width={16} height={16} />
 					My links
+				</NavLink>
+			</li>
+			<li>
+				<NavLink href="/me/groups" count={counts?.numGroups}>
+					<TablerFolder width={16} height={16} />
+					My groups
 				</NavLink>
 			</li>
 			<li>

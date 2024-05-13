@@ -127,6 +127,13 @@
       "when": 1714392151054,
       "tag": "0017_peaceful_cerise",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1715626194668,
+      "tag": "0018_abnormal_warpath",
+      "breakpoints": true
     }
   ]
 }
