@@ -51,7 +51,7 @@
 	<title>API keys</title>
 </svelte:head>
 
-<Header title="API keys" description="Give other applications access to Pieni.link's data" />
+<Header title="API keys" description="Give external applications access to your account's data" />
 
 <Dialog.Root
 	bind:open={dialogOpen}

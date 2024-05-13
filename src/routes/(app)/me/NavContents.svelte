@@ -8,7 +8,8 @@
 	import TablerReportSearch from '~icons/tabler/report-search';
 	import TablerLogout from '~icons/tabler/logout';
 	import TablerActivityHeartbeat from '~icons/tabler/activity-heartbeat';
-	import IconMail from '~icons/tabler/mail';
+	import TablerMail from '~icons/tabler/mail';
+	import TablerFileText from '~icons/tabler/file-text';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import NavLink from './NavLink.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -75,6 +76,13 @@
 				</NavLink>
 			</li>
 
+			<li>
+				<NavLink href="/me/api/docs">
+					<TablerFileText width={16} height={16} />
+					API Documentation
+				</NavLink>
+			</li>
+
 			{#if session?.user.role === 'admin'}
 				<h3 class="mx-4 mb-1 mt-4 text-xs font-semibold text-slate-500">Admin</h3>
 
@@ -86,7 +94,7 @@
 				</li>
 				<li>
 					<NavLink href="/me/admin/invites" count={counts?.numInvites}>
-						<IconMail width={16} height={16} />
+						<TablerMail width={16} height={16} />
 						Invites
 					</NavLink>
 				</li>
