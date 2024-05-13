@@ -5,6 +5,7 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import TablerTrash from '~icons/tabler/trash';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 </script>
@@ -69,7 +70,7 @@
 									</AlertDialog.Description>
 								</AlertDialog.Header>
 
-								<form method="post" action="?/delete_account" class="contents">
+								<form method="post" action="?/delete_account" class="contents" use:enhance>
 									<input type="hidden" name="id" value={user.id} />
 
 									<AlertDialog.Footer>
