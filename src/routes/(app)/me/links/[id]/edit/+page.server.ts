@@ -8,8 +8,7 @@ import { and, eq } from 'drizzle-orm';
 
 export const actions = {
 	update: async ({ request, params, locals }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
@@ -27,33 +26,32 @@ export const actions = {
 		let updated: Link;
 
 		try {
-			updated = await updateUserLink(params.id, session.user.id, body.data);
+			updated = await updateUserLink(params.id, locals.user.id, body.data);
 		} catch (err) {
 			error(500, err as Error);
 		}
 
 		logger.info(
-			`Link ${params.id} updated to ${JSON.stringify(updated, null, 2)} by user ${session.user.id} (${session.user.name})`
+			`Link ${params.id} updated to ${JSON.stringify(updated, null, 2)} by user ${locals.user.id} (${locals.user.name})`
 		);
 
 		redirect(301, `/me/links/${updated.id}/edit`);
 	},
 
 	delete: async ({ locals, params }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
 		const result = await db
 			.delete(links)
-			.where(and(eq(links.id, params.id), eq(links.userId, session.user.id)));
+			.where(and(eq(links.id, params.id), eq(links.userId, locals.user.id)));
 
 		if (result.rowCount === 0) {
 			error(500, 'failed to delete link');
 		}
 
-		logger.info(`Link ${params.id} deleted by user ${session.user.id} (${session.user.name})`);
+		logger.info(`Link ${params.id} deleted by user ${locals.user.id} (${locals.user.name})`);
 
 		redirect(302, '/me');
 	}

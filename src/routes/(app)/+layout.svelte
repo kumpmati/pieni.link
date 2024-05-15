@@ -8,7 +8,7 @@
 
 <Toaster theme="dark" />
 
-<HomeNav session={data.session} />
+<HomeNav user={data.user} />
 
 <main class="mx-auto flex h-full w-full max-w-3xl flex-col px-2">
 	<slot />

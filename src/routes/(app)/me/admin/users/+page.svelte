@@ -28,7 +28,7 @@
 
 	<Table.Body>
 		{#each data.users as user (user.id)}
-			{@const isOwnAccount = user.id === data.session?.user.id}
+			{@const isOwnAccount = user.id === data.user?.id}
 			<Table.Row>
 				<Table.Cell>
 					<img src={user.image} alt={user.name} class="h-8 w-8 rounded-full" />

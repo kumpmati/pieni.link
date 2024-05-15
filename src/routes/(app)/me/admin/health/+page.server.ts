@@ -10,10 +10,8 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
-	const session = await locals.auth.validate();
-
-	if (!session) error(403, 'unauthorized');
-	if (session.user.role !== 'admin') error(401, 'forbidden');
+	if (!locals.user) error(403, 'unauthorized');
+	if (locals.user.role !== 'admin') error(401, 'forbidden');
 
 	return {
 		env: {

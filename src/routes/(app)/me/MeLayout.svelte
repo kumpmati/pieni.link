@@ -8,8 +8,9 @@
 	import { fly } from 'svelte/transition';
 	import { setMenuStore } from './store';
 	import type { UserCounts } from '$lib/server/database/handlers/dashboard';
+	import type { AuthUser } from '$lib/server/auth/lucia';
 
-	export let session: Session | null;
+	export let user: AuthUser | null;
 	export let counts: UserCounts | null;
 
 	const showMenu = setMenuStore();
@@ -39,14 +40,14 @@
 			transition:fly={{ duration: 150, y: -15 }}
 			class="fixed top-0 z-10 h-full w-full bg-slate-900 pt-14"
 		>
-			<NavContents {session} class="relative w-full" {counts} />
+			<NavContents {user} class="relative w-full" {counts} />
 		</span>
 	{/if}
 </div>
 
 <!-- Desktop: show only after md-breakpoint -->
 <div class="hidden md:flex">
-	<NavContents {session} class="fixed top-0 w-64" {counts} />
+	<NavContents {user} class="fixed top-0 w-64" {counts} />
 </div>
 
 <main class="flex w-full flex-col gap-2 p-4 pt-[4.5rem] md:pl-72 md:pt-6">

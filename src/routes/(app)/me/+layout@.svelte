@@ -15,6 +15,6 @@
 
 <Toaster theme="dark" />
 
-<MeLayout session={data.session} counts={loadedCounts}>
+<MeLayout user={data.user} counts={loadedCounts}>
 	<slot />
 </MeLayout>

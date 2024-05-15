@@ -17,10 +17,8 @@ export const load = (async () => {
 
 export const actions = {
 	create_invite: async ({ request, locals }) => {
-		const session = await locals.auth.validate();
-
-		if (!session) error(401, 'unauthorized');
-		if (session.user.role !== 'admin') error(403, 'forbidden');
+		if (!locals.user) error(401, 'unauthorized');
+		if (locals.user.role !== 'admin') error(403, 'forbidden');
 
 		const raw = Object.fromEntries(await request.formData());
 
@@ -31,17 +29,14 @@ export const actions = {
 
 		await createSignupToken(body.data.role);
 
-		logger.info(
-			`New ${body.data.role} invite created by ${session.user.id} (${session.user.name})`
-		);
+		logger.info(`New ${body.data.role} invite created by ${locals.user.id} (${locals.user.name})`);
 
 		redirect(302, '/me/admin/invites');
 	},
 
 	delete_invite: async ({ request, locals }) => {
-		const session = await locals.auth.validate();
-		if (!session) error(401, 'unauthorized');
-		if (session.user.role !== 'admin') error(403, 'forbidden');
+		if (!locals.user) error(401, 'unauthorized');
+		if (locals.user.role !== 'admin') error(403, 'forbidden');
 
 		const raw = Object.fromEntries(await request.formData());
 
@@ -52,6 +47,6 @@ export const actions = {
 
 		await deleteSignupToken(body.data.id);
 
-		logger.info(`Invite ${body.data.id} deleted by ${session.user.id} (${session.user.name})`);
+		logger.info(`Invite ${body.data.id} deleted by ${locals.user.id} (${locals.user.name})`);
 	}
 };

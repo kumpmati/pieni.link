@@ -26,6 +26,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
 	event.locals.auth = auth.handleRequest(event);
 
+	const session = await event.locals.auth.validate();
+	event.locals.session = session;
+	event.locals.user = session?.user ?? null;
+
 	const response = await resolve(event);
 	const end = performance.now();
 
