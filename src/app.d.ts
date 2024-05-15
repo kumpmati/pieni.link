@@ -1,5 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+import type { AuthUser } from '$lib/server/auth/lucia';
 import type { ApiKey } from '$lib/server/database/schema/api';
+import type { AuthRequest, Session } from 'lucia';
 import 'unplugin-icons/types/svelte';
 
 // for information about these interfaces
@@ -7,7 +9,9 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			auth: import('lucia').AuthRequest;
+			auth: AuthRequest;
+			session: Session | null;
+			user: AuthUser | null;
 
 			/**
 			 * Only used inside /api routes!!

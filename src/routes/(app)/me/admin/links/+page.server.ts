@@ -11,10 +11,8 @@ export const load = (async () => {
 
 export const actions = {
 	delete_link: async ({ locals, request }) => {
-		const session = await locals.auth.validate();
-
-		if (!session) error(401, 'unauthorized');
-		if (session.user.role !== 'admin') error(403, 'forbidden');
+		if (!locals.user) error(401, 'unauthorized');
+		if (locals.user.role !== 'admin') error(403, 'forbidden');
 
 		const id = (await request.formData()).get('id')?.toString() ?? null;
 
@@ -24,6 +22,6 @@ export const actions = {
 
 		await deleteLink(id);
 
-		logger.info(`Link ${id} deleted by user ${session.user.id} (${session.user.name})`);
+		logger.info(`Link ${id} deleted by user ${locals.user.id} (${locals.user.name})`);
 	}
 };

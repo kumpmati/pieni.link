@@ -4,20 +4,18 @@ import type { PageServerLoad } from './$types';
 import { logger } from '$lib/server/logger';
 
 export const load = (async ({ locals }) => {
-	const session = await locals.auth.validate();
-	if (!session) {
+	if (!locals.user) {
 		error(401, 'unauthorized');
 	}
 
 	return {
-		links: await getAllUserLinks(session.user.id)
+		links: await getAllUserLinks(locals.user.id)
 	};
 }) satisfies PageServerLoad;
 
 export const actions = {
 	delete_link: async ({ locals, request }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
@@ -29,6 +27,6 @@ export const actions = {
 
 		await deleteLink(id);
 
-		logger.info(`Link ${id} deleted by user ${session.user.id} (${session.user.name})`);
+		logger.info(`Link ${id} deleted by user ${locals.user.id} (${locals.user.name})`);
 	}
 };

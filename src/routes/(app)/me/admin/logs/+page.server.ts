@@ -25,13 +25,12 @@ export const load = (async ({ url }) => {
 
 export const actions = {
 	delete_all_logs: async ({ locals }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
 		await db.delete(log);
 
-		logger.warn(`Logs cleared by ${session.user.id} (${session.user.name})`);
+		logger.warn(`Logs cleared by ${locals.user.id} (${locals.user.name})`);
 	}
 };

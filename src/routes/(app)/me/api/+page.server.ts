@@ -9,33 +9,30 @@ import { apiKeySchema } from '$lib/server/database/schema/api';
 import { logger } from '$lib/server/logger';
 
 export const load = (async ({ locals }) => {
-	const session = await locals.auth.validate();
-	if (!session) {
+	if (!locals.user) {
 		error(401, 'unauthorized');
 	}
 
 	return {
-		apiKeys: await getUserApiKeys(session.user.id)
+		apiKeys: await getUserApiKeys(locals.user.id)
 	};
 }) satisfies PageServerLoad;
 
 export const actions = {
 	create_api_key: async ({ locals }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
-		const key = await createUserApiKey(session.user.id);
+		const key = await createUserApiKey(locals.user.id);
 
-		logger.info(`API key ${key.id} created by ${session.user.id} (${session.user.name})`);
+		logger.info(`API key ${key.id} created by ${locals.user.id} (${locals.user.name})`);
 
 		return key;
 	},
 
 	delete_api_key: async ({ locals, request }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
@@ -46,10 +43,8 @@ export const actions = {
 			error(400, 'no valid api key id specified');
 		}
 
-		await deleteUserApiKey(result.data.id, session.user.id);
+		await deleteUserApiKey(result.data.id, locals.user.id);
 
-		logger.info(
-			`API key ${result.data.id} was deleted by ${session.user.id} (${session.user.name})`
-		);
+		logger.info(`API key ${result.data.id} was deleted by ${locals.user.id} (${locals.user.name})`);
 	}
 };

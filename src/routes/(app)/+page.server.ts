@@ -7,15 +7,13 @@ import { fromZodError } from 'zod-validation-error';
 
 export const actions = {
 	create: async ({ request, locals }) => {
-		const session = await locals.auth.validate();
-
-		if (!session) {
+		if (!locals.user) {
 			redirect(302, '/auth/signin');
 		}
 
 		const raw = Object.fromEntries(await request.formData());
 
-		const body = linkInsertSchema.safeParse({ ...raw, userId: session.user.id });
+		const body = linkInsertSchema.safeParse({ ...raw, userId: locals.user.id });
 		if (!body.success) {
 			error(400, fromZodError(body.error).message);
 		}
@@ -26,9 +24,7 @@ export const actions = {
 
 		const link = await insertLink(body.data);
 
-		logger.info(
-			`New link: ${link.id} -> ${link.url} by user ${link.userId} (${session.user.name})`
-		);
+		logger.info(`New link: ${link.id} -> ${link.url} by user ${link.userId} (${locals.user.name})`);
 
 		return link;
 	}

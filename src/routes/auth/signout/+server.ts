@@ -3,12 +3,11 @@ import { error, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ locals }) => {
-	const session = await locals.auth.validate();
-	if (!session) {
+	if (!locals.session) {
 		error(401);
 	}
 
-	await auth.invalidateSession(session.sessionId);
+	await auth.invalidateSession(locals.session.sessionId);
 	locals.auth.setSession(null);
 
 	redirect(302, '/');

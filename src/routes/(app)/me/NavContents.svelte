@@ -16,9 +16,10 @@
 	import type { Session } from 'lucia';
 	import { cn } from '$lib/utils';
 	import type { UserCounts } from '$lib/server/database/handlers/dashboard';
+	import type { AuthUser } from '$lib/server/auth/lucia';
 
 	let className: string = '';
-	export let session: Session | null;
+	export let user: AuthUser | null;
 	export let counts: UserCounts | null;
 
 	export { className as class };
@@ -32,14 +33,14 @@
 
 	<h3 class="text-md ml-2 mt-0 flex items-center gap-3 font-bold text-primary">
 		<Avatar.Root class="h-9 w-9">
-			<Avatar.Image src={session?.user.image} alt={session?.user.name} />
-			<Avatar.Fallback>{session?.user.name}</Avatar.Fallback>
+			<Avatar.Image src={user?.image} alt={user?.name} />
+			<Avatar.Fallback>{user?.name}</Avatar.Fallback>
 		</Avatar.Root>
 
 		<span class="flex flex-col font-display">
-			{session?.user.name}
+			{user?.name}
 			<small class="font-sans text-sm font-normal text-slate-500">
-				{session?.user.role}
+				{user?.role}
 			</small>
 		</span>
 	</h3>
@@ -83,7 +84,7 @@
 				</NavLink>
 			</li>
 
-			{#if session?.user.role === 'admin'}
+			{#if user?.role === 'admin'}
 				<h3 class="mx-4 mb-1 mt-4 text-xs font-semibold text-slate-500">Admin</h3>
 
 				<li>

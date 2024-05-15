@@ -4,15 +4,14 @@ import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
 	delete_account: async ({ locals }) => {
-		const session = await locals.auth.validate();
-		if (!session) {
+		if (!locals.user) {
 			error(401, 'unauthorized');
 		}
 
-		await deleteUser(session.user.id);
+		await deleteUser(locals.user.id);
 		locals.auth.invalidate();
 
-		logger.warn(`Account deleted: ${session.user.id} (${session.user.name})`);
+		logger.warn(`Account deleted: ${locals.user.id} (${locals.user.name})`);
 
 		redirect(302, '/');
 	}
