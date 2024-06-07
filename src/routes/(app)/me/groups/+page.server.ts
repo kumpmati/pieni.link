@@ -1,8 +1,4 @@
-import {
-	getGroupsByUser,
-	getGroupsByUserWithLinks,
-	insertGroup
-} from '$lib/server/database/handlers/group';
+import { getGroupsByUser, insertGroup } from '$lib/server/database/handlers/group';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { groupInsertSchema } from '$lib/server/database/schema/group';

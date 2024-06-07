@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { twMerge } from 'tailwind-merge';
 
 	export let title: string;
 	export let description: string = '';
@@ -10,7 +10,7 @@
 </script>
 
 <header
-	class={cn(
+	class={twMerge(
 		'mb-4 mt-0 flex w-full flex-col items-start justify-between gap-4 md:mt-8 md:flex-row md:items-center',
 		className
 	)}

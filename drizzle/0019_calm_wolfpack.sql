@@ -1,0 +1,1 @@
+ALTER TABLE "link_to_group" ADD COLUMN "name" text DEFAULT 'Link' NOT NULL;

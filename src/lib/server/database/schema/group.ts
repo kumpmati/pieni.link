@@ -1,4 +1,4 @@
-import { pgTable, varchar, text, timestamp, index, primaryKey } from 'drizzle-orm/pg-core';
+import { pgTable, varchar, text, timestamp, index, uuid } from 'drizzle-orm/pg-core';
 import { user } from './auth';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
@@ -32,22 +32,28 @@ export const groupInsertSchema = createInsertSchema(groups, {
 	name: z.string().min(2)
 });
 
-export const linksToGroups = pgTable(
-	'link_to_group',
-	{
-		groupId: varchar('group_id', { length: 15 })
-			.notNull()
-			.references(() => groups.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-		linkId: text('link_id')
-			.notNull()
-			.references(() => links.id, { onUpdate: 'cascade', onDelete: 'cascade' })
-	},
-	(self) => ({
-		linkToGroupIdx: primaryKey({ columns: [self.groupId, self.linkId] })
-	})
-);
+export const groupUpdateSchema = groupInsertSchema.partial();
+export type GroupUpdate = z.infer<typeof groupUpdateSchema>;
+
+export const linksToGroups = pgTable('link_to_group', {
+	itemId: uuid('id').primaryKey().defaultRandom(),
+	name: text('name').notNull().default('Link'),
+	groupId: varchar('group_id', { length: 15 })
+		.notNull()
+		.references(() => groups.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+	linkId: text('link_id')
+		.notNull()
+		.references(() => links.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
+});
 
 export type LinksToGroups = typeof linksToGroups.$inferSelect;
+
+export const linksToGroupsInsertSchema = createInsertSchema(linksToGroups);
+export type LinksToGroupsInsert = z.infer<typeof linksToGroupsInsertSchema>;
+
+export const linksToGroupsUpdateSchema = linksToGroupsInsertSchema.omit({ itemId: true }).partial();
+export type LinksToGroupsUpdate = z.infer<typeof linksToGroupsUpdateSchema>;
 
 // creates a link-to-group relation
 export const linksToGroupsRelations = relations(linksToGroups, ({ one }) => ({

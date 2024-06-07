@@ -56,7 +56,7 @@
 					break;
 
 				case 'redirect':
-					await update();
+					await update({ reset: false });
 			}
 			loading = false;
 		};

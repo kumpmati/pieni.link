@@ -21,7 +21,7 @@
 
 	const handleCreateEnhance: SubmitFunction = () => {
 		return async ({ update, result }) => {
-			await update();
+			await update({ reset: false });
 
 			if (result.type === 'success') {
 				dialogOpen = true;

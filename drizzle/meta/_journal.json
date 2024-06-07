@@ -134,6 +134,34 @@
       "when": 1715626194668,
       "tag": "0018_abnormal_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1717766435391,
+      "tag": "0019_calm_wolfpack",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1717788812817,
+      "tag": "0020_gigantic_pete_wisdom",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "5",
+      "when": 1717790295387,
+      "tag": "0021_demonic_namor",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "5",
+      "when": 1717791279022,
+      "tag": "0022_busy_silver_fox",
+      "breakpoints": true
     }
   ]
 }

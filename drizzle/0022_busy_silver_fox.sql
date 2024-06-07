@@ -1,0 +1,1 @@
+ALTER TABLE "link_to_group" ADD COLUMN "created_at" timestamp with time zone DEFAULT now() NOT NULL;

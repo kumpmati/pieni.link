@@ -3,6 +3,7 @@ import { db } from '..';
 import type { AuthUser } from '../schema/auth';
 import { links, type Link, type LinkUpdate, type LinkInsert } from '../schema/link';
 import { error } from '@sveltejs/kit';
+import type { Group } from '../schema/group';
 
 export const consumeLink = async (linkId: Link['id']) => {
 	const rows = await db

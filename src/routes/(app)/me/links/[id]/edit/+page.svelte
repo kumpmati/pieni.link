@@ -23,22 +23,22 @@
 
 	let loading: string | null = null;
 	let validUntil: Date | null = data.link.validUntil;
-	let tempForm: HTMLFormElement;
 	let hasExpired = data.link.validUntil ? dayjs(data.link.validUntil).diff() < 0 : false;
 
 	const handleSubmit: SubmitFunction = (e) => {
 		loading = e.formElement.dataset.id as string;
 
 		return async ({ update, result }) => {
+			await update({ reset: false });
+			loading = null;
+
 			switch (result.type) {
 				case 'redirect':
 					toast.success('Link updated!');
-					await update();
 					break;
 
 				case 'success':
 					toast.success('Link updated!');
-					await update();
 					break;
 
 				case 'error':
@@ -54,8 +54,6 @@
 					console.log(result);
 					break;
 			}
-
-			loading = null;
 		};
 	};
 </script>
@@ -112,7 +110,6 @@
 			method="post"
 			action="?/update"
 			use:enhance={handleSubmit}
-			bind:this={tempForm}
 		>
 			<input type="hidden" name="validUntil" value={validUntil} />
 		</form>
