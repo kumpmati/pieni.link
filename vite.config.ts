@@ -1,10 +1,14 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
+import { functionsMixins } from 'vite-plugin-functions-mixins';
 import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
-	plugins: [sveltekit(), Icons({ compiler: 'svelte' })],
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	}
+	plugins: [
+		sveltekit(),
+		Icons({ compiler: 'svelte' }),
+		functionsMixins({ deps: ['m3-svelte'] })
+	],
+
+	test: { include: ['src/**/*.{test,spec}.{js,ts}'] }
 });

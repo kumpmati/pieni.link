@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { Button } from "m3-svelte";
+</script>
+
 <svelte:head>
 	<title>Pieni - A modern, simple URL shortener</title>
 	<meta name="description" content="A modern, simple URL shortener." />
@@ -6,3 +10,5 @@
 </svelte:head>
 
 <h1>pieni.link</h1>
+
+<Button onclick={() => alert("Hello world")}>Click me</Button>

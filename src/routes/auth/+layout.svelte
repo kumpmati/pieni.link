@@ -1,7 +1,9 @@
 <script lang="ts">
-	import '../../app.pcss';
+	import '../layout.css';
+
+	let { children } = $props();
 </script>
 
 <main class="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center px-2">
-	<slot />
+	{@render children()}
 </main>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.pcss';
+	import './layout.css';
 	import { page } from '$app/stores';
 </script>
 
@@ -8,7 +8,7 @@
 </svelte:head>
 
 <main class="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center px-2">
-	<h1 class="font-display scroll-m-20 text-4xl font-extrabold tracking-tight">
+	<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight">
 		<small class="text-muted-foreground">{$page.status}</small>
 		{$page.error?.message ?? 'unknown error'}
 	</h1>
