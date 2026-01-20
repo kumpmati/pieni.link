@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.pcss';
 	import { page } from '$app/stores';
-	import Button from '$lib/components/ui/button/button.svelte';
 </script>
 
 <svelte:head>
@@ -14,5 +13,5 @@
 		{$page.error?.message ?? 'unknown error'}
 	</h1>
 
-	<Button variant="ghost" href="/" class="mt-4">Home</Button>
+	<a href="/" class="mt-4">Home</a>
 </main>
