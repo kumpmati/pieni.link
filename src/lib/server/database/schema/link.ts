@@ -2,7 +2,7 @@ import { index, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
-import { user } from './auth';
+import { old_user } from './auth_old';
 
 export const links = pgTable(
 	'links',
@@ -14,18 +14,16 @@ export const links = pgTable(
 
 		validUntil: timestamp('valid_until', { withTimezone: true }),
 
-		userId: varchar('user_id', { length: 15 })
+		oldUserId: varchar('old_user_id', { length: 15 })
 			.notNull()
-			.references(() => user.id, { onDelete: 'cascade', onUpdate: 'cascade' })
+			.references(() => old_user.id, { onDelete: 'cascade', onUpdate: 'cascade' })
 	},
-	(self) => ({
-		createdAtIdx: index('links_created_at_index').on(self.createdAt).desc(),
-		lastUsedIdx: index('links_last_used_index').on(self.lastUsed).desc(),
-
-		validUntilIdx: index('links_valid_until_index').on(self.validUntil),
-
-		userIdIdx: index('links_user_id_index').on(self.userId)
-	})
+	(self) => [
+		index('links_created_at_index').on(self.createdAt),
+		index('links_last_used_index').on(self.lastUsed),
+		index('links_valid_until_index').on(self.validUntil),
+		index('links_user_id_index').on(self.oldUserId)
+	]
 );
 
 export type Link = typeof links.$inferSelect;

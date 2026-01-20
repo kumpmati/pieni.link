@@ -127,6 +127,20 @@
       "when": 1714392151054,
       "tag": "0017_peaceful_cerise",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1768910787184,
+      "tag": "0018_fine_echo",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1768910871485,
+      "tag": "0019_hot_microbe",
+      "breakpoints": true
     }
   ]
 }

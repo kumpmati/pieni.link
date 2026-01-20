@@ -1,11 +1,17 @@
 @import "m3-svelte/etc/styles.css";
 @import "m3-svelte/etc/recommended-styles.css";
+
 @function --m3-density(--size) {
   result: var(--size);
 }
+
 :root {
   color-scheme: light dark;
+
+  font-family: 'Google Sans Flex', sans-serif;
+  background: var(--m3v-background);
 }
+
 @layer tokens {
   :root {
     --m3c-surface: light-dark(#fdf7fe, #0f0d12);

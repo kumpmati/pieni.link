@@ -1,8 +1,8 @@
 import { and, desc, eq, gt, isNull, or, sql } from 'drizzle-orm';
 import { db } from '..';
-import type { AuthUser } from '../schema/auth';
 import { links, type Link, type LinkUpdate, type LinkInsert } from '../schema/link';
 import { error } from '@sveltejs/kit';
+import type { OldAuthUser } from '../schema/auth_old';
 
 export const consumeLink = async (linkId: Link['id']) => {
 	const rows = await db
@@ -28,19 +28,19 @@ export const getAllLinks = async () => {
  * Returns all the user's links with the newest link first
  * @param userId
  */
-export const getAllUserLinks = async (userId: AuthUser['id']): Promise<Link[]> => {
-	return db.select().from(links).where(eq(links.userId, userId)).orderBy(desc(links.createdAt));
+export const getAllUserLinks = async (userId: OldAuthUser['id']): Promise<Link[]> => {
+	return db.select().from(links).where(eq(links.oldUserId, userId)).orderBy(desc(links.createdAt));
 };
 
 export const getUserLinksPaginated = async (
-	userId: AuthUser['id'],
+	userId: OldAuthUser['id'],
 	limit: number,
 	offset: number = 0
 ): Promise<Link[]> => {
 	return db
 		.select()
 		.from(links)
-		.where(eq(links.userId, userId))
+		.where(eq(links.oldUserId, userId))
 		.orderBy(desc(links.createdAt))
 		.limit(limit)
 		.offset(offset);
@@ -51,11 +51,11 @@ export const getUserLinksPaginated = async (
  * @param linkId
  * @param userId
  */
-export const getUserLink = async (linkId: Link['id'], userId: AuthUser['id']): Promise<Link> => {
+export const getUserLink = async (linkId: Link['id'], userId: OldAuthUser['id']): Promise<Link> => {
 	const rows = await db
 		.select()
 		.from(links)
-		.where(and(eq(links.id, linkId), eq(links.userId, userId)));
+		.where(and(eq(links.id, linkId), eq(links.oldUserId, userId)));
 
 	if (rows.length === 0) {
 		error(404, 'link not found');
@@ -72,7 +72,7 @@ export const updateUserLink = async (
 	const rows = await db
 		.update(links)
 		.set(data)
-		.where(and(eq(links.id, linkId), eq(links.userId, userId)))
+		.where(and(eq(links.id, linkId), eq(links.oldUserId, userId)))
 		.returning();
 
 	if (rows.length === 0) {
@@ -96,13 +96,13 @@ export const insertLink = async (data: LinkInsert) => {
 	return result[0];
 };
 
-export const getNumLinksByUser = async (userId: AuthUser['id']) => {
+export const getNumLinksByUser = async (userId: OldAuthUser['id']) => {
 	const data = await db
 		.select({
 			count: sql<number>`cast(count(*) as int)`
 		})
 		.from(links)
-		.where(eq(links.userId, userId));
+		.where(eq(links.oldUserId, userId));
 
 	return data[0]?.count ?? 0;
 };

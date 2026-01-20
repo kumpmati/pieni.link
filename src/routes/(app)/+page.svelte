@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Button } from "m3-svelte";
+	import { getOwnLinks } from '$lib/queries/link.remote';
+	import { TextFieldOutlined } from 'm3-svelte';
 </script>
 
 <svelte:head>
@@ -11,4 +12,12 @@
 
 <h1>pieni.link</h1>
 
-<Button onclick={() => alert("Hello world")}>Click me</Button>
+<TextFieldOutlined type="url" label="Short link" />
+
+<ul>
+	{#each await getOwnLinks() as link (link.id)}
+		<li>{link.id} {link.url}</li>
+	{:else}
+		<li>No links</li>
+	{/each}
+</ul>

@@ -2,8 +2,8 @@ import { and, asc, desc, eq, gte, sql } from 'drizzle-orm';
 import { linkVisit } from '../schema/analytics';
 import { db } from '..';
 import dayjs from 'dayjs';
-import type { AuthUser } from '../schema/auth';
 import { links, type Link } from '../schema/link';
+import type { OldAuthUser } from '../schema/auth_old';
 
 export const getLinkVisits = async (linkId: string) => {
 	return await db
@@ -68,10 +68,10 @@ export const getLinkVisitsPerReferrer = async (linkId: string) => {
 
 /**
  * Returns overall statistics for all of the user's links
- * @param userId
+ * @param oldUserId
  */
 export const getOverallLinkStatistics = async (
-	userId: AuthUser['id']
+	oldUserId: OldAuthUser['id']
 ): Promise<OverallLinkStatistics> => {
 	const last24hDate = dayjs().subtract(24, 'hours').toDate();
 
@@ -80,12 +80,12 @@ export const getOverallLinkStatistics = async (
 			.select({ count: sql<number>`cast(count(${linkVisit.id}) as int)` })
 			.from(linkVisit)
 			.where(gte(linkVisit.timestamp, last24hDate))
-			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.userId, userId))),
+			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.oldUserId, oldUserId))),
 
 		db
 			.select({ count: sql<number>`cast(count(${linkVisit.id}) as int)` })
 			.from(linkVisit)
-			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.userId, userId))),
+			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.oldUserId, oldUserId))),
 
 		db
 			.select({
@@ -93,7 +93,7 @@ export const getOverallLinkStatistics = async (
 				count: sql<number>`cast(count(${linkVisit.linkId}) as int)`
 			})
 			.from(linkVisit)
-			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.userId, userId)))
+			.innerJoin(links, and(eq(linkVisit.linkId, links.id), eq(links.oldUserId, oldUserId)))
 			.groupBy(linkVisit.linkId)
 			.orderBy(desc(sql`count`))
 			.limit(1)
