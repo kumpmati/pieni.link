@@ -127,6 +127,34 @@
       "when": 1714392151054,
       "tag": "0017_peaceful_cerise",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1768910787184,
+      "tag": "0018_fine_echo",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1768910871485,
+      "tag": "0019_hot_microbe",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1768911231736,
+      "tag": "0020_watery_apocalypse",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1768920117692,
+      "tag": "0021_cute_hydra",
+      "breakpoints": true
     }
   ]
 }
