@@ -8,11 +8,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      PUBLIC_BASEURL: ${{ secrets.PUBLIC_BASEURL }}
+      PUBLIC_BASEURL: ${{ vars.PUBLIC_BASEURL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       GOOGLE_OAUTH_ID: ${{ secrets.GOOGLE_OAUTH_ID }}
       GOOGLE_OAUTH_SECRET: ${{ secrets.GOOGLE_OAUTH_SECRET }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL }}
       LOG_LEVEL: ${{ vars.LOG_LEVEL }}
     steps:
       - name: Checkout repository
