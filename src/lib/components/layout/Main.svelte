@@ -20,10 +20,10 @@
 		margin: 0 auto;
 		margin-top: 128px;
 		width: calc(100% - 2rem);
-		max-width: 480px;
+		max-width: 600px;
 
 		@media screen and (max-width: 700px) {
-			margin-top: 4rem;
+			margin-top: 1rem;
 		}
 	}
 </style>
