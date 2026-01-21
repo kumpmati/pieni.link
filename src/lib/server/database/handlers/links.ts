@@ -82,20 +82,6 @@ export const updateUserLink = async (
 	return rows[0];
 };
 
-export const deleteLink = async (linkId: Link['id']) => {
-	await db.delete(links).where(eq(links.id, linkId));
-};
-
-export const insertLink = async (data: LinkInsert) => {
-	const result = await db.insert(links).values(data).returning();
-
-	if (result.length === 0) {
-		error(500, 'failed to create link');
-	}
-
-	return result[0];
-};
-
 export const getNumLinksByUser = async (userId: OldAuthUser['id']) => {
 	const data = await db
 		.select({

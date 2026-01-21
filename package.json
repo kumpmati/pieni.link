@@ -18,7 +18,8 @@
 		"studio": "drizzle-kit studio"
 	},
 	"devDependencies": {
-		"@iconify-json/tabler": "^1.1.110",
+		"@iconify-json/lucide": "^1.2.86",
+		"@iconify/svelte": "^5.2.1",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-node": "^4.0.0",
 		"@sveltejs/kit": "^2.50.0",
@@ -44,6 +45,7 @@
 		"svelte-check": "^4.0.0",
 		"tslib": "^2.4.1",
 		"typescript": "^5.5.0",
+		"ua-parser-js": "^2.0.8",
 		"unplugin-icons": "^0.18.5",
 		"vite": "^7.3.1",
 		"vite-plugin-functions-mixins": "^0.4.1",
