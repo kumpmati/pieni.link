@@ -2,7 +2,7 @@
 	import AnalyticsCard from './AnalyticsCard.svelte';
 	import { getAllVisitsByDay, getMostCommon, getTotalVisits } from '$lib/queries/analytics.remote';
 	import { Card } from 'm3-svelte';
-	import { formatVisitsPerDay } from '$lib/utils';
+	import { daysBetween, formatVisitsPerDay } from '$lib/utils';
 	import TrafficSparkline from './charts/TrafficSparkline.svelte';
 
 	type Props = {
@@ -17,7 +17,7 @@
 <div class="wrapper">
 	<svelte:boundary>
 		{#snippet pending()}
-			<Card variant="elevated" style="width: 100%; height: 157px;">
+			<Card variant="elevated" style="width: 100%; height: 221px;">
 				<span></span>
 			</Card>
 		{/snippet}
@@ -25,12 +25,15 @@
 		{@const visitsByDay = await getAllVisitsByDay(dateRange)}
 		{@const totalVisits = await getTotalVisits(dateRange)}
 		{@const isAllTime = dateRange[0].getFullYear() === 1970}
+		{@const isTodayOnly = daysBetween(dateRange) === 0}
 
 		<AnalyticsCard
-			extraInfo={!isAllTime ? `${formatVisitsPerDay(totalVisits, dateRange)} per day` : undefined}
+			extraInfo={!isAllTime && !isTodayOnly
+				? `${formatVisitsPerDay(totalVisits, dateRange)} per day`
+				: undefined}
 		>
 			{#snippet value()}
-				{totalVisits} <span class="subtle">visits</span>
+				{totalVisits} <span class="subtle">visit{totalVisits === 1 ? '' : 's'}</span>
 			{/snippet}
 
 			<TrafficSparkline {dateRange} data={visitsByDay} />
