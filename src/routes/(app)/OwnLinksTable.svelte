@@ -3,6 +3,9 @@
 	import LucideExternalLink from '~icons/lucide/external-link';
 	import { getAllOwnLinks } from '$lib/queries/link.remote';
 	import { Button } from 'm3-svelte';
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
 
 	type Props = {
 		showAll?: boolean;
@@ -16,7 +19,7 @@
 		<tr>
 			<td width="100">Slug</td>
 			<td>URL</td>
-			<td width="80">Visits</td>
+			<td>Last visit</td>
 			<td width="32"></td>
 		</tr>
 	</thead>
@@ -36,7 +39,11 @@
 						</span>
 					</a>
 				</td>
-				<td>-</td>
+				<td>
+					<p class="subtle" title={link.lastUsed?.toLocaleString() ?? '-'}>
+						{link.lastUsed ? dayjs(link.lastUsed).fromNow() : '-'}
+					</p>
+				</td>
 				<td>
 					<Button variant="text" iconType="full" href="/l/{link.id}">
 						<LucideArrowRight width={18} height={18} />
@@ -63,6 +70,11 @@
 
 	.row:hover {
 		background-color: var(--m3c-surface-container);
+	}
+
+	.subtle {
+		font-size: 14px;
+		color: var(--m3c-on-surface-variant);
 	}
 
 	.external-link {
