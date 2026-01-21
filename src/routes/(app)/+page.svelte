@@ -10,13 +10,13 @@
 	import OverallAnalytics from '$lib/components/OverallAnalytics.svelte';
 	import LinkShortenerForm from './LinkShortenerForm.svelte';
 	import OwnLinksTable from './OwnLinksTable.svelte';
-	import { type Timeframes } from '$lib/components/TimeframeTags.svelte';
+	import TimeframeTags, { type Timeframes } from '$lib/components/TimeframeTags.svelte';
 	import { timeframeToDateRange } from '$lib/utils';
 	import Collapsible from '$lib/components/Collapsible.svelte';
 
 	const user = await getCurrentUser();
 
-	const timeframe = $state<Timeframes>('30d');
+	let timeframe = $state<Timeframes>('30d');
 	const dateRange = $derived(timeframeToDateRange(timeframe));
 
 	let showAnalytics = $state(true);
@@ -47,6 +47,8 @@
 				{#snippet title()}
 					<LucideChartArea /> Overall Analytics
 				{/snippet}
+
+				<TimeframeTags bind:value={timeframe} style="margin-bottom: 1rem;" />
 
 				<OverallAnalytics {dateRange} />
 			</Collapsible>

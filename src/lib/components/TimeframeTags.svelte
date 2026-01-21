@@ -15,13 +15,14 @@
 	import { Chip } from 'm3-svelte';
 
 	type Props = {
-		value: (typeof TIMEFRAMES)[number]['value'];
+		value: Timeframes;
+		style?: string;
 	};
 
-	let { value = $bindable() }: Props = $props();
+	let { value = $bindable(), style }: Props = $props();
 </script>
 
-<ul>
+<ul {style}>
 	{#each TIMEFRAMES as opt (opt.value)}
 		{@const selected = value === opt.value}
 		<Chip

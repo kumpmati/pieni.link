@@ -2,6 +2,7 @@
 	import AnalyticsCard from './AnalyticsCard.svelte';
 	import { getMostCommon, getTotalVisits } from '$lib/queries/analytics.remote';
 	import { Card } from 'm3-svelte';
+	import { formatVisitsPerDay } from '$lib/utils';
 
 	type Props = {
 		dateRange: [Date, Date];
@@ -20,9 +21,14 @@
 			</Card>
 		{/snippet}
 
-		<AnalyticsCard extraInfo="? per day">
+		{@const visits = await getTotalVisits(dateRange)}
+		{@const isAllTime = dateRange[0].getFullYear() === 1970}
+
+		<AnalyticsCard
+			extraInfo={!isAllTime ? `${formatVisitsPerDay(visits, dateRange)} per day` : undefined}
+		>
 			{#snippet value()}
-				{await getTotalVisits()} <span class="subtle">visits</span>
+				{visits} <span class="subtle">visits</span>
 			{/snippet}
 		</AnalyticsCard>
 

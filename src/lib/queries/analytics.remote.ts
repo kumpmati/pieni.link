@@ -1,27 +1,31 @@
 import { UAParser } from 'ua-parser-js';
 import { query } from '$app/server';
 import { db } from '$lib/server/database';
-import { and, eq, gte, lte, sql } from 'drizzle-orm';
+import { and, between, eq, sql } from 'drizzle-orm';
 import { authenticate } from './helpers';
 import { error } from '@sveltejs/kit';
 import { linkVisit } from '$lib/server/database/schema/analytics';
 import { links } from '$lib/server/database/schema/link';
 import z from 'zod';
 
-export const getTotalVisits = query(async () => {
+const dateRangeSchema = z.array(z.date()).length(2);
+
+export const getTotalVisits = query(dateRangeSchema, async (dateRange) => {
 	const { user } = await authenticate();
 	if (!user) error(401, 'unauthorized');
+
+	const [from, to] = dateRange;
 
 	const [totalVisits] = await db
 		.select({ count: sql<number>`cast(count(*) as int)` })
 		.from(linkVisit)
 		.innerJoin(links, eq(linkVisit.linkId, links.id))
-		.where(eq(links.userId, user.id));
+		.where(and(eq(links.userId, user.id), between(linkVisit.timestamp, from, to)));
 
 	return totalVisits.count;
 });
 
-export const getMostCommon = query(z.array(z.date()).length(2), async (dateRange) => {
+export const getMostCommon = query(dateRangeSchema, async (dateRange) => {
 	const { user } = await authenticate();
 	if (!user) error(401, 'unauthorized');
 
@@ -31,9 +35,7 @@ export const getMostCommon = query(z.array(z.date()).length(2), async (dateRange
 		.select({ ua: linkVisit.userAgent })
 		.from(linkVisit)
 		.innerJoin(links, eq(linkVisit.linkId, links.id))
-		.where(
-			and(eq(links.userId, user.id), gte(linkVisit.timestamp, from), lte(linkVisit.timestamp, to))
-		);
+		.where(and(eq(links.userId, user.id), between(linkVisit.timestamp, from, to)));
 
 	const osCounts: Record<string, number> = {};
 	const browserCounts: Record<string, number> = {};
