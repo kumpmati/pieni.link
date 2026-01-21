@@ -1,7 +1,7 @@
 import { UAParser } from 'ua-parser-js';
 import { query } from '$app/server';
 import { db } from '$lib/server/database';
-import { and, between, eq, sql } from 'drizzle-orm';
+import { and, between, countDistinct, eq, sql } from 'drizzle-orm';
 import { mustAuthenticate } from './helpers';
 import { linkVisit } from '$lib/server/database/schema/analytics';
 import { links } from '$lib/server/database/schema/link';
@@ -24,10 +24,8 @@ export const getTotalVisits = query(dateRangeSchema, async (dateRange) => {
 	return totalVisits.count;
 });
 
-export const getMostCommon = query(dateRangeSchema, async (dateRange) => {
+export const getMostCommon = query(dateRangeSchema, async ([from, to]) => {
 	const user = await mustAuthenticate();
-
-	const [from, to] = dateRange;
 
 	// TODO: persist key user agent (os, browser, country) info in database to simplify query logic
 	const allVisits = await db
@@ -78,4 +76,20 @@ export const getAllVisitsByDay = query(dateRangeSchema, async (dateRange) => {
 	const user = await mustAuthenticate();
 
 	return await getAllUserVisitsGroupedByDay(user.id, dateRange);
+});
+
+export const getExtraStats = query(dateRangeSchema, async ([from, to]) => {
+	const user = await mustAuthenticate();
+
+	// TODO: user agent is not indexed, see if indexing it helps
+	const [result] = await db
+		.select({
+			uaCount: countDistinct(linkVisit.userAgent),
+			referrerCount: countDistinct(linkVisit.referrer)
+		})
+		.from(linkVisit)
+		.innerJoin(links, eq(linkVisit.linkId, links.id))
+		.where(and(eq(links.userId, user.id), between(linkVisit.timestamp, from, to)));
+
+	return result;
 });
