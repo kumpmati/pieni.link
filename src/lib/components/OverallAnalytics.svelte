@@ -44,15 +44,15 @@
 				{#snippet value()}
 					{@const mostCommonOS = (await mostCommon).os.at(0)}
 
-					{mostCommonOS?.name ?? '-'}
-					<span class="subtle">({mostCommonOS?.percentage ?? '-'}%)</span>
+					{mostCommonOS?.name || 'Unknown'}
+					<span class="subtle">({Math.round(mostCommonOS?.percentage ?? 0) || '-'}%)</span>
 				{/snippet}
 			</AnalyticsCard>
 			<AnalyticsCard label="Browser">
 				{#snippet value()}
 					{@const mostCommonBrowser = (await mostCommon).browser.at(0)}
 
-					{mostCommonBrowser?.name ?? '-'}
+					{mostCommonBrowser?.name || 'Unknown'}
 					<span class="subtle">({Math.round(mostCommonBrowser?.percentage ?? 0) || '-'}%)</span>
 				{/snippet}
 			</AnalyticsCard>

@@ -42,11 +42,11 @@ export const getMostCommon = query(dateRangeSchema, async (dateRange) => {
 	for (const { ua } of allVisits) {
 		const parser = new UAParser(ua);
 
-		const os = parser.getOS().name ?? '-';
+		const os = parser.getOS().name ?? '';
 		osCounts[os] ??= 0;
 		osCounts[os] += 1;
 
-		const browser = parser.getBrowser().name ?? '-';
+		const browser = parser.getBrowser().name ?? '';
 		browserCounts[browser] ??= 0;
 		browserCounts[browser] += 1;
 	}
