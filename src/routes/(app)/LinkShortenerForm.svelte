@@ -40,7 +40,7 @@
 		try {
 			loading = true;
 
-			shortLink = await createLink(value).updates(getAllOwnLinks(5));
+			shortLink = await createLink(value).updates(getAllOwnLinks(5), getAllOwnLinks(1000));
 
 			if (!shortLink) {
 				snackbar('Failed to create link'); // TODO: show error to user
@@ -64,7 +64,7 @@
 	};
 </script>
 
-<form style="display: contents;" onsubmit={handleSubmit}>
+<form onsubmit={handleSubmit}>
 	<TextFieldOutlined
 		required
 		autocomplete="off"
@@ -76,4 +76,42 @@
 		trailing={shortLink ? { icon: IconClose, onclick: handleClear } : undefined}
 		onpaste={handlePaste}
 	/>
+
+	<span class={{ subtle: true, visible: !!shortLink }}>
+		Redirects to <a href={shortLink?.url} target="_blank" rel="noopener noreferrer">
+			{shortLink?.url}
+		</a>
+	</span>
 </form>
+
+<style>
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.subtle {
+		color: var(--m3c-on-surface-variant);
+		font-size: 0.875rem;
+		margin-top: 0.25rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		visibility: hidden;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+
+		&.visible {
+			visibility: visible;
+		}
+	}
+</style>
