@@ -7,17 +7,18 @@
 	import AnalyticsSignInPrompt from '$lib/components/AnalyticsSignInPrompt.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import UserButton from '$lib/components/UserButton.svelte';
-	import OverallAnalytics from '$lib/components/OverallAnalytics.svelte';
+	import OverallAnalytics from './OverallAnalytics.svelte';
 	import LinkShortenerForm from './LinkShortenerForm.svelte';
 	import OwnLinksTable from './OwnLinksTable.svelte';
-	import TimeframeTags, { type Timeframes } from '$lib/components/TimeframeTags.svelte';
+	import TimeframeTags from '$lib/components/TimeframeTags.svelte';
 	import { timeframeToDateRange } from '$lib/utils';
 	import Collapsible from '$lib/components/Collapsible.svelte';
 	import Main from '$lib/components/layout/Main.svelte';
+	import { TIMEFRAMES, type Timeframes } from '$lib/constants';
 
 	const user = await getCurrentUser();
 
-	let timeframe = $state<Timeframes>('30d');
+	let timeframe = $state<Timeframes>(TIMEFRAMES[1].value);
 	const dateRange = $derived(timeframeToDateRange(timeframe));
 
 	let showAnalytics = $state(true);

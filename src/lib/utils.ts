@@ -1,6 +1,6 @@
 import { PUBLIC_BASEURL } from '$env/static/public';
 import dayjs from 'dayjs';
-import type { Timeframes } from './components/TimeframeTags.svelte';
+import type { Timeframes } from '$lib/constants';
 import type { Link } from './server/database/schema/link';
 
 export const getFullURL = (l: Link): string => {
@@ -9,21 +9,24 @@ export const getFullURL = (l: Link): string => {
 
 export const timeframeToDateRange = (t: Timeframes): [Date, Date] => {
 	switch (t) {
-		case 'all-time': {
-			// TODO: better start date
-			return [new Date('1970-01-01'), dayjs().endOf('day').toDate()];
+		case '12mon': {
+			return [dayjs().subtract(12, 'months').startOf('day').toDate(), new Date()];
 		}
 
-		case '30d': {
-			return [dayjs().subtract(30, 'days').startOf('day').toDate(), dayjs().endOf('day').toDate()];
+		case '6mon': {
+			return [dayjs().subtract(6, 'months').startOf('day').toDate(), new Date()];
+		}
+
+		case '1mon': {
+			return [dayjs().subtract(1, 'month').startOf('day').toDate(), new Date()];
 		}
 
 		case '7d': {
-			return [dayjs().subtract(7, 'days').startOf('day').toDate(), dayjs().endOf('day').toDate()];
+			return [dayjs().subtract(7, 'days').startOf('day').toDate(), new Date()];
 		}
 
 		case 'today': {
-			return [dayjs().startOf('day').toDate(), dayjs().endOf('day').toDate()];
+			return [dayjs().startOf('day').toDate(), new Date()];
 		}
 
 		default: {
@@ -45,4 +48,8 @@ export const formatVisitsPerDay = (total: number, dateRange: [Date, Date]): stri
 	}
 
 	return `~${Math.round(perDay)}`;
+};
+
+export const formatAmount = (amount: number): string => {
+	return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(amount).toLowerCase();
 };

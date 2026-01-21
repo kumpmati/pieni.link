@@ -1,9 +1,9 @@
 <script lang="ts">
-	import AnalyticsCard from './AnalyticsCard.svelte';
+	import AnalyticsCard from '$lib/components/AnalyticsCard.svelte';
 	import { getAllVisitsByDay, getMostCommon, getTotalVisits } from '$lib/queries/analytics.remote';
 	import { Card } from 'm3-svelte';
-	import { daysBetween, formatVisitsPerDay } from '$lib/utils';
-	import TrafficSparkline from './charts/TrafficSparkline.svelte';
+	import { daysBetween, formatAmount, formatVisitsPerDay } from '$lib/utils';
+	import TrafficSparkline from '$lib/components/charts/TrafficSparkline.svelte';
 
 	type Props = {
 		dateRange: [Date, Date];
@@ -28,12 +28,13 @@
 		{@const isTodayOnly = daysBetween(dateRange) === 0}
 
 		<AnalyticsCard
+			label="Visits"
 			extraInfo={!isAllTime && !isTodayOnly
 				? `${formatVisitsPerDay(totalVisits, dateRange)} per day`
 				: undefined}
 		>
 			{#snippet value()}
-				{totalVisits} <span class="subtle">visit{totalVisits === 1 ? '' : 's'}</span>
+				{formatAmount(totalVisits)}
 			{/snippet}
 
 			<TrafficSparkline {dateRange} data={visitsByDay} />
@@ -69,7 +70,7 @@
 
 	.row {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 		gap: 1rem;
 	}
 

@@ -1,17 +1,6 @@
-<script module lang="ts">
-	import iconCheck from '@ktibow/iconset-material-symbols/check';
-
-	export const TIMEFRAMES = [
-		{ value: 'all-time', label: 'All Time' },
-		{ value: '30d', label: '30 days' },
-		{ value: '7d', label: '7 days' },
-		{ value: 'today', label: 'Today' }
-	] as const;
-
-	export type Timeframes = (typeof TIMEFRAMES)[number]['value'];
-</script>
-
 <script lang="ts">
+	import { TIMEFRAMES, type Timeframes } from '$lib/constants';
+	import iconCheck from '@ktibow/iconset-material-symbols/check';
 	import { Chip } from 'm3-svelte';
 
 	type Props = {

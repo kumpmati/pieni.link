@@ -27,8 +27,8 @@
 
 			xaxis: {
 				type: 'datetime',
-				min: dayjs(dateRange[0]).startOf('day').toDate().getTime(),
-				max: dayjs(dateRange[1]).startOf('day').toDate().getTime()
+				min: dateRange[0].getTime(),
+				max: dateRange[1].getTime()
 			},
 
 			stroke: {
@@ -53,8 +53,8 @@
 			if (chart) {
 				chart.updateOptions({
 					xaxis: {
-						min: dayjs(dateRange[0]).startOf('day').toDate().getTime(),
-						max: dayjs(dateRange[1]).startOf('day').toDate().getTime()
+						min: dateRange[0].getTime(),
+						max: dateRange[1].getTime()
 					}
 				} satisfies ApexOptions);
 				chart.updateSeries([{ data: data.map((d) => ({ x: d.day, y: d.count })) }]);
@@ -65,9 +65,8 @@
 
 <div bind:this={el}></div>
 
-<style global>
-	:root {
-		--base: var(--m3c-primary);
-		--sparkline-gradient: color-mix(in srgb, var(--base) 0%, transparent);
+<style>
+	div {
+		height: 48px;
 	}
 </style>
