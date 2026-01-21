@@ -51,7 +51,7 @@
 			<TrafficSparkline {dateRange} data={visitsByDay} />
 		</AnalyticsCard>
 
-		<div class="grid">
+		<div class="grid-2">
 			<AnalyticsCard label="Browser" onclick={() => (showDialogs.browsers = true)}>
 				{#snippet value()}
 					{@const mostCommonBrowser = (await mostCommon).browser.at(0)}
@@ -71,7 +71,7 @@
 			</AnalyticsCard>
 		</div>
 
-		<div class="grid">
+		<div class="grid-3">
 			<AnalyticsCard label="Unique users*">
 				{#snippet value()}
 					<span title="This many unique user-agent strings were found">
@@ -130,9 +130,15 @@
 		gap: 1rem;
 	}
 
-	.grid {
+	.grid-2 {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 1rem;
+	}
+
+	.grid-3 {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
 		gap: 1rem;
 	}
 
@@ -146,6 +152,7 @@
 
 		.name {
 			color: var(--m3c-on-surface);
+			font-weight: 500;
 		}
 	}
 </style>
