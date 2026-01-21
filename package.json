@@ -50,8 +50,7 @@
 		"vite": "^7.3.1",
 		"vite-plugin-functions-mixins": "^0.4.1",
 		"vitest": "^4.0.17",
-		"zod": "^4.3.5",
-		"zod-validation-error": "^3.1.0"
+		"zod": "^4.3.5"
 	},
 	"type": "module",
 	"dependencies": {
