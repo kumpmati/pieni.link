@@ -46,6 +46,22 @@ export const getLinkById = query(z.string(), async (id) => {
 	return row ?? null;
 });
 
+export const updateLinkURL = command(
+	z.object({ id: z.string(), url: z.string().url() }),
+	async ({ id, url }) => {
+		const { user } = await authenticate();
+		if (!user) error(401, 'unauthorized');
+
+		const [row] = await db
+			.update(links)
+			.set({ url })
+			.where(and(eq(links.id, id), eq(links.userId, user.id)))
+			.returning();
+
+		return row;
+	}
+);
+
 export const removeOwnLink = command(z.string(), async (id) => {
 	const { user } = await authenticate();
 	if (!user) error(401, 'unauthorized');

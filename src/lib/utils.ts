@@ -43,5 +43,5 @@ export const formatVisitsPerDay = (total: number, dateRange: [Date, Date]): stri
 		return `< 1`;
 	}
 
-	return Math.round(perDay).toString();
+	return `~${Math.round(perDay)}`;
 };

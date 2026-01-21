@@ -39,7 +39,7 @@
 
 	<LinkShortenerForm />
 
-	<div style="margin-top: 1rem">
+	<div>
 		{#if !user}
 			<AnalyticsSignInPrompt />
 		{:else}
