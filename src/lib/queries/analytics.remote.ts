@@ -2,17 +2,16 @@ import { UAParser } from 'ua-parser-js';
 import { query } from '$app/server';
 import { db } from '$lib/server/database';
 import { and, between, eq, sql } from 'drizzle-orm';
-import { authenticate } from './helpers';
-import { error } from '@sveltejs/kit';
+import { mustAuthenticate } from './helpers';
 import { linkVisit } from '$lib/server/database/schema/analytics';
 import { links } from '$lib/server/database/schema/link';
 import z from 'zod';
+import { getAllUserVisitsGroupedByDay } from '$lib/server/database/handlers/analytics';
 
-const dateRangeSchema = z.array(z.date()).length(2);
+const dateRangeSchema = z.tuple([z.date(), z.date()]);
 
 export const getTotalVisits = query(dateRangeSchema, async (dateRange) => {
-	const { user } = await authenticate();
-	if (!user) error(401, 'unauthorized');
+	const user = await mustAuthenticate();
 
 	const [from, to] = dateRange;
 
@@ -26,11 +25,11 @@ export const getTotalVisits = query(dateRangeSchema, async (dateRange) => {
 });
 
 export const getMostCommon = query(dateRangeSchema, async (dateRange) => {
-	const { user } = await authenticate();
-	if (!user) error(401, 'unauthorized');
+	const user = await mustAuthenticate();
 
 	const [from, to] = dateRange;
 
+	// TODO: persist key user agent (os, browser, country) info in database to simplify query logic
 	const allVisits = await db
 		.select({ ua: linkVisit.userAgent })
 		.from(linkVisit)
@@ -73,4 +72,10 @@ export const getMostCommon = query(dateRangeSchema, async (dateRange) => {
 		browser,
 		total: allVisits.length
 	};
+});
+
+export const getAllVisitsByDay = query(dateRangeSchema, async (dateRange) => {
+	const user = await mustAuthenticate();
+
+	return await getAllUserVisitsGroupedByDay(user.id, dateRange);
 });

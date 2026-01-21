@@ -10,6 +10,7 @@ export const getFullURL = (l: Link): string => {
 export const timeframeToDateRange = (t: Timeframes): [Date, Date] => {
 	switch (t) {
 		case 'all-time': {
+			// TODO: better start date
 			return [new Date('1970-01-01'), dayjs().endOf('day').toDate()];
 		}
 

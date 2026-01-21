@@ -1,8 +1,9 @@
 <script lang="ts">
 	import AnalyticsCard from './AnalyticsCard.svelte';
-	import { getMostCommon, getTotalVisits } from '$lib/queries/analytics.remote';
+	import { getAllVisitsByDay, getMostCommon, getTotalVisits } from '$lib/queries/analytics.remote';
 	import { Card } from 'm3-svelte';
 	import { formatVisitsPerDay } from '$lib/utils';
+	import TrafficSparkline from './charts/TrafficSparkline.svelte';
 
 	type Props = {
 		dateRange: [Date, Date];
@@ -21,15 +22,18 @@
 			</Card>
 		{/snippet}
 
-		{@const visits = await getTotalVisits(dateRange)}
+		{@const visitsByDay = await getAllVisitsByDay(dateRange)}
+		{@const totalVisits = await getTotalVisits(dateRange)}
 		{@const isAllTime = dateRange[0].getFullYear() === 1970}
 
 		<AnalyticsCard
-			extraInfo={!isAllTime ? `${formatVisitsPerDay(visits, dateRange)} per day` : undefined}
+			extraInfo={!isAllTime ? `${formatVisitsPerDay(totalVisits, dateRange)} per day` : undefined}
 		>
 			{#snippet value()}
-				{visits} <span class="subtle">visits</span>
+				{totalVisits} <span class="subtle">visits</span>
 			{/snippet}
+
+			<TrafficSparkline {dateRange} data={visitsByDay} />
 		</AnalyticsCard>
 
 		<div class="row">

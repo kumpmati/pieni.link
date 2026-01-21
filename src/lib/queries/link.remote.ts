@@ -2,14 +2,12 @@ import { command, query } from '$app/server';
 import { and, desc, eq } from 'drizzle-orm';
 import { db } from '../server/database';
 import { links } from '../server/database/schema/link';
-import { authenticate } from './helpers';
+import { mustAuthenticate } from './helpers';
 import z from 'zod';
-import { error } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 
 export const createLink = command(z.string().url(), async (url) => {
-	const { user } = await authenticate();
-	if (!user) error(401, 'unauthorized'); // TODO: redirect to sign-in?
+	const user = await mustAuthenticate();
 
 	const id = nanoid(6);
 
@@ -27,8 +25,7 @@ export const createLink = command(z.string().url(), async (url) => {
 });
 
 export const getAllOwnLinks = query(z.number().int().min(1), async (limit) => {
-	const { user } = await authenticate();
-	if (!user) return [];
+	const user = await mustAuthenticate();
 
 	return db
 		.select()
@@ -39,8 +36,7 @@ export const getAllOwnLinks = query(z.number().int().min(1), async (limit) => {
 });
 
 export const getLinkById = query(z.string(), async (id) => {
-	const { user } = await authenticate();
-	if (!user) error(401, 'unauthorized');
+	await mustAuthenticate();
 
 	const [row] = await db.select().from(links).where(eq(links.id, id));
 	return row ?? null;
@@ -49,8 +45,7 @@ export const getLinkById = query(z.string(), async (id) => {
 export const updateLinkURL = command(
 	z.object({ id: z.string(), url: z.string().url() }),
 	async ({ id, url }) => {
-		const { user } = await authenticate();
-		if (!user) error(401, 'unauthorized');
+		const user = await mustAuthenticate();
 
 		const [row] = await db
 			.update(links)
@@ -63,8 +58,7 @@ export const updateLinkURL = command(
 );
 
 export const removeOwnLink = command(z.string(), async (id) => {
-	const { user } = await authenticate();
-	if (!user) error(401, 'unauthorized');
+	const user = await mustAuthenticate();
 
 	await db.delete(links).where(and(eq(links.id, id), eq(links.userId, user.id)));
 });
