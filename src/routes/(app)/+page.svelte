@@ -14,11 +14,11 @@
 	import { timeframeToDateRange } from '$lib/utils';
 	import Collapsible from '$lib/components/Collapsible.svelte';
 	import Main from '$lib/components/layout/Main.svelte';
-	import { TIMEFRAMES, type Timeframes } from '$lib/constants';
+	import { type Timeframes } from '$lib/constants';
 
 	const user = await getCurrentUser();
 
-	let timeframe = $state<Timeframes>(TIMEFRAMES[1].value);
+	let timeframe = $state<Timeframes>('30d');
 	const dateRange = $derived(timeframeToDateRange(timeframe));
 
 	let showAnalytics = $state(true);

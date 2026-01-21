@@ -40,12 +40,7 @@
 
 <Main>
 	<heading>
-		<Button
-			href="/"
-			variant="text"
-			iconType="full"
-			style="position: absolute; left: -0.5rem; transform: translateX(-100%)"
-		>
+		<Button href="/" variant="text" iconType="full">
 			<LucideArrowLeft />
 		</Button>
 		<h1>

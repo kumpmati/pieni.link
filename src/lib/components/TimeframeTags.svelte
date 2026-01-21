@@ -13,7 +13,7 @@
 
 <ul {style}>
 	{#each TIMEFRAMES as opt (opt.value)}
-		{@const selected = value === opt.value}
+		{@const selected = $state.eager(value) === opt.value}
 		<Chip
 			variant="general"
 			value={opt.value}

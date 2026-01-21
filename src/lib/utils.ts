@@ -17,8 +17,8 @@ export const timeframeToDateRange = (t: Timeframes): [Date, Date] => {
 			return [dayjs().subtract(6, 'months').startOf('day').toDate(), new Date()];
 		}
 
-		case '1mon': {
-			return [dayjs().subtract(1, 'month').startOf('day').toDate(), new Date()];
+		case '30d': {
+			return [dayjs().subtract(30, 'days').startOf('day').toDate(), new Date()];
 		}
 
 		case '7d': {

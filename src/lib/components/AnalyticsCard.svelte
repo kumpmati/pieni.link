@@ -13,7 +13,7 @@
 	let { label, extraInfo, value, children, onclick }: Props = $props();
 </script>
 
-<Card variant="elevated" style="display: flex; flex-direction: column; gap: 1rem;" {onclick}>
+<Card variant="elevated" style="display: flex; flex-direction: column;" {onclick}>
 	<div class="heading">
 		<div class="main">
 			{#if label}

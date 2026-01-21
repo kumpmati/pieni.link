@@ -13,35 +13,40 @@
 	let el: HTMLDivElement;
 	let chart: ApexCharts;
 
-	onMount(async () => {
-		const ApexCharts = (await import('apexcharts')).default;
+	onMount(() => {
+		import('apexcharts').then(({ default: ApexCharts }) => {
+			const opts: ApexOptions = {
+				series: [{ data: data.map((d) => ({ x: d.day, y: d.count })) }],
+				chart: {
+					type: 'line',
+					width: '100%',
+					height: 48,
+					sparkline: { enabled: true }
+				},
 
-		const opts: ApexOptions = {
-			series: [{ data: data.map((d) => ({ x: d.day, y: d.count })) }],
-			chart: {
-				type: 'line',
-				width: '100%',
-				height: 48,
-				sparkline: { enabled: true }
-			},
+				xaxis: {
+					type: 'datetime',
+					min: dateRange[0].getTime(),
+					// datapoints are at midnight, this makes line extend to the edge
+					max: dayjs(dateRange[1]).startOf('day').toDate().getTime()
+				},
 
-			xaxis: {
-				type: 'datetime',
-				min: dateRange[0].getTime(),
-				max: dateRange[1].getTime()
-			},
+				stroke: {
+					curve: 'straight',
+					width: 2,
+					colors: ['var(--m3c-primary)']
+				},
 
-			stroke: {
-				curve: 'straight',
-				width: 2,
-				colors: ['var(--m3c-primary)']
-			},
+				tooltip: { enabled: false }
+			};
 
-			tooltip: { enabled: false }
+			chart = new ApexCharts(el, opts);
+			chart.render();
+		});
+
+		return () => {
+			chart?.destroy();
 		};
-
-		chart = new ApexCharts(el, opts);
-		chart.render();
 	});
 
 	$effect(() => {
@@ -50,15 +55,16 @@
 		dateRange;
 
 		untrack(() => {
-			if (chart) {
-				chart.updateOptions({
-					xaxis: {
-						min: dateRange[0].getTime(),
-						max: dateRange[1].getTime()
-					}
-				} satisfies ApexOptions);
-				chart.updateSeries([{ data: data.map((d) => ({ x: d.day, y: d.count })) }]);
-			}
+			if (!chart) return;
+
+			chart.updateOptions({
+				xaxis: {
+					min: dateRange[0].getTime(),
+					// datapoints are at midnight, this makes line extend to the edge
+					max: dayjs(dateRange[1]).startOf('day').toDate().getTime()
+				}
+			} satisfies ApexOptions);
+			chart.updateSeries([{ data: data.map((d) => ({ x: d.day, y: d.count })) }]);
 		});
 	});
 </script>
