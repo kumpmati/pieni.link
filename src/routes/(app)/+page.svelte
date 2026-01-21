@@ -13,6 +13,7 @@
 	import TimeframeTags, { type Timeframes } from '$lib/components/TimeframeTags.svelte';
 	import { timeframeToDateRange } from '$lib/utils';
 	import Collapsible from '$lib/components/Collapsible.svelte';
+	import Main from '$lib/components/layout/Main.svelte';
 
 	const user = await getCurrentUser();
 
@@ -31,7 +32,7 @@
 	<meta name="author" content="github.com/kumpmati" />
 </svelte:head>
 
-<main>
+<Main>
 	<div class="heading">
 		<Logo />
 		<UserButton />
@@ -75,19 +76,9 @@
 			</Collapsible>
 		{/if}
 	</div>
-</main>
+</Main>
 
 <style>
-	main {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		margin: 0 auto;
-		margin-top: 128px;
-		width: calc(100% - 2rem);
-		max-width: 480px;
-	}
-
 	.heading {
 		display: flex;
 		align-items: center;

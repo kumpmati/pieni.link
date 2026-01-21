@@ -6,6 +6,7 @@
 	import { Button, snackbar, TextFieldOutlined } from 'm3-svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import type { PageProps } from './$types';
+	import Main from '$lib/components/layout/Main.svelte';
 
 	let { data, params }: PageProps = $props();
 
@@ -37,7 +38,7 @@
 	};
 </script>
 
-<main>
+<Main>
 	<heading>
 		<Button
 			href="/"
@@ -70,19 +71,9 @@
 		<LucideTrash />
 		Delete link
 	</Button>
-</main>
+</Main>
 
 <style>
-	main {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		margin: 0 auto;
-		margin-top: 128px;
-		width: calc(100% - 2rem);
-		max-width: 480px;
-	}
-
 	heading {
 		position: relative;
 		display: flex;
