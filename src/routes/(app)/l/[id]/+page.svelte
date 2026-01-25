@@ -38,6 +38,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Edit link - {params.id}</title>
+</svelte:head>
+
 <Main>
 	<heading>
 		<Button href="/" variant="text" iconType="full">
