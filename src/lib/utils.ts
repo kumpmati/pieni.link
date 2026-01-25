@@ -50,6 +50,9 @@ export const formatVisitsPerDay = (total: number, dateRange: [Date, Date]): stri
 	return `~${Math.round(perDay)}`;
 };
 
+/**
+ * Formats the given amount in a human format, e.g. `1200 -> 1.2k`
+ */
 export const formatAmount = (amount: number): string => {
 	return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(amount).toLowerCase();
 };

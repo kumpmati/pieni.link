@@ -2,7 +2,7 @@
 	import type { RemoteQuery } from '@sveltejs/kit';
 	import AnalyticsCard from '../AnalyticsCard.svelte';
 	import { Button, Dialog } from 'm3-svelte';
-	import { getHostname } from '$lib/utils';
+	import { formatAmount, getHostname } from '$lib/utils';
 
 	type Props = {
 		data: { referrer: string; count: number }[];
@@ -15,7 +15,7 @@
 
 <AnalyticsCard label="Referrers" onclick={() => (open = true)}>
 	{#snippet value()}
-		{data.length}
+		{formatAmount(data.length)}
 	{/snippet}
 </AnalyticsCard>
 

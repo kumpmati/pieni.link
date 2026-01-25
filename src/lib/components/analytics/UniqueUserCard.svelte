@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatAmount } from '$lib/utils';
 	import AnalyticsCard from '../AnalyticsCard.svelte';
 
 	type Props = {
@@ -11,7 +12,7 @@
 <AnalyticsCard label="Unique users*">
 	{#snippet value()}
 		<span title="Based on number of unique User-Agents, which does not map 1:1 to each user">
-			{data}
+			{formatAmount(data)}
 		</span>
 	{/snippet}
 </AnalyticsCard>
