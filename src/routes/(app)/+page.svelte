@@ -7,7 +7,7 @@
 	import AnalyticsSignInPrompt from '$lib/components/AnalyticsSignInPrompt.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import UserButton from '$lib/components/UserButton.svelte';
-	import OverallAnalytics from './OverallAnalytics.svelte';
+	import AnalyticsGrid from './AnalyticsGrid.svelte';
 	import LinkShortenerForm from './LinkShortenerForm.svelte';
 	import OwnLinksTable from './OwnLinksTable.svelte';
 	import TimeframeTags from '$lib/components/TimeframeTags.svelte';
@@ -15,6 +15,13 @@
 	import Collapsible from '$lib/components/Collapsible.svelte';
 	import Main from '$lib/components/layout/Main.svelte';
 	import { type Timeframes } from '$lib/constants';
+	import {
+		getAllVisitsByDay,
+		getMostCommonBrowsers,
+		getMostCommonDevices,
+		getTotalUniqueReferrers,
+		getTotalUniqueUsers
+	} from '$lib/queries/analytics.remote';
 
 	const user = await getCurrentUser();
 
@@ -51,8 +58,14 @@
 				{/snippet}
 
 				<TimeframeTags bind:value={timeframe} style="margin-bottom: 1rem;" />
-
-				<OverallAnalytics {dateRange} />
+				<AnalyticsGrid
+					{dateRange}
+					totalVisitsQuery={getAllVisitsByDay(dateRange)}
+					mostCommonBrowsersQuery={getMostCommonBrowsers(dateRange)}
+					mostCommonDevicesQuery={getMostCommonDevices(dateRange)}
+					uniqueReferrersQuery={getTotalUniqueReferrers(dateRange)}
+					uniqueUsersQuery={getTotalUniqueUsers(dateRange)}
+				/>
 			</Collapsible>
 
 			<Collapsible bind:open={showLinks}>

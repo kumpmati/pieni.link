@@ -53,3 +53,11 @@ export const formatVisitsPerDay = (total: number, dateRange: [Date, Date]): stri
 export const formatAmount = (amount: number): string => {
 	return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(amount).toLowerCase();
 };
+
+export const getHostname = (maybeUrl: string): string => {
+	try {
+		return new URL(maybeUrl).hostname;
+	} catch {
+		return maybeUrl;
+	}
+};

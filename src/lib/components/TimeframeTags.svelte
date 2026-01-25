@@ -5,13 +5,14 @@
 
 	type Props = {
 		value: Timeframes;
+		disabled?: boolean;
 		style?: string;
 	};
 
-	let { value = $bindable(), style }: Props = $props();
+	let { value = $bindable(), disabled, style }: Props = $props();
 </script>
 
-<ul {style}>
+<ul {style} class:disabled>
 	{#each TIMEFRAMES as opt (opt.value)}
 		{@const selected = $state.eager(value) === opt.value}
 		<Chip
@@ -36,5 +37,10 @@
 		margin: 0;
 		padding: 0;
 		flex-wrap: wrap;
+	}
+
+	.disabled {
+		opacity: 0.5;
+		user-select: none;
 	}
 </style>
