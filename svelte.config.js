@@ -1,7 +1,5 @@
 import adapterAuto from '@sveltejs/adapter-auto';
 import adapterNode from '@sveltejs/adapter-node';
-// replace above line with this when running using Docker
-
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -12,7 +10,7 @@ const config = {
 
 	compilerOptions: {
 		experimental: {
-			async: true,
+			async: true
 		}
 	},
 
