@@ -1,7 +1,7 @@
-import postgres from 'pg';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
 import { DATABASE_URL } from '$env/static/private';
-import { drizzle } from 'drizzle-orm/node-postgres';
 
-export const pool = new postgres.Pool({ connectionString: DATABASE_URL });
+const client = neon(DATABASE_URL);
 
-export const db = drizzle(pool);
+export const db = drizzle(client);
