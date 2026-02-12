@@ -22,7 +22,6 @@
 		"@iconify/svelte": "^5.2.1",
 		"@neondatabase/serverless": "^1.0.2",
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/adapter-node": "^4.0.0",
 		"@sveltejs/kit": "^2.50.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@types/eslint": "8.56.0",
