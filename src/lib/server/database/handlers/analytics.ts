@@ -20,6 +20,22 @@ export const getAllUserVisitsGroupedByDay = async (userId: string, dateRange: [D
 	return data;
 };
 
+export const getLinkVisitsGroupedByDay = async (linkId: string, dateRange: [Date, Date]) => {
+	const [from, to] = dateRange;
+
+	const data = await db
+		.select({
+			day: sql<string>`date_trunc('day', ${linkVisit.timestamp})`,
+			count: sql<number>`cast(count(*) as int)`
+		})
+		.from(linkVisit)
+		.where(and(eq(linkVisit.linkId, linkId), between(linkVisit.timestamp, from, to)))
+		.orderBy(asc(sql`1`))
+		.groupBy(sql`1`);
+
+	return data;
+};
+
 export const getLinkVisitsPerReferrer = async (linkId: string) => {
 	return await db
 		.select({

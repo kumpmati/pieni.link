@@ -2,6 +2,7 @@ import { PUBLIC_BASEURL } from '$env/static/public';
 import dayjs from 'dayjs';
 import type { Timeframes } from '$lib/constants';
 import type { Link } from './server/database/schema/link';
+import { browser } from '$app/environment';
 
 export const getFullURL = (l: Link): string => {
 	return `${PUBLIC_BASEURL}/${l.id}`;
@@ -63,4 +64,19 @@ export const getHostname = (maybeUrl: string): string => {
 	} catch {
 		return maybeUrl;
 	}
+};
+
+export const downloadAsFile = (filename: string, content: string) => {
+	if (!browser) throw new Error('download must be called in a browser');
+
+	const element = document.createElement('a');
+	element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`);
+	element.setAttribute('download', filename);
+
+	element.style.display = 'none';
+	document.body.appendChild(element);
+
+	element.click();
+
+	document.body.removeChild(element);
 };

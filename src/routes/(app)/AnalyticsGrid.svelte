@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AnalyticsCard from '$lib/components/AnalyticsCard.svelte';
-	import { type TotalUniqueReferrers, type VisitsByDay } from '$lib/queries/analytics.remote';
+	import { type UniqueReferrers, type VisitsByDay } from '$lib/queries/analytics.remote';
 	import TotalVisitsCard from '$lib/components/analytics/TotalVisitsCard.svelte';
 	import ReferrerCountCard from '$lib/components/analytics/ReferrerCountCard.svelte';
 	import UniqueUserCard from '$lib/components/analytics/UniqueUserCard.svelte';
@@ -14,7 +14,7 @@
 		totalVisitsQuery: RemoteQuery<VisitsByDay>;
 		mostCommonBrowsersQuery: RemoteQuery<{ name: string; percentage: number }[]>;
 		mostCommonDevicesQuery: RemoteQuery<{ name: string; percentage: number }[]>;
-		uniqueReferrersQuery: RemoteQuery<TotalUniqueReferrers>;
+		uniqueReferrersQuery: RemoteQuery<UniqueReferrers>;
 		uniqueUsersQuery: RemoteQuery<number>;
 	};
 
