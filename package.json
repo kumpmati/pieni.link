@@ -54,9 +54,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@internationalized/date": "^3.5.1",
-		"@lucia-auth/adapter-postgresql": "^2.0.2",
-		"@lucia-auth/oauth": "^3.5.2",
 		"better-auth": "^1.4.16",
 		"clsx": "^2.1.0",
 		"csv-stringify": "^6.4.6",
@@ -65,7 +62,6 @@
 		"drizzle-zod": "^0.5.1",
 		"lucia": "^2.7.6",
 		"nanoid": "^5.0.4",
-		"nprogress": "^0.2.0",
 		"pg": "^8.11.3",
 		"pino": "^9.0.0"
 	}
